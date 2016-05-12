@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AntFileScanner.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Plugin Utils</a> &gt; <a href="index.source.html" class="el_package">biz.gabrys.maven.plugin.util.io</a> &gt; <span class="el_source">AntFileScanner.java</span></div><h1>AntFileScanner.java</h1><pre class="source lang-java linenums">/*
+ * Maven Plugin Utils
+ * http://maven-project-utils.projects.gabrys.biz/
+ *
+ * Copyright (c) 2015 Adam Gabryś
+ *
+ * This file is licensed under the BSD 3-Clause (the &quot;License&quot;).
+ * You may not use this file except in compliance with the License.
+ * You may obtain:
+ * - a copy of the License at project page
+ * - a template of the License at https://opensource.org/licenses/BSD-3-Clause
+ */
+package biz.gabrys.maven.plugin.util.io;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.maven.plugin.logging.Log;
+import org.codehaus.plexus.util.DirectoryScanner;
+
+/**
+ * File scanner which uses &lt;a href=&quot;http://ant.apache.org/&quot;&gt;Ant&lt;/a&gt;
+ * &lt;a href=&quot;http://ant.apache.org/manual/dirtasks.html#patterns&quot;&gt;patterns&lt;/a&gt; to match files.
+ * @since 1.2
+ */
+public class AntFileScanner implements FileScanner {
+
+    private final Log logger;
+
+    /**
+     * Constructs a new instance.
+     * @since 1.2
+     */
+    public AntFileScanner() {
+<span class="fc" id="L37">        this(null);</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * Constructs a new instance.
+     * @param logger the logger used to log included/excluded files (only in debug mode).
+     * @since 1.2
+     */
+<span class="fc" id="L45">    public AntFileScanner(final Log logger) {</span>
+<span class="fc" id="L46">        this.logger = logger;</span>
+<span class="fc" id="L47">    }</span>
+
+    public Collection&lt;File&gt; getFiles(final File directory, final String[] includes, final String[] excludes) {
+<span class="nc bnc" id="L50" title="All 4 branches missed.">        final boolean loggerEnabled = logger != null &amp;&amp; logger.isDebugEnabled();</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        final DirectoryScanner scanner = loggerEnabled ? new LoggingDirectoryScanner(logger) : new DirectoryScanner();</span>
+<span class="nc" id="L52">        scanner.setBasedir(directory);</span>
+<span class="nc" id="L53">        scanner.setIncludes(includes.clone());</span>
+<span class="nc" id="L54">        scanner.setExcludes(excludes.clone());</span>
+<span class="nc" id="L55">        scanner.scan();</span>
+<span class="nc" id="L56">        return convertToFiles(directory, scanner.getIncludedFiles());</span>
+    }
+
+    /**
+     * Converts paths found by scanner to files collection with absolute paths.
+     * @param directory the base directory.
+     * @param paths the found paths.
+     * @return the collection with files.
+     * @since 1.2
+     */
+    protected List&lt;File&gt; convertToFiles(final File directory, final String[] paths) {
+<span class="fc" id="L67">        final List&lt;File&gt; files = new ArrayList&lt;File&gt;(paths.length);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (final String path : paths) {</span>
+<span class="fc" id="L69">            files.add(new File(directory, path));</span>
+        }
+<span class="fc" id="L71">        return files;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
