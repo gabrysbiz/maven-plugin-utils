@@ -20,7 +20,7 @@ public class SystemTimer implements Timer {
 
     private final Object mutex = new Object();
 
-    private long startTime;
+    private Long startTime;
     private volatile Time time;
 
     /**
@@ -49,7 +49,19 @@ public class SystemTimer implements Timer {
         return time;
     }
 
+    /**
+     * {@inheritDoc} The current counted time is equal to:
+     * <ul>
+     * <li>{@code null} when timer has not been started</li>
+     * <li>{@code current time - start time} when timer has been started and has not been stopped</li>
+     * <li>{@code counted time during stop} when timer has been stopped</li>
+     * </ul>
+     * @since 1.0
+     */
     public Time getTime() {
+        if (startTime == null) {
+            return null;
+        }
         if (time == null) {
             return new Time(System.currentTimeMillis() - startTime);
         }

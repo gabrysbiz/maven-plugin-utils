@@ -12,11 +12,20 @@
  */
 package biz.gabrys.maven.plugin.util.io;
 
-class RegexFileFilterException extends RuntimeException {
+/**
+ * Thrown to indicate that an error occurred during file-filtering process by regular expressions.
+ * @since 1.2
+ */
+public class RegexFileFilterException extends RuntimeException {
 
     private static final long serialVersionUID = -2209439425443207057L;
 
-    RegexFileFilterException(final Throwable cause) {
+    /**
+     * Constructs a new instance with the specified cause.
+     * @param cause the cause.
+     * @since 1.2
+     */
+    public RegexFileFilterException(final Throwable cause) {
         super(cause);
     }
 }

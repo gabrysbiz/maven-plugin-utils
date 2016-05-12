@@ -20,11 +20,28 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.maven.plugin.logging.Log;
 
-class RegexFileScanner implements FileScanner {
+/**
+ * File scanner which uses regular expressions to match files.
+ * @since 1.2
+ */
+public class RegexFileScanner implements FileScanner {
 
     private final Log logger;
 
-    RegexFileScanner(final Log logger) {
+    /**
+     * Constructs a new instance.
+     * @since 1.2
+     */
+    public RegexFileScanner() {
+        this(null);
+    }
+
+    /**
+     * Constructs a new instance.
+     * @param logger the logger used to log included/excluded files (only in debug mode).
+     * @since 1.2
+     */
+    public RegexFileScanner(final Log logger) {
         this.logger = logger;
     }
 
@@ -33,7 +50,7 @@ class RegexFileScanner implements FileScanner {
      */
     public Collection<File> getFiles(final File directory, final String[] includes, final String[] excludes) {
         IOFileFilter filter = new RegexFileFilter(directory, includes, excludes);
-        if (logger.isDebugEnabled()) {
+        if (logger != null && logger.isDebugEnabled()) {
             filter = new LoggingFileFilter(filter, logger);
         }
         return FileUtils.listFiles(directory, filter, TrueFileFilter.INSTANCE);

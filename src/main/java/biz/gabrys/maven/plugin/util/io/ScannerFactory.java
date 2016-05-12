@@ -31,9 +31,9 @@ public class ScannerFactory {
     /**
      * Creates a new scanner related with the pattern format.
      * @param patternFormat the scanner pattern format.
-     * @param logger the plugin logger.
+     * @param logger the logger used to log included/excluded files (only in debug mode).
      * @return the new scanner.
-     * @throws IllegalArgumentException if logger is {@code null}.
+     * @throws IllegalArgumentException if the logger is equal to {@code null}.
      * @since 1.0
      */
     public FileScanner create(final ScannerPatternFormat patternFormat, final Log logger) {

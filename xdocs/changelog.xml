@@ -7,6 +7,16 @@
     </properties>
 
     <body>
+         <section id="release-1.2" name="Release 1.2">
+            <p>Features:</p>
+            <ul>
+                <li>
+                    Allow access to all classes from
+                    <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/io/package-summary.html">biz.gabrys.maven.plugin.util.io</a>
+                    package
+                </li>
+            </ul>
+        </section>
         <section id="release-1.1" name="Release 1.1">
             <p>Bugs:</p>
             <ul>
@@ -14,6 +24,7 @@
                 <li>Optimization of call logger instructions</li>
                 <li>Added missing <a href="apidocs/">JavaDocs</a></li>
             </ul>
+            <p><a href="http://maven-plugin-utils.projects.gabrys.biz/1.1/">See documentation</a></p>
         </section>
         <section id="release-1.0" name="Release 1.0">
             <p>Initial release.</p>
