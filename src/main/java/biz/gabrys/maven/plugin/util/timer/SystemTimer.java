@@ -21,7 +21,7 @@ public class SystemTimer implements Timer {
     private final Object mutex = new Object();
 
     private long startTime;
-    private Time time;
+    private volatile Time time;
 
     /**
      * Constructs a new instance.

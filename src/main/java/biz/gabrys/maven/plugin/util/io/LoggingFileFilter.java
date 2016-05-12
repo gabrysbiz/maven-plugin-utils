@@ -29,7 +29,7 @@ class LoggingFileFilter implements IOFileFilter {
 
     public boolean accept(final File file) {
         final boolean accepted = filter.accept(file);
-        if (file.isFile()) {
+        if (logger.isDebugEnabled() && file.isFile()) {
             logger.debug((accepted ? "Include " : "Exclude ") + file.getAbsolutePath());
         }
         return accepted;

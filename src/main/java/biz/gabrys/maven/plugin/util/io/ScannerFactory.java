@@ -21,6 +21,14 @@ import org.apache.maven.plugin.logging.Log;
 public class ScannerFactory {
 
     /**
+     * Constructs a new instance.
+     * @since 1.0
+     */
+    public ScannerFactory() {
+        // do nothing
+    }
+
+    /**
      * Creates a new scanner related with the pattern format.
      * @param patternFormat the scanner pattern format.
      * @param logger the plugin logger.
@@ -32,7 +40,7 @@ public class ScannerFactory {
         if (logger == null) {
             throw new IllegalArgumentException("Logger cannot be null");
         }
-        if (ScannerPatternFormat.ANT.equals(patternFormat)) {
+        if (patternFormat == ScannerPatternFormat.ANT) {
             return new AntFileScanner(logger);
         }
         return new RegexFileScanner(logger);

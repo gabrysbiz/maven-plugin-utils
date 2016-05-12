@@ -29,7 +29,7 @@ class LoggingDirectoryScanner extends DirectoryScanner {
     protected boolean isExcluded(final String name) {
         final boolean excluded = super.isExcluded(name);
         final File file = new File(getBasedir(), name);
-        if (file.isFile()) {
+        if (logger.isDebugEnabled() && file.isFile()) {
             logger.debug((excluded ? "Exclude " : "Include ") + file.getAbsolutePath());
         }
         return excluded;
