@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+    <properties>
+        <title>About</title>
+    </properties>
+
+    <body>
+        <section name="About">
+            <p>
+                The ${project.name} is a Java library which contains utilities for the
+                <a href="https://maven.apache.org/">Maven 2</a> plugins.
+                Read <a href="apidocs/">API documentation</a> for more information.
+            </p>
+        </section>
+        <section name="Requirements">
+            <p>
+                The library to run requires:
+            </p>
+            <ul>
+                <li>Java 5.0 or higher</li>
+                <li>Third-Party Dependencies (<a href="dependencies.html">see list</a>)</li>
+            </ul>
+        </section>
+        <section name="Download">
+            <p>
+                You can download the library from <a href="download.html">this page</a> or using various
+                <a href="dependency-info.html">dependency management tools</a>.
+            </p>
+        </section>
+    </body>
+</document>
