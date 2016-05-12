@@ -5,10 +5,10 @@
 
     <groupId>biz.gabrys.maven</groupId>
     <artifactId>plugin-utils</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>Maven Plugin Utils</name>
     <description>The Maven Plugin Utils is a Java library which contains utilities for the Maven 2 plugins.</description>
-    <url>http://maven-plugin-utils.projects.gabrys.biz/LATEST/</url>
+    <url>http://maven-plugin-utils.projects.gabrys.biz/1.0/</url>
 
     <inceptionYear>2015</inceptionYear>
     <organization>
