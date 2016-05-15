@@ -2,11 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 	<url>
-		<loc>http://maven-plugin-utils.project.gabrys.biz/</loc>
-		<changefreq>monthly</changefreq>
+		<loc>http://maven-plugin-utils.projects.gabrys.biz/</loc>
+		<changefreq>2016-05-15</changefreq>
 	</url>
 	<url>
-		<loc>http://maven-plugin-utils.project.gabrys.biz/LATEST/</loc>
-		<changefreq>weekly</changefreq>
+		<loc>http://maven-plugin-utils.projects.gabrys.biz/LATEST/</loc>
+		<changefreq>2016-05-15</changefreq>
+	</url>
+	<url>
+		<loc>http://maven-plugin-utils.projects.gabrys.biz/1.2/</loc>
+		<changefreq>2016-05-15</changefreq>
+	</url>
+	<url>
+		<loc>http://maven-plugin-utils.projects.gabrys.biz/1.1/</loc>
+		<changefreq>2016-05-15</changefreq>
+	</url>
+	<url>
+		<loc>http://maven-plugin-utils.projects.gabrys.biz/1.0/</loc>
+		<changefreq>2016-05-15</changefreq>
 	</url>
 </urlset>
