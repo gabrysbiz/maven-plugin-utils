@@ -30,15 +30,16 @@ public class RegexFileFilter implements IOFileFilter {
     /**
      * Constructs a new instance.
      * @param directory the directory to be scanned.
-     * @param includes a list of include patterns.
-     * @param excludes a list of exclude patterns.
+     * @param includes an array of include patterns.
+     * @param excludes an array of exclude patterns.
+     * @throws RegexFileFilterException if an error occurs while resolving canonical path.
      * @since 1.2
      */
-<span class="fc" id="L37">    public RegexFileFilter(final File directory, final String[] includes, final String[] excludes) {</span>
-<span class="fc" id="L38">        rootDirectoryPath = getCanonicalPath(directory);</span>
-<span class="fc" id="L39">        this.includes = includes.clone();</span>
-<span class="fc" id="L40">        this.excludes = excludes.clone();</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L38">    public RegexFileFilter(final File directory, final String[] includes, final String[] excludes) {</span>
+<span class="fc" id="L39">        rootDirectoryPath = getCanonicalPath(directory);</span>
+<span class="fc" id="L40">        this.includes = includes.clone();</span>
+<span class="fc" id="L41">        this.excludes = excludes.clone();</span>
+<span class="fc" id="L42">    }</span>
 
     /**
      * {@inheritDoc}&lt;br&gt;
@@ -47,7 +48,7 @@ public class RegexFileFilter implements IOFileFilter {
      * @since 1.2
      */
     public final boolean accept(final File dir, final String name) {
-<span class="fc" id="L50">        return isAcceptable(new File(dir, name));</span>
+<span class="fc" id="L51">        return isAcceptable(new File(dir, name));</span>
     }
 
     /**
@@ -57,7 +58,7 @@ public class RegexFileFilter implements IOFileFilter {
      * @since 1.2
      */
     public final boolean accept(final File file) {
-<span class="fc" id="L60">        return isAcceptable(file);</span>
+<span class="fc" id="L61">        return isAcceptable(file);</span>
     }
 
     /**
@@ -67,12 +68,12 @@ public class RegexFileFilter implements IOFileFilter {
      * @since 1.2
      */
     protected boolean isAcceptable(final File file) {
-<span class="fc" id="L70">        final String path = getCanonicalPath(file);</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (!path.startsWith(rootDirectoryPath)) {</span>
-<span class="fc" id="L72">            return false;</span>
+<span class="fc" id="L71">        final String path = getCanonicalPath(file);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (!path.startsWith(rootDirectoryPath)) {</span>
+<span class="fc" id="L73">            return false;</span>
         }
-<span class="fc" id="L74">        final String nameWithoutRoot = path.substring(rootDirectoryPath.length() + 1).replace('\\', '/');</span>
-<span class="fc bfc" id="L75" title="All 4 branches covered.">        return !matches(nameWithoutRoot, excludes) &amp;&amp; matches(nameWithoutRoot, includes);</span>
+<span class="fc" id="L75">        final String nameWithoutRoot = path.substring(rootDirectoryPath.length() + 1).replace('\\', '/');</span>
+<span class="fc bfc" id="L76" title="All 4 branches covered.">        return !matches(nameWithoutRoot, excludes) &amp;&amp; matches(nameWithoutRoot, includes);</span>
     }
 
     /**
@@ -83,12 +84,12 @@ public class RegexFileFilter implements IOFileFilter {
      * @since 1.2
      */
     protected static boolean matches(final String path, final String[] patterns) {
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (final String pattern : patterns) {</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">            if (path.matches(pattern)) {</span>
-<span class="fc" id="L88">                return true;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        for (final String pattern : patterns) {</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            if (path.matches(pattern)) {</span>
+<span class="fc" id="L89">                return true;</span>
             }
         }
-<span class="fc" id="L91">        return false;</span>
+<span class="fc" id="L92">        return false;</span>
     }
 
     /**
@@ -100,9 +101,9 @@ public class RegexFileFilter implements IOFileFilter {
      */
     protected static String getCanonicalPath(final File file) {
         try {
-<span class="fc" id="L103">            return file.getCanonicalPath();</span>
-<span class="fc" id="L104">        } catch (final IOException e) {</span>
-<span class="fc" id="L105">            throw new RegexFileFilterException(e);</span>
+<span class="fc" id="L104">            return file.getCanonicalPath();</span>
+<span class="fc" id="L105">        } catch (final IOException e) {</span>
+<span class="fc" id="L106">            throw new RegexFileFilterException(e);</span>
         }
     }
 }

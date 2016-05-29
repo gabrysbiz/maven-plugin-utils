@@ -31,12 +31,12 @@ public class LoggingDirectoryScanner extends DirectoryScanner {
      * @throws IllegalArgumentException if the logger is equal to {@code null}.
      * @since 1.2
      */
-<span class="nc" id="L34">    public LoggingDirectoryScanner(final Log logger) {</span>
-<span class="nc bnc" id="L35" title="All 2 branches missed.">        if (logger == null) {</span>
+<span class="fc" id="L34">    public LoggingDirectoryScanner(final Log logger) {</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (logger == null) {</span>
 <span class="nc" id="L36">            throw new IllegalArgumentException(&quot;Logger cannot be null&quot;);</span>
         }
-<span class="nc" id="L38">        this.logger = logger;</span>
-<span class="nc" id="L39">    }</span>
+<span class="fc" id="L38">        this.logger = logger;</span>
+<span class="fc" id="L39">    }</span>
 
     /**
      * {@inheritDoc} It logs (in debug mode) for {@link File#isFile() normal file} information whether it is included or

@@ -18,6 +18,10 @@ package biz.gabrys.maven.plugin.util.timer;
  */
 public class Time {
 
+    private static final int MILLISECONDS_IN_SECOND = 1000;
+    private static final int SECONDS_IN_MINUTE = 60;
+    private static final int MINUTES_IN_HOUR = 60;
+
     private final long milliseconds;
 
     /**
@@ -25,9 +29,9 @@ public class Time {
      * @param milliseconds a counted time in the milliseconds.
      * @since 1.0
      */
-<span class="fc" id="L28">    public Time(final long milliseconds) {</span>
-<span class="fc" id="L29">        this.milliseconds = milliseconds;</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L32">    public Time(final long milliseconds) {</span>
+<span class="fc" id="L33">        this.milliseconds = milliseconds;</span>
+<span class="fc" id="L34">    }</span>
 
     /**
      * Returns milliseconds representation of {@code this} object.
@@ -35,34 +39,53 @@ public class Time {
      * @since 1.0
      */
     public long toMilliseconds() {
-<span class="fc" id="L38">        return milliseconds;</span>
+<span class="fc" id="L42">        return milliseconds;</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L43">        return (int) (milliseconds ^ milliseconds &gt;&gt;&gt; 32);</span>
+<span class="nc" id="L47">        return (int) (milliseconds ^ milliseconds &gt;&gt;&gt; 32);</span>
     }
 
     @Override
     public boolean equals(final Object obj) {
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (this == obj) {</span>
-<span class="nc" id="L49">            return true;</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L53">            return true;</span>
         }
-<span class="nc bnc" id="L51" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L52">            return false;</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L56">            return false;</span>
         }
-<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L55">            return false;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L59">            return false;</span>
         }
-<span class="nc" id="L57">        final Time other = (Time) obj;</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">        return milliseconds == other.milliseconds;</span>
+<span class="nc" id="L61">        final Time other = (Time) obj;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        return milliseconds == other.milliseconds;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L63">        final long seconds = milliseconds / 1000 % 60;</span>
-<span class="nc" id="L64">        final long millis = milliseconds % 1000;</span>
-<span class="nc" id="L65">        return String.format(&quot;%s.%03d seconds&quot;, seconds, millis);</span>
+<span class="fc" id="L67">        final long millis = milliseconds % MILLISECONDS_IN_SECOND;</span>
+<span class="fc" id="L68">        long seconds = milliseconds / MILLISECONDS_IN_SECOND;</span>
+<span class="fc" id="L69">        long minutes = seconds / SECONDS_IN_MINUTE;</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (minutes &gt; 0) {</span>
+<span class="fc" id="L71">            seconds -= minutes * SECONDS_IN_MINUTE;</span>
+        }
+<span class="fc" id="L73">        final long hours = minutes / MINUTES_IN_HOUR;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (hours &gt; 0) {</span>
+<span class="fc" id="L75">            minutes -= hours * MINUTES_IN_HOUR;</span>
+        }
+
+<span class="fc" id="L78">        final StringBuilder time = new StringBuilder();</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (hours &gt; 0) {</span>
+<span class="fc" id="L80">            time.append(hours);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">            time.append(String.format(&quot; hour%s &quot;, hours == 1 ? &quot;&quot; : &quot;s&quot;));</span>
+        }
+<span class="fc bfc" id="L83" title="All 4 branches covered.">        if (hours &gt; 0 || minutes &gt; 0) {</span>
+<span class="fc" id="L84">            time.append(minutes);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            time.append(String.format(&quot; minute%s &quot;, minutes == 1 ? &quot;&quot; : &quot;s&quot;));</span>
+        }
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">        time.append(String.format(&quot;%s.%03d second%s&quot;, seconds, millis, seconds == 1 &amp;&amp; millis == 0 ? &quot;&quot; : &quot;s&quot;));</span>
+<span class="fc" id="L88">        return time.toString();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

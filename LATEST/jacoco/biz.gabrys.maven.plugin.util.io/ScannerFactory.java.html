@@ -24,12 +24,13 @@ public class ScannerFactory {
      * Constructs a new instance.
      * @since 1.0
      */
-<span class="nc" id="L27">    public ScannerFactory() {</span>
+<span class="fc" id="L27">    public ScannerFactory() {</span>
         // do nothing
-<span class="nc" id="L29">    }</span>
+<span class="fc" id="L29">    }</span>
 
     /**
-     * Creates a new scanner related with the pattern format.
+     * Creates a new scanner related with the pattern format. Returns an instance of {@link RegexFileScanner} if
+     * {@code patternFormat} is equal to {@code null}.
      * @param patternFormat the scanner pattern format.
      * @param logger the logger used to log included/excluded files (only in debug mode).
      * @return the new scanner.
@@ -37,13 +38,13 @@ public class ScannerFactory {
      * @since 1.0
      */
     public FileScanner create(final ScannerPatternFormat patternFormat, final Log logger) {
-<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (logger == null) {</span>
-<span class="nc" id="L41">            throw new IllegalArgumentException(&quot;Logger cannot be null&quot;);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (logger == null) {</span>
+<span class="fc" id="L42">            throw new IllegalArgumentException(&quot;Logger cannot be null&quot;);</span>
         }
-<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (patternFormat == ScannerPatternFormat.ANT) {</span>
-<span class="nc" id="L44">            return new AntFileScanner(logger);</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (patternFormat == ScannerPatternFormat.ANT) {</span>
+<span class="fc" id="L45">            return new AntFileScanner(logger);</span>
         }
-<span class="nc" id="L46">        return new RegexFileScanner(logger);</span>
+<span class="fc" id="L47">        return new RegexFileScanner(logger);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
