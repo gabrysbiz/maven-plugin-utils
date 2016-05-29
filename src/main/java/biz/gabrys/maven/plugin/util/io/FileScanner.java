@@ -24,8 +24,8 @@ public interface FileScanner {
     /**
      * Returns files contained by a directory.
      * @param directory the directory to be scanned.
-     * @param includes a list of include patterns.
-     * @param excludes a list of exclude patterns
+     * @param includes an array of include patterns.
+     * @param excludes an array of exclude patterns
      * @return files contained by a directory.
      * @since 1.0
      */

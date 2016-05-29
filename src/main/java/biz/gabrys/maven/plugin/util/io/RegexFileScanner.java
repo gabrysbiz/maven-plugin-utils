@@ -49,10 +49,23 @@ public class RegexFileScanner implements FileScanner {
      * {@inheritDoc} You must use '/' as path separator in include/exclude patterns.
      */
     public Collection<File> getFiles(final File directory, final String[] includes, final String[] excludes) {
+        final IOFileFilter filter = createFileFilter(directory, includes, excludes);
+        return FileUtils.listFiles(directory, filter, TrueFileFilter.INSTANCE);
+    }
+
+    /**
+     * Creates a {@link IOFileFilter} which will be used to find all files which match filters.
+     * @param directory the directory to be scanned.
+     * @param includes an array of include patterns.
+     * @param excludes an array of exclude patterns
+     * @return an instance of {@link IOFileFilter}.
+     * @since 1.3
+     */
+    protected IOFileFilter createFileFilter(final File directory, final String[] includes, final String[] excludes) {
         IOFileFilter filter = new RegexFileFilter(directory, includes, excludes);
         if (logger != null && logger.isDebugEnabled()) {
             filter = new LoggingFileFilter(filter, logger);
         }
-        return FileUtils.listFiles(directory, filter, TrueFileFilter.INSTANCE);
+        return filter;
     }
 }

@@ -47,8 +47,7 @@ public class AntFileScanner implements FileScanner {
     }
 
     public Collection<File> getFiles(final File directory, final String[] includes, final String[] excludes) {
-        final boolean loggerEnabled = logger != null && logger.isDebugEnabled();
-        final DirectoryScanner scanner = loggerEnabled ? new LoggingDirectoryScanner(logger) : new DirectoryScanner();
+        final DirectoryScanner scanner = createDirectoryScanner();
         scanner.setBasedir(directory);
         scanner.setIncludes(includes.clone());
         scanner.setExcludes(excludes.clone());
@@ -57,11 +56,23 @@ public class AntFileScanner implements FileScanner {
     }
 
     /**
+     * Creates a {@link DirectoryScanner} which will be used to find all files which match filters.
+     * @return a not initialized instance of the {@link DirectoryScanner} or its subclass.
+     * @since 1.3
+     * @see #getFiles(File, String[], String[])
+     */
+    protected DirectoryScanner createDirectoryScanner() {
+        final boolean loggerEnabled = logger != null && logger.isDebugEnabled();
+        return loggerEnabled ? new LoggingDirectoryScanner(logger) : new DirectoryScanner();
+    }
+
+    /**
      * Converts paths found by scanner to files collection with absolute paths.
      * @param directory the base directory.
      * @param paths the found paths.
      * @return the collection with files.
      * @since 1.2
+     * @see #getFiles(File, String[], String[])
      */
     protected List<File> convertToFiles(final File directory, final String[] paths) {
         final List<File> files = new ArrayList<File>(paths.length);

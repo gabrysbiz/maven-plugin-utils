@@ -60,8 +60,27 @@ public class Time {
 
     @Override
     public String toString() {
-        final long seconds = milliseconds / 1000 % 60;
         final long millis = milliseconds % 1000;
-        return String.format("%s.%03d seconds", seconds, millis);
+        long seconds = milliseconds / 1000;
+        long minutes = seconds / 60;
+        if (minutes > 0) {
+            seconds -= minutes * 60;
+        }
+        final long hours = minutes / 24;
+        if (hours > 0) {
+            minutes -= hours * 24;
+        }
+
+        final StringBuilder time = new StringBuilder();
+        if (hours > 0) {
+            time.append(hours);
+            time.append(String.format(" hour%s ", hours == 1 ? "" : "s"));
+        }
+        if (hours > 0 || minutes > 0) {
+            time.append(minutes);
+            time.append(String.format(" minute%s ", minutes == 1 ? "" : "s"));
+        }
+        time.append(String.format("%s.%03d second%s", seconds, millis, seconds == 1 && millis == 0 ? "" : "s"));
+        return time.toString();
     }
 }
