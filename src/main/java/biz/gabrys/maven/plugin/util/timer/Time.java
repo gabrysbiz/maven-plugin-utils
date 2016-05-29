@@ -62,6 +62,26 @@ public class Time {
         return milliseconds == other.milliseconds;
     }
 
+    /**
+     * Returns a string representation of the time in human-readable format. Examples:
+     * 
+     * <pre>
+     * 0.000 seconds
+     * 0.589 seconds
+     * 1.000 second
+     * 57.042 seconds
+     * 1 minute 0.000 seconds
+     * 1 minute 1.000 second
+     * 12 minutes 28.321 seconds
+     * 1 hour 0 minutes 0.000 seconds
+     * 5 hours 0 minutes 0.000 seconds
+     * 5 hours 1 minute 1.000 second
+     * 5 hours 9 minutes 4.123 seconds
+     * </pre>
+     * 
+     * @return a string representation of the time in human-readable format.
+     * @since 1.3
+     */
     @Override
     public String toString() {
         final long millis = milliseconds % MILLISECONDS_IN_SECOND;
