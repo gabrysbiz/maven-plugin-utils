@@ -52,10 +52,7 @@ public class Time {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
         final Time other = (Time) obj;
@@ -71,11 +68,12 @@ public class Time {
      * 1.000 second
      * 57.042 seconds
      * 1 minute 0.000 seconds
-     * 1 minute 1.000 second
+     * 7 minutes 1.000 second
      * 12 minutes 28.321 seconds
      * 1 hour 0 minutes 0.000 seconds
      * 5 hours 0 minutes 0.000 seconds
      * 5 hours 1 minute 1.000 second
+     * 5 hours 1 minute 54.132 seconds
      * 5 hours 9 minutes 4.123 seconds
      * </pre>
      * 
