@@ -18,6 +18,10 @@ package biz.gabrys.maven.plugin.util.timer;
  */
 public class Time {
 
+    private static final int MILLISECONDS_IN_SECOND = 1000;
+    private static final int SECONDS_IN_MINUTE = 60;
+    private static final int MINUTES_IN_HOUR = 60;
+
     private final long milliseconds;
 
     /**
@@ -60,15 +64,15 @@ public class Time {
 
     @Override
     public String toString() {
-        final long millis = milliseconds % 1000;
-        long seconds = milliseconds / 1000;
-        long minutes = seconds / 60;
+        final long millis = milliseconds % MILLISECONDS_IN_SECOND;
+        long seconds = milliseconds / MILLISECONDS_IN_SECOND;
+        long minutes = seconds / SECONDS_IN_MINUTE;
         if (minutes > 0) {
-            seconds -= minutes * 60;
+            seconds -= minutes * SECONDS_IN_MINUTE;
         }
-        final long hours = minutes / 24;
+        final long hours = minutes / MINUTES_IN_HOUR;
         if (hours > 0) {
-            minutes -= hours * 24;
+            minutes -= hours * MINUTES_IN_HOUR;
         }
 
         final StringBuilder time = new StringBuilder();
