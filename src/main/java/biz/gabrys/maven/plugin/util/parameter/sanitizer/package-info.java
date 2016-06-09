@@ -10,9 +10,7 @@
  * - a copy of the License at project page
  * - a template of the License at https://opensource.org/licenses/BSD-3-Clause
  */
-package biz.gabrys.maven.plugin.util.parameter.converter;
-
-public interface ValueToStringConverter {
-
-    String convert(Object value);
-}
+/**
+ * Contains types responsible for sanitizing parameters values.
+ */
+package biz.gabrys.maven.plugin.util.parameter.sanitizer;
