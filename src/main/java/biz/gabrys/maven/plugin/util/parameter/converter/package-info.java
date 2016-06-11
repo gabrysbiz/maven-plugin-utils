@@ -11,6 +11,6 @@
  * - a template of the License at https://opensource.org/licenses/BSD-3-Clause
  */
 /**
- * Contains classes responsible for sanitizing parameters values.
+ * Contains classes responsible for converting parameters values to string representation.
  */
-package biz.gabrys.maven.plugin.util.parameter.sanitizer;
+package biz.gabrys.maven.plugin.util.parameter.converter;

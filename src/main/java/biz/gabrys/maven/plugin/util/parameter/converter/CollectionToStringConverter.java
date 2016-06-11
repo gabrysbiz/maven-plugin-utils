@@ -15,6 +15,10 @@ package biz.gabrys.maven.plugin.util.parameter.converter;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * Responsible for converting collections to string representation.
+ * @since 1.3.0
+ */
 public class CollectionToStringConverter extends AbstractValueToStringConverter {
 
     @Override

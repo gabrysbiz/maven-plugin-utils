@@ -12,7 +12,17 @@
  */
 package biz.gabrys.maven.plugin.util.parameter.converter;
 
+/**
+ * Responsible for converting parameters values to string representation.
+ * @since 1.3.0
+ */
 public interface ValueToStringConverter {
 
+    /**
+     * Converts a parameter value to string representation.
+     * @param value the parameter value.
+     * @return the string representation of the parameter value.
+     * @since 1.3.0
+     */
     String convert(Object value);
 }

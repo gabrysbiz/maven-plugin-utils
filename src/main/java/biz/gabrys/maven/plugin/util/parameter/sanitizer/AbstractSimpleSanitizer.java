@@ -13,14 +13,14 @@
 package biz.gabrys.maven.plugin.util.parameter.sanitizer;
 
 /**
- * Helps in implementing {@link ValueSanitizer} which specifies that the parameter value is valid based on a simple
- * condition.
+ * Helps in implementing {@link ValueSanitizer sanitizers} which specify that the parameter value is valid based on a
+ * simple condition.
  * @since 1.3.0
  */
 public abstract class AbstractSimpleSanitizer implements ValueSanitizer {
 
     /**
-     * The information whether parameter current value is valid.
+     * Information whether parameter current value is valid.
      * @since 1.3.0
      */
     protected final boolean valid;

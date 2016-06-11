@@ -20,7 +20,7 @@ package biz.gabrys.maven.plugin.util.parameter.sanitizer;
 public class LazySimpleSanitizer extends AbstractSimpleSanitizer {
 
     /**
-     * The sanitized value container.
+     * Sanitized value container.
      * @since 1.3.0
      */
     protected final ValueContainer conatiner;

@@ -12,18 +12,44 @@
  */
 package biz.gabrys.maven.plugin.util.parameter.converter;
 
+/**
+ * Helps in implementing {@link ValueToStringConverter converters} which are null safe.
+ * @since 1.3.0
+ */
 public abstract class AbstractValueToStringConverter implements ValueToStringConverter {
 
+    /**
+     * String representation of {@code null} value.
+     */
+    protected static final String NULL_STRING = "null";
+
+    /**
+     * Constructs a new instance.
+     * @since 1.3.0
+     */
     protected AbstractValueToStringConverter() {
         // do nothing
     }
 
+    /**
+     * {@inheritDoc} This method is null safe.
+     * @param value the parameter value (can be {@code null}).
+     * @return the string representation of the parameter value (never {@code null}).
+     * @since 1.3.0
+     */
     public String convert(final Object value) {
         if (value == null) {
-            return "null";
+            return NULL_STRING;
         }
-        return convert2(value);
+        final String converted = convert2(value);
+        return converted == null ? NULL_STRING : converted;
     }
 
+    /**
+     * Converts a parameter value to string representation.
+     * @param value the parameter value (never {@code null}).
+     * @return the string representation of the parameter value (can be {@code null}).
+     * @since 1.3.0
+     */
     protected abstract String convert2(final Object value);
 }
