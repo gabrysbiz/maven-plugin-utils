@@ -11,6 +11,6 @@
  * - a template of the License at https://opensource.org/licenses/BSD-3-Clause
  */
 /**
- * Contains classes responsible for sanitizing parameters values.
+ * Contains sanitizers responsible for sanitizing (convert from invalid to valid form) Mojos parameters values .
  */
 package biz.gabrys.maven.plugin.util.parameter.sanitizer;

@@ -37,8 +37,9 @@ public class AlwaysValidSanitizer implements ValueSanitizer {
     }
 
     /**
-     * Throws an {@link UnsupportedOperationException} exception.
+     * Throws an {@link UnsupportedOperationException}.
      * @param value the parameter invalid value (ignored).
+     * @return nothing, because throws the {@link UnsupportedOperationException}.
      * @throws UnsupportedOperationException always.
      * @since 1.3.0
      */

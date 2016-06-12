@@ -13,7 +13,7 @@
 package biz.gabrys.maven.plugin.util.parameter.sanitizer;
 
 /**
- * Responsible for sanitizing Mojos parameters values.
+ * Responsible for sanitizing (convert from invalid to valid form) Mojo parameters values.
  * @since 1.3.0
  */
 public interface ValueSanitizer {

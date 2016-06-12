@@ -11,6 +11,6 @@
  * - a template of the License at https://opensource.org/licenses/BSD-3-Clause
  */
 /**
- * Contains converters responsible for converting parameters values to string representation.
+ * Contains utilities to operate on Mojos parameters.
  */
-package biz.gabrys.maven.plugin.util.parameter.converter;
+package biz.gabrys.maven.plugin.util.parameter;

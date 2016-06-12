@@ -20,6 +20,7 @@ public abstract class AbstractValueToStringConverter implements ValueToStringCon
 
     /**
      * String representation of {@code null} value.
+     * @since 1.3.0
      */
     protected static final String NULL_STRING = "null";
 
