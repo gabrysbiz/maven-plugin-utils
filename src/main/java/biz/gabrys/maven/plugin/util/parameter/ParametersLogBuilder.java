@@ -38,7 +38,7 @@ import biz.gabrys.maven.plugin.util.parameter.sanitizer.ValueSanitizer;
  * </p>
  * 
  * <pre>
- * public class ExampleMojo extends AbstractMojo
+ * public class ExampleMojo extends AbstractMojo {
  *
  *     public void execute() {
  *         logParameters();
@@ -46,7 +46,7 @@ import biz.gabrys.maven.plugin.util.parameter.sanitizer.ValueSanitizer;
  *     }
  *
  *     private void logParameters() {
- *         ParametersLogger logger = new ParametersLogger(getLog());
+ *         ParametersLogBuilder logger = new ParametersLogBuilder(getLog());
  *
  *         // overwrite parameter
  *         logger.append("parameter", 1);
@@ -57,7 +57,7 @@ import biz.gabrys.maven.plugin.util.parameter.sanitizer.ValueSanitizer;
  *         logger.append("stringArray", {"one", "two", "three"});
  *
  *         // custom converter
- *         logger.append("cutomObject", new Object(), new ValueToStringConverter() {
+ *         logger.append("cutomObject", new Object(), new {@link ValueToStringConverter}() {
  *
  *             public String convert(final Object value) {
  *                 return "custom object";
@@ -65,28 +65,30 @@ import biz.gabrys.maven.plugin.util.parameter.sanitizer.ValueSanitizer;
  *         });
  *
  *         // simple sanitizer
- *         logger.append("booleanTrueValue", true, new SimpleSanitizer(true, Boolean.TRUE));
- *         logger.append("booleanFalseValue", false, new SimpleSanitizer(false, Boolean.TRUE));
+ *         logger.append("booleanTrueValue", true, new {@link biz.gabrys.maven.plugin.util.parameter.sanitizer.SimpleSanitizer SimpleSanitizer}(true, Boolean.TRUE));
+ *         logger.append("booleanFalseValue", false, new {@link biz.gabrys.maven.plugin.util.parameter.sanitizer.SimpleSanitizer SimpleSanitizer}(false, Boolean.TRUE));
  *
  *         // lazy sanitizer
- *         logger.append("stringLazyNotExecuted", "lazy-not-executed", new LazySimpleSanitizer(true, new ValueContainer() {
+ *         boolean condition1 = true;
+ *         logger.append("stringLazyNotExecuted", "lazy-not-executed", new {@link biz.gabrys.maven.plugin.util.parameter.sanitizer.LazySimpleSanitizer LazySimpleSanitizer}(condition1, new ValueContainer() {
  *
  *             public Object getValue() {
- *                 // never executed, because condition is equal to true 
+ *                 // never executed, because condition1 is equal to true 
  *                 return "heavyOperation1()";
  *             }
  *         }));
- *         logger.append("stringLazyExecuted", "lazy-executed", new LazySimpleSanitizer(false, new ValueContainer() {
+ *         boolean condition2 = false;
+ *         logger.append("stringLazyExecuted", "lazy-executed", new {@link biz.gabrys.maven.plugin.util.parameter.sanitizer.LazySimpleSanitizer LazySimpleSanitizer}(condition2, new ValueContainer() {
  *
  *             public Object getValue() {
- *                 // executed, because condition is equal to false 
+ *                 // executed, because condition2 is equal to false 
  *                 return "heavyOperation2()";
  *             }
  *         }));
  *
  *         // custom sanitizer
  *         final String customSanitizerValue = null;
- *         logger.append("customSanitizerValue", customSanitizerValue, new ValueSanitizer() {
+ *         logger.append("customSanitizerValue", customSanitizerValue, new {@link ValueSanitizer}() {
  *
  *             private Object sanitizedValue;
  *
@@ -129,7 +131,6 @@ import biz.gabrys.maven.plugin.util.parameter.sanitizer.ValueSanitizer;
  * 
  * @since 1.3.0
  */
-// TODO add tests
 public class ParametersLogBuilder {
 
     /**
@@ -137,7 +138,7 @@ public class ParametersLogBuilder {
      * @since 1.3.0
      * @see Container
      */
-    protected final Map<String, Container> parameters = new LinkedHashMap<String, Container>();
+    protected final Map<String, Container> parameters;
     /**
      * Logger used to log parameters.
      * @since 1.3.0
@@ -151,6 +152,21 @@ public class ParametersLogBuilder {
      * @since 1.3.0
      */
     public ParametersLogBuilder(final Log logger) {
+        this(new LinkedHashMap<String, Container>(), logger);
+    }
+
+    /**
+     * Constructs a new object.
+     * @param parameters the map which stores parameters names and associated containers.
+     * @param logger the logger used to log parameters.
+     * @throws IllegalArgumentException if the parameters or logger is equal to {@code null}.
+     * @since 1.3.0
+     */
+    protected ParametersLogBuilder(final Map<String, Container> parameters, final Log logger) {
+        if (parameters == null) {
+            throw new IllegalArgumentException("Parameters cannot be null");
+        }
+        this.parameters = parameters;
         if (logger == null) {
             throw new IllegalArgumentException("Logger cannot be null");
         }
@@ -222,16 +238,7 @@ public class ParametersLogBuilder {
      * @since 1.3.0
      */
     public boolean info() {
-        return log(new InternalLogger() {
-
-            public boolean isEnabled() {
-                return logger.isInfoEnabled();
-            }
-
-            public void log(final CharSequence line) {
-                logger.info(line);
-            }
-        });
+        return log(new InfoInternalLoggerAdapter(logger));
     }
 
     /**
@@ -240,16 +247,7 @@ public class ParametersLogBuilder {
      * @since 1.3.0
      */
     public boolean debug() {
-        return log(new InternalLogger() {
-
-            public boolean isEnabled() {
-                return logger.isDebugEnabled();
-            }
-
-            public void log(final CharSequence line) {
-                logger.debug(line);
-            }
-        });
+        return log(new DebugInternalLoggerAdapter(logger));
     }
 
     /**
@@ -328,11 +326,16 @@ public class ParametersLogBuilder {
      */
     protected String createParameterValue(final Container container) {
         final StringBuilder line = new StringBuilder();
-        line.append(container.converter.convert(container.value));
-        if (!container.sanitizer.isValid(container.value)) {
+
+        final ValueToStringConverter converter = container.getConverter();
+        final Object value = container.getValue();
+        line.append(converter.convert(value));
+
+        final ValueSanitizer sanitizer = container.getSanitizer();
+        if (!sanitizer.isValid(value)) {
             line.append(" (calculated: ");
-            final Object correctedValue = container.sanitizer.sanitize(container.value);
-            line.append(container.converter.convert(correctedValue));
+            final Object correctedValue = sanitizer.sanitize(value);
+            line.append(converter.convert(correctedValue));
             line.append(')');
         }
         return line.toString();
@@ -344,21 +347,9 @@ public class ParametersLogBuilder {
      */
     protected static class Container {
 
-        /**
-         * Parameter value.
-         * @since 1.3.0
-         */
-        protected final Object value;
-        /**
-         * Converter responsible for converting parameter value to string representation.
-         * @since 1.3.0
-         */
-        protected final ValueToStringConverter converter;
-        /**
-         * Sanitizer responsible for sanitizing parameter value.
-         * @since 1.3.0
-         */
-        protected final ValueSanitizer sanitizer;
+        private final Object value;
+        private final ValueToStringConverter converter;
+        private final ValueSanitizer sanitizer;
 
         /**
          * Constructs a new instance.
@@ -372,6 +363,33 @@ public class ParametersLogBuilder {
             this.converter = converter;
             this.sanitizer = sanitizer;
         }
+
+        /**
+         * Returns a parameter value.
+         * @return the parameter value.
+         * @since 1.3.0
+         */
+        protected Object getValue() {
+            return value;
+        }
+
+        /**
+         * Returns a converter responsible for converting parameter value to string representation.
+         * @return the converter.
+         * @since 1.3.0
+         */
+        protected ValueToStringConverter getConverter() {
+            return converter;
+        }
+
+        /**
+         * Returns a sanitizer responsible for sanitizing parameter value.
+         * @return the sanitizer.
+         * @since 1.3.0
+         */
+        protected ValueSanitizer getSanitizer() {
+            return sanitizer;
+        }
     }
 
     /**
@@ -379,28 +397,9 @@ public class ParametersLogBuilder {
      * Used to adaptation instance of the {@link org.apache.maven.plugin.logging.Log} to logger used in the
      * {@link ParametersLogBuilder#log(InternalLogger)} method.
      * </p>
-     * <p>
-     * Example:
-     * </p>
-     * 
-     * <pre>
-     * public boolean info() {
-     *     return log(new InternalLogger() {
-     *
-     *         public boolean isEnabled() {
-     *             return logger.isInfoEnabled();
-     *         }
-     *
-     *         public void log(final CharSequence line) {
-     *             logger.info(line);
-     *         }
-     *     });
-     * }
-     * </pre>
-     * 
      * @since 1.3.0
      */
-    protected static interface InternalLogger {
+    protected interface InternalLogger {
 
         /**
          * Checks whether a logger is enabled.
@@ -415,5 +414,59 @@ public class ParametersLogBuilder {
          * @since 1.3.0
          */
         void log(CharSequence line);
+    }
+
+    /**
+     * Adapts {@link org.apache.maven.plugin.logging.Log} to {@link InternalLogger} API which uses info mode.
+     * @since 1.3.0
+     * @see ParametersLogBuilder#info()
+     */
+    protected static class InfoInternalLoggerAdapter implements InternalLogger {
+
+        private final Log logger;
+
+        /**
+         * Constructs a new instance.
+         * @param logger the adapted logger.
+         * @since 1.3.0
+         */
+        protected InfoInternalLoggerAdapter(final Log logger) {
+            this.logger = logger;
+        }
+
+        public boolean isEnabled() {
+            return logger.isInfoEnabled();
+        }
+
+        public void log(final CharSequence line) {
+            logger.info(line);
+        }
+    }
+
+    /**
+     * Adapts {@link org.apache.maven.plugin.logging.Log} to {@link InternalLogger} API which uses debug mode.
+     * @since 1.3.0
+     * @see ParametersLogBuilder#debug()
+     */
+    protected static class DebugInternalLoggerAdapter implements InternalLogger {
+
+        private final Log logger;
+
+        /**
+         * Constructs a new instance.
+         * @param logger the adapted logger.
+         * @since 1.3.0
+         */
+        protected DebugInternalLoggerAdapter(final Log logger) {
+            this.logger = logger;
+        }
+
+        public boolean isEnabled() {
+            return logger.isDebugEnabled();
+        }
+
+        public void log(final CharSequence line) {
+            logger.debug(line);
+        }
     }
 }
