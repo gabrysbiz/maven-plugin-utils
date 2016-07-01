@@ -24,7 +24,7 @@ package biz.gabrys.maven.plugin.util.timer;
  * public class ExampleMojo extends AbstractMojo {
  *
  *     public void execute() {
- *         {@link Timer} timer = {@link SystemTimer#getStartedTimer()};
+ *         {@link Timer} timer = {@link SystemTimer#getStartedTimer() SystemTimer.getStartedTimer()};
  *
  *         // logic
  *         ...

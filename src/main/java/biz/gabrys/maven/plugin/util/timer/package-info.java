@@ -12,7 +12,7 @@
  */
 /**
  * <p>
- * Contains types responsible for counting execution time.
+ * Contains types responsible for counting the execution time.
  * </p>
  * <p>
  * Example:

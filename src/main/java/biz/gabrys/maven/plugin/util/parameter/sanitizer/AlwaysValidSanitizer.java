@@ -13,7 +13,7 @@
 package biz.gabrys.maven.plugin.util.parameter.sanitizer;
 
 /**
- * Value sanitizer which threats all values as valid.
+ * Value sanitizer which treats all values as valid.
  * @since 1.3.0
  */
 public class AlwaysValidSanitizer implements ValueSanitizer {

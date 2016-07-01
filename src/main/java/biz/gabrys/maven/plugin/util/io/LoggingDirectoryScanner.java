@@ -39,8 +39,8 @@ public class LoggingDirectoryScanner extends DirectoryScanner {
     }
 
     /**
-     * {@inheritDoc} It logs (in debug mode) for {@link File#isFile() normal file} information whether it is included or
-     * excluded.
+     * {@inheritDoc} It additionally logs (in debug mode) for {@link File#isFile() normal file} information whether it
+     * is included or excluded.
      * @since 1.2
      */
     @Override

@@ -21,6 +21,14 @@ import java.util.Collection;
  */
 public class CollectionToStringConverter extends AbstractValueToStringConverter {
 
+    /**
+     * Constructs a new instance.
+     * @since 1.3.0
+     */
+    public CollectionToStringConverter() {
+        // do nothing
+    }
+
     @Override
     public String convert2(final Object value) {
         final Collection<?> collection = (Collection<?>) value;

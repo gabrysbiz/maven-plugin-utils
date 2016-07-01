@@ -27,7 +27,7 @@ import biz.gabrys.maven.plugin.util.parameter.sanitizer.ValueSanitizer;
 /**
  * <p>
  * Builder which allows to log Mojos parameters values. It supports basic types like arrays and collections. All other
- * types are threat as {@link Object}. The builder also provides API to use custom:
+ * types are treat as {@link Object}s. The builder also provides API to use custom:
  * </p>
  * <ul>
  * <li>{@link ValueToStringConverter} - responsible for converting parameter value to string representation</li>
@@ -57,7 +57,7 @@ import biz.gabrys.maven.plugin.util.parameter.sanitizer.ValueSanitizer;
  *         logger.append("stringArray", {"one", "two", "three"});
  *
  *         // custom converter
- *         logger.append("cutomObject", new Object(), new {@link ValueToStringConverter}() {
+ *         logger.append("customObject", new Object(), new {@link ValueToStringConverter}() {
  *
  *             public String convert(final Object value) {
  *                 return "custom object";
@@ -121,7 +121,7 @@ import biz.gabrys.maven.plugin.util.parameter.sanitizer.ValueSanitizer;
  * [DEBUG]       parameter = 2
  * [DEBUG]       booleanParameter = true
  * [DEBUG]       stringArray = ["one", "two", "three"]
- * [DEBUG]       cutomObject = custom object
+ * [DEBUG]       customObject = custom object
  * [DEBUG]       booleanTrueValue = true
  * [DEBUG]       booleanFalseValue = false (calculated: true)
  * [DEBUG]       stringLazyNotExecuted = lazy-not-executed

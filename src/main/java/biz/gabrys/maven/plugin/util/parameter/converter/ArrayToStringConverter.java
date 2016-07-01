@@ -21,6 +21,14 @@ import java.util.Arrays;
 public class ArrayToStringConverter implements ValueToStringConverter {
 
     /**
+     * Constructs a new instance.
+     * @since 1.3.0
+     */
+    public ArrayToStringConverter() {
+        // do nothing
+    }
+
+    /**
      * {@inheritDoc} This method is null safe.
      * @return the string representation of the parameter value (never {@code null}).
      * @since 1.3.0

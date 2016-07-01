@@ -11,20 +11,20 @@
             <p>Features:</p>
             <ul>
                 <li>
-                    Add
+                    Added
                     <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/parameter/ParametersLogBuilder.html">
                         ParametersLogBuilder
                     </a>
                     which allows to log Mojos parameters values
                 </li>
                 <li>
-                    Add protected method
+                    Added protected method
                     <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/io/AntFileScanner.html">
                         AntFileScanner#createDirectoryScanner()
                     </a>
                 </li>
                 <li>
-                    Add protected method
+                    Added protected method
                     <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/io/RegexFileScanner.html">
                         RegexFileScanner#createFileFilter(File, String[], String[])
                     </a>
@@ -45,9 +45,7 @@
             <ul>
                 <li>
                     Allow access to all classes from
-                    <a href="http://maven-plugin-utils.projects.gabrys.biz/1.2/apidocs/index.html?biz/gabrys/maven/plugin/util/io/package-summary.html">
-                        biz.gabrys.maven.plugin.util.io
-                    </a>
+                    <a href="http://maven-plugin-utils.projects.gabrys.biz/1.2/apidocs/index.html?biz/gabrys/maven/plugin/util/io/package-summary.html">biz.gabrys.maven.plugin.util.io</a>
                     package
                 </li>
             </ul>

@@ -59,7 +59,7 @@ public class RegexFileScanner implements FileScanner {
      * @param includes an array of include patterns.
      * @param excludes an array of exclude patterns
      * @return an instance of the {@link IOFileFilter}.
-     * @since 1.3
+     * @since 1.3.0
      */
     protected IOFileFilter createFileFilter(final File directory, final String[] includes, final String[] excludes) {
         IOFileFilter filter = new RegexFileFilter(directory, includes, excludes);

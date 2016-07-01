@@ -15,10 +15,11 @@
  * Contains classes related with I/O operations. It provides tools to:
  * </p>
  * <ul>
- * <li>scan directories for files/directories which match certain criteria (see
- * {@link biz.gabrys.maven.plugin.util.io.FileScanner FileScanner})</li>
- * <li>create destination file (logical) in output directory based on source directory, source file and output file name
- * pattern (see {@link biz.gabrys.maven.plugin.util.io.DestinationFileCreator DestinationFileCreator}</li>
+ * <li>scan directories for files which match certain criteria (see {@link biz.gabrys.maven.plugin.util.io.FileScanner
+ * FileScanner})</li>
+ * <li>create a virtual (not physical) destination file in the output directory based on the source directory, the
+ * source file and the output file name pattern (see {@link biz.gabrys.maven.plugin.util.io.DestinationFileCreator
+ * DestinationFileCreator})</li>
  * </ul>
  */
 package biz.gabrys.maven.plugin.util.io;

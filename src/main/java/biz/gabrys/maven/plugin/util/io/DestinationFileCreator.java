@@ -16,8 +16,8 @@ import java.io.File;
 
 /**
  * <p>
- * Responsible for creating destination file (logical) in output directory based on source directory, source file and
- * output file name pattern.
+ * Responsible for creating a virtual (not physical) destination file in the output directory based on the source
+ * directory, the source file and the output file name pattern.
  * </p>
  * <p>
  * Example:
@@ -100,7 +100,7 @@ public class DestinationFileCreator {
     }
 
     /**
-     * Creates a destination file in the output directory. This method does not create file on a hard drive.
+     * Creates a destination file in the output directory. This method does not create any file on the hard drive.
      * @param source the source file.
      * @return the destination file.
      * @since 1.0

@@ -9,13 +9,13 @@
     <body>
         <section name="About">
             <p>
-                The ${project.name} is a Java library which contains utilities for the
+                ${project.name} is a Java library which contains utilities for
                 <a href="https://maven.apache.org/">Maven 2</a> plugins. It contains tools to:
             </p>
             <ul>
                 <li>
-                    scan directories for files/directories and create destination file (logical) in
-                    output directory based on source (see
+                    scan directories for files and create a virtual (not physical) destination file
+                    in the output directory based on the source (see
                     <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/io/package-summary.html">biz.gabrys.maven.plugin.util.io</a>
                     package)
                 </li>

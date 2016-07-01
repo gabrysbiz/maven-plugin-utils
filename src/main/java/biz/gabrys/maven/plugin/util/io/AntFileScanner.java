@@ -21,8 +21,8 @@ import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 /**
- * File scanner which uses <a href="http://ant.apache.org/">Ant</a>
- * <a href="http://ant.apache.org/manual/dirtasks.html#patterns">patterns</a> to match files.
+ * File scanner which uses <a href="http://ant.apache.org/manual/dirtasks.html#patterns">Ant patterns</a> to match
+ * files.
  * @since 1.2
  */
 public class AntFileScanner implements FileScanner {
@@ -58,7 +58,7 @@ public class AntFileScanner implements FileScanner {
     /**
      * Creates a {@link DirectoryScanner} which will be used to find all files which match filters.
      * @return a not initialized instance of the {@link DirectoryScanner} or its subclass.
-     * @since 1.3
+     * @since 1.3.0
      * @see #getFiles(File, String[], String[])
      */
     protected DirectoryScanner createDirectoryScanner() {
