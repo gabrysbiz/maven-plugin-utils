@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Time.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Plugin Utils</a> &gt; <a href="index.source.html" class="el_package">biz.gabrys.maven.plugin.util.timer</a> &gt; <span class="el_source">Time.java</span></div><h1>Time.java</h1><pre class="source lang-java linenums">/*
+ * Maven Plugin Utils
+ * http://maven-project-utils.projects.gabrys.biz/
+ *
+ * Copyright (c) 2015 Adam Gabryś
+ *
+ * This file is licensed under the BSD 3-Clause (the &quot;License&quot;).
+ * You may not use this file except in compliance with the License.
+ * You may obtain:
+ * - a copy of the License at project page
+ * - a template of the License at https://opensource.org/licenses/BSD-3-Clause
+ */
+package biz.gabrys.maven.plugin.util.timer;
+
+/**
+ * Represents time counted by a {@link Timer}.
+ * @since 1.0
+ */
+public class Time {
+
+    private static final int MILLISECONDS_IN_SECOND = 1000;
+    private static final int SECONDS_IN_MINUTE = 60;
+    private static final int MINUTES_IN_HOUR = 60;
+
+    private final long milliseconds;
+
+    /**
+     * Constructs a new instance.
+     * @param milliseconds a counted time in the milliseconds.
+     * @since 1.0
+     */
+<span class="fc" id="L32">    public Time(final long milliseconds) {</span>
+<span class="fc" id="L33">        this.milliseconds = milliseconds;</span>
+<span class="fc" id="L34">    }</span>
+
+    /**
+     * Returns milliseconds representation of {@code this} object.
+     * @return this in milliseconds.
+     * @since 1.0
+     */
+    public long toMilliseconds() {
+<span class="fc" id="L42">        return milliseconds;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L47">        return (int) (milliseconds ^ milliseconds &gt;&gt;&gt; 32);</span>
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L53">            return true;</span>
+        }
+<span class="fc bfc" id="L55" title="All 4 branches covered.">        if (obj == null || getClass() != obj.getClass()) {</span>
+<span class="fc" id="L56">            return false;</span>
+        }
+<span class="fc" id="L58">        final Time other = (Time) obj;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        return milliseconds == other.milliseconds;</span>
+    }
+
+    /**
+     * Returns a string representation of the time in human-readable format. Examples:
+     * 
+     * &lt;pre&gt;
+     * 0.000 seconds
+     * 0.589 seconds
+     * 1.000 second
+     * 57.042 seconds
+     * 1 minute 0.000 seconds
+     * 7 minutes 1.000 second
+     * 12 minutes 28.321 seconds
+     * 1 hour 0 minutes 0.000 seconds
+     * 5 hours 0 minutes 0.000 seconds
+     * 5 hours 1 minute 1.000 second
+     * 5 hours 1 minute 54.132 seconds
+     * 5 hours 9 minutes 4.123 seconds
+     * &lt;/pre&gt;
+     * 
+     * @return a string representation of the time in human-readable format.
+     * @since 1.3.0
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L85">        final long millis = milliseconds % MILLISECONDS_IN_SECOND;</span>
+<span class="fc" id="L86">        long seconds = milliseconds / MILLISECONDS_IN_SECOND;</span>
+<span class="fc" id="L87">        long minutes = seconds / SECONDS_IN_MINUTE;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (minutes &gt; 0) {</span>
+<span class="fc" id="L89">            seconds -= minutes * SECONDS_IN_MINUTE;</span>
+        }
+<span class="fc" id="L91">        final long hours = minutes / MINUTES_IN_HOUR;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (hours &gt; 0) {</span>
+<span class="fc" id="L93">            minutes -= hours * MINUTES_IN_HOUR;</span>
+        }
+
+<span class="fc" id="L96">        final StringBuilder time = new StringBuilder();</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        if (hours &gt; 0) {</span>
+<span class="fc" id="L98">            time.append(hours);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">            time.append(String.format(&quot; hour%s &quot;, hours == 1 ? &quot;&quot; : &quot;s&quot;));</span>
+        }
+<span class="fc bfc" id="L101" title="All 4 branches covered.">        if (hours &gt; 0 || minutes &gt; 0) {</span>
+<span class="fc" id="L102">            time.append(minutes);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            time.append(String.format(&quot; minute%s &quot;, minutes == 1 ? &quot;&quot; : &quot;s&quot;));</span>
+        }
+<span class="pc bpc" id="L105" title="1 of 4 branches missed.">        time.append(String.format(&quot;%s.%03d second%s&quot;, seconds, millis, seconds == 1 &amp;&amp; millis == 0 ? &quot;&quot; : &quot;s&quot;));</span>
+<span class="fc" id="L106">        return time.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
