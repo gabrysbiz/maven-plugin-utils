@@ -10,7 +10,27 @@
         <section name="About">
             <p>
                 The ${project.name} is a Java library which contains utilities for the
-                <a href="https://maven.apache.org/">Maven 2</a> plugins.
+                <a href="https://maven.apache.org/">Maven 2</a> plugins. It contains tools to:
+            </p>
+            <ul>
+                <li>
+                    scan directories for files/directories and create destination file (logical) in
+                    output directory based on source (see
+                    <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/io/package-summary.html">biz.gabrys.maven.plugin.util.io</a>
+                    package)
+                </li>
+                <li>
+                    log Mojos parameters (see
+                    <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/parameter/package-summary.html">biz.gabrys.maven.plugin.util.parameter</a>
+                    package)
+                </li>
+                <li>
+                    count execution time (see
+                    <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/timer/package-summary.html">biz.gabrys.maven.plugin.util.timer</a>
+                    package)
+                </li>
+            </ul>
+            <p>
                 Read <a href="apidocs/">API documentation</a> for more information.
             </p>
         </section>

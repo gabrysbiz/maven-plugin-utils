@@ -16,7 +16,45 @@ import java.io.File;
 import java.util.Collection;
 
 /**
+ * <p>
  * Responsible for scanning a directory for files/directories which match certain criteria.
+ * </p>
+ * <p>
+ * Example:
+ * </p>
+ * 
+ * <pre>
+ * public class ExampleMojo extends AbstractMojo {
+ *
+ *     // source directory
+ *     protected File sourceDirectory;
+ *     // included files pattern
+ *     protected String[] includes;
+ *     // excluded files pattern
+ *     protected String[] excludes;
+ *     // fileset pattern format
+ *     protected String filesetPatternFormat;
+ *
+ *     public void execute() {
+ *         Collection&lt;File&gt; files = getFiles();
+ *         if (files.isEmpty()) {
+ *             getLog().warn("No sources to process");
+ *             return;
+ *         }
+ *
+ *         // logic which process files
+ *         ...
+ *
+ *     }
+ * 
+ *     private Collection&lt;File&gt; getFiles() {
+ *        {@link ScannerPatternFormat} patternFormat = {@link ScannerPatternFormat}.toPattern(filesetPatternFormat);
+ *        FileScanner scanner = new {@link ScannerFactory}().create(patternFormat, getLog());
+ *        return scanner.getFiles(sourceDirectory, includes, excludes);
+ *    }
+ * }
+ * </pre>
+ * 
  * @since 1.0
  */
 public interface FileScanner {

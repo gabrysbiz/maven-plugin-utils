@@ -24,7 +24,6 @@ public enum ScannerPatternFormat {
      * @since 1.0
      */
     ANT,
-
     /**
      * The regular expressions format.
      * @since 1.0
