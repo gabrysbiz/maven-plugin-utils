@@ -13,12 +13,32 @@
 package biz.gabrys.maven.plugin.util.timer;
 
 /**
+ * &lt;p&gt;
  * Default implementation of the {@link Timer} which based on the {@link System#currentTimeMillis()} method.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Example:
+ * &lt;/p&gt;
+ * 
+ * &lt;pre&gt;
+ * public class ExampleMojo extends AbstractMojo {
+ *
+ *     public void execute() {
+ *         {@link Timer} timer = {@link SystemTimer#getStartedTimer()};
+ *
+ *         // logic
+ *         ...
+ *
+ *         getLog().info(&quot;Finished in &quot; + timer.stop());
+ *     }
+ * }
+ * &lt;/pre&gt;
+ * 
  * @since 1.0
  */
 public class SystemTimer implements Timer {
 
-<span class="fc" id="L21">    private final Object mutex = new Object();</span>
+<span class="fc" id="L41">    private final Object mutex = new Object();</span>
 
     private Long startTime;
     private volatile Time time;
@@ -27,26 +47,26 @@ public class SystemTimer implements Timer {
      * Constructs a new instance.
      * @since 1.0
      */
-<span class="fc" id="L30">    public SystemTimer() {</span>
+<span class="fc" id="L50">    public SystemTimer() {</span>
         // do nothing
-<span class="fc" id="L32">    }</span>
+<span class="fc" id="L52">    }</span>
 
     public void start() {
-<span class="fc" id="L35">        synchronized (mutex) {</span>
-<span class="fc" id="L36">            time = null;</span>
-<span class="fc" id="L37">            startTime = System.currentTimeMillis();</span>
-<span class="pc" id="L38">        }</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L55">        synchronized (mutex) {</span>
+<span class="fc" id="L56">            time = null;</span>
+<span class="fc" id="L57">            startTime = System.currentTimeMillis();</span>
+<span class="pc" id="L58">        }</span>
+<span class="fc" id="L59">    }</span>
 
     public Time stop() {
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (time == null) {</span>
-<span class="fc" id="L43">            synchronized (mutex) {</span>
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">                if (time == null) {</span>
-<span class="fc" id="L45">                    time = getTime();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (time == null) {</span>
+<span class="fc" id="L63">            synchronized (mutex) {</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">                if (time == null) {</span>
+<span class="fc" id="L65">                    time = getTime();</span>
                 }
-<span class="pc" id="L47">            }</span>
+<span class="pc" id="L67">            }</span>
         }
-<span class="fc" id="L49">        return time;</span>
+<span class="fc" id="L69">        return time;</span>
     }
 
     /**
@@ -59,13 +79,13 @@ public class SystemTimer implements Timer {
      * @since 1.0
      */
     public Time getTime() {
-<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (startTime == null) {</span>
-<span class="fc" id="L63">            return null;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (startTime == null) {</span>
+<span class="fc" id="L83">            return null;</span>
         }
-<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (time == null) {</span>
-<span class="fc" id="L66">            return new Time(System.currentTimeMillis() - startTime);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (time == null) {</span>
+<span class="fc" id="L86">            return new Time(System.currentTimeMillis() - startTime);</span>
         }
-<span class="fc" id="L68">        return time;</span>
+<span class="fc" id="L88">        return time;</span>
     }
 
     /**
@@ -75,9 +95,9 @@ public class SystemTimer implements Timer {
      * @see #start()
      */
     public static SystemTimer getStartedTimer() {
-<span class="nc" id="L78">        final SystemTimer timer = new SystemTimer();</span>
-<span class="nc" id="L79">        timer.start();</span>
-<span class="nc" id="L80">        return timer;</span>
+<span class="nc" id="L98">        final SystemTimer timer = new SystemTimer();</span>
+<span class="nc" id="L99">        timer.start();</span>
+<span class="nc" id="L100">        return timer;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

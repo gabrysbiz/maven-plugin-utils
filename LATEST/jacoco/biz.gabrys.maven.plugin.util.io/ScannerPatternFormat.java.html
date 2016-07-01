@@ -24,12 +24,11 @@ package biz.gabrys.maven.plugin.util.io;
      * @since 1.0
      */
 <span class="fc" id="L26">    ANT,</span>
-
     /**
      * The regular expressions format.
      * @since 1.0
      */
-<span class="fc" id="L32">    REGEX;</span>
+<span class="fc" id="L31">    REGEX;</span>
 
     /**
      * Returns a scanner pattern format by name (case insensitive).
@@ -39,12 +38,12 @@ package biz.gabrys.maven.plugin.util.io;
      * @since 1.0
      */
     public static ScannerPatternFormat toPattern(final String name) {
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        for (final ScannerPatternFormat pattern : values()) {</span>
-<span class="fc bfc" id="L43" title="All 2 branches covered.">            if (pattern.name().equalsIgnoreCase(name)) {</span>
-<span class="fc" id="L44">                return pattern;</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (final ScannerPatternFormat pattern : values()) {</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (pattern.name().equalsIgnoreCase(name)) {</span>
+<span class="fc" id="L43">                return pattern;</span>
             }
         }
-<span class="fc" id="L47">        throw new IllegalArgumentException(String.format(&quot;Cannot find search pattern format for name \&quot;%s\&quot;&quot;, name));</span>
+<span class="fc" id="L46">        throw new IllegalArgumentException(String.format(&quot;Cannot find search pattern format for name \&quot;%s\&quot;&quot;, name));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
