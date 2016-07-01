@@ -11,6 +11,14 @@
  * - a template of the License at https://opensource.org/licenses/BSD-3-Clause
  */
 /**
- * Contains classes related with I/O operations.
+ * <p>
+ * Contains classes related with I/O operations. It provides tools to:
+ * </p>
+ * <ul>
+ * <li>scan directories for files/directories which match certain criteria (see
+ * {@link biz.gabrys.maven.plugin.util.io.FileScanner FileScanner})</li>
+ * <li>create destination file (logical) in output directory based on source directory, source file and output file name
+ * pattern (see {@link biz.gabrys.maven.plugin.util.io.DestinationFileCreator DestinationFileCreator}</li>
+ * </ul>
  */
 package biz.gabrys.maven.plugin.util.io;

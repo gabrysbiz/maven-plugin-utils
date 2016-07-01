@@ -4,7 +4,7 @@
 
     <bannerLeft>
         <name>${projectName}</name>
-        <href>//maven-plugin-utils.projects.gabrys.biz/</href>
+        <href>../</href>
     </bannerLeft>
 
     <skin>

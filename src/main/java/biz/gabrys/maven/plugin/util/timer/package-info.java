@@ -11,6 +11,25 @@
  * - a template of the License at https://opensource.org/licenses/BSD-3-Clause
  */
 /**
- * Contains classes related with counting time.
+ * <p>
+ * Contains types responsible for counting execution time.
+ * </p>
+ * <p>
+ * Example:
+ * </p>
+ * 
+ * <pre>
+ * public class ExampleMojo extends AbstractMojo {
+ *
+ *     public void execute() {
+ *         {@link biz.gabrys.maven.plugin.util.timer.Timer Timer} timer = {@link biz.gabrys.maven.plugin.util.timer.SystemTimer SystemTimer}.getStartedTimer();
+ *
+ *         // logic
+ *         ...
+ *
+ *         getLog().info("Finished in " + timer.stop());
+ *     }
+ * }
+ * </pre>
  */
 package biz.gabrys.maven.plugin.util.timer;

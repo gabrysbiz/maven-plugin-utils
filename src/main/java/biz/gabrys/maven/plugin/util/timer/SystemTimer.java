@@ -13,7 +13,27 @@
 package biz.gabrys.maven.plugin.util.timer;
 
 /**
+ * <p>
  * Default implementation of the {@link Timer} which based on the {@link System#currentTimeMillis()} method.
+ * </p>
+ * <p>
+ * Example:
+ * </p>
+ * 
+ * <pre>
+ * public class ExampleMojo extends AbstractMojo {
+ *
+ *     public void execute() {
+ *         {@link Timer} timer = {@link SystemTimer#getStartedTimer()};
+ *
+ *         // logic
+ *         ...
+ *
+ *         getLog().info("Finished in " + timer.stop());
+ *     }
+ * }
+ * </pre>
+ * 
  * @since 1.0
  */
 public class SystemTimer implements Timer {

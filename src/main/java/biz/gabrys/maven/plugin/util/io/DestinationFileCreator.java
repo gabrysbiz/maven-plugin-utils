@@ -15,8 +15,42 @@ package biz.gabrys.maven.plugin.util.io;
 import java.io.File;
 
 /**
- * Responsible for creating destination file in output directory based on source directory, source file and output file
- * name pattern.
+ * <p>
+ * Responsible for creating destination file (logical) in output directory based on source directory, source file and
+ * output file name pattern.
+ * </p>
+ * <p>
+ * Example:
+ * </p>
+ * 
+ * <pre>
+ * public class ExampleMojo extends AbstractMojo {
+ *
+ *     protected File sourceDirectory;
+ *     protected File outputDirectory;
+ *     protected String[] outputFileNamePattern = {@link #FILE_NAME_PARAMETER DestinationFileCreator.FILE_NAME_PARAMETER} + ".output";
+ *
+ *     public void execute() {
+ *         // logic
+ *         File source = ...
+ *
+ *         // process file data
+ *         String content = process(source); 
+ *
+ *         File output = creatFile(source);
+ *         saveFile(output, content);
+ *     }
+ * 
+ *     private File createFile(File source) {
+ *        DestinationFileCreator fileCreator = new DestinationFileCreator(sourceDirectory, outputDirectory, outputFileNamePattern);
+ *        File output = fileCreator.create(source);
+ *        return output;
+ *    }
+ *
+ *    ...
+ * }
+ * </pre>
+ * 
  * @since 1.0
  */
 public class DestinationFileCreator {
