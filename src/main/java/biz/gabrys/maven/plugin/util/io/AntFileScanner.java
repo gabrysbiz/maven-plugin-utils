@@ -15,26 +15,56 @@ package biz.gabrys.maven.plugin.util.io;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.DirectoryScanner;
 
-class AntFileScanner implements FileScanner {
+/**
+ * File scanner which uses <a href="http://ant.apache.org/">Ant</a>
+ * <a href="http://ant.apache.org/manual/dirtasks.html#patterns">patterns</a> to match files.
+ * @since 1.2
+ */
+public class AntFileScanner implements FileScanner {
 
     private final Log logger;
 
-    AntFileScanner(final Log logger) {
+    /**
+     * Constructs a new instance.
+     * @since 1.2
+     */
+    public AntFileScanner() {
+        this(null);
+    }
+
+    /**
+     * Constructs a new instance.
+     * @param logger the logger used to log included/excluded files (only in debug mode).
+     * @since 1.2
+     */
+    public AntFileScanner(final Log logger) {
         this.logger = logger;
     }
 
     public Collection<File> getFiles(final File directory, final String[] includes, final String[] excludes) {
-        final DirectoryScanner scanner = logger.isDebugEnabled() ? new LoggingDirectoryScanner(logger) : new DirectoryScanner();
+        final boolean loggerEnabled = logger != null && logger.isDebugEnabled();
+        final DirectoryScanner scanner = loggerEnabled ? new LoggingDirectoryScanner(logger) : new DirectoryScanner();
         scanner.setBasedir(directory);
         scanner.setIncludes(includes.clone());
         scanner.setExcludes(excludes.clone());
         scanner.scan();
-        final String[] paths = scanner.getIncludedFiles();
-        final Collection<File> files = new ArrayList<File>(paths.length);
+        return convertToFiles(directory, scanner.getIncludedFiles());
+    }
+
+    /**
+     * Converts paths found by scanner to files collection with absolute paths.
+     * @param directory the base directory.
+     * @param paths the found paths.
+     * @return the collection with files.
+     * @since 1.2
+     */
+    protected List<File> convertToFiles(final File directory, final String[] paths) {
+        final List<File> files = new ArrayList<File>(paths.length);
         for (final String path : paths) {
             files.add(new File(directory, path));
         }

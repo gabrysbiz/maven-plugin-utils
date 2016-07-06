@@ -17,25 +17,58 @@ import java.io.File;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.maven.plugin.logging.Log;
 
-class LoggingFileFilter implements IOFileFilter {
+/**
+ * Decorator which adds logger instructions (in debug mode) to an instance of the {@link IOFileFilter}.
+ * @since 1.2
+ */
+public class LoggingFileFilter implements IOFileFilter {
 
     private final IOFileFilter filter;
     private final Log logger;
 
-    LoggingFileFilter(final IOFileFilter filter, final Log logger) {
+    /**
+     * Constructs a new instance.
+     * @param filter the decorated class.
+     * @param logger logger the logger used to log included/excluded files (only in debug mode).
+     * @throws IllegalArgumentException if the filter or the logger is equal to {@code null}.
+     * @since 1.2
+     */
+    public LoggingFileFilter(final IOFileFilter filter, final Log logger) {
+        if (filter == null) {
+            throw new IllegalArgumentException("Filter cannot be null");
+        }
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger cannot be null");
+        }
         this.filter = filter;
         this.logger = logger;
     }
 
+    /**
+     * {@inheritDoc} It logs (in debug mode) for {@link File#isFile() normal file} information whether it is included or
+     * excluded.
+     * @since 1.2
+     */
     public boolean accept(final File file) {
         final boolean accepted = filter.accept(file);
-        if (logger.isDebugEnabled() && file.isFile()) {
-            logger.debug((accepted ? "Include " : "Exclude ") + file.getAbsolutePath());
+        if (!logger.isDebugEnabled()) {
+            return accepted;
         }
+        LoggerUtils.debugInclusion(logger, file, accepted);
         return accepted;
     }
 
+    /**
+     * {@inheritDoc} It logs (in debug mode) for {@link File#isFile() normal file} information whether it is included or
+     * excluded.
+     * @since 1.2
+     */
     public boolean accept(final File dir, final String name) {
-        return filter.accept(dir, name);
+        final boolean accepted = filter.accept(dir, name);
+        if (!logger.isDebugEnabled()) {
+            return accepted;
+        }
+        LoggerUtils.debugInclusion(logger, new File(dir, name), accepted);
+        return accepted;
     }
 }

@@ -17,50 +17,88 @@ import java.io.IOException;
 
 import org.apache.commons.io.filefilter.IOFileFilter;
 
-class RegexFileFilter implements IOFileFilter {
+/**
+ * File filter which uses regular expressions to accept files.
+ * @since 1.2
+ */
+public class RegexFileFilter implements IOFileFilter {
 
     private final String rootDirectoryPath;
     private final String[] includes;
     private final String[] excludes;
 
-    RegexFileFilter(final File rootDirectory, final String[] includes, final String[] excludes) {
-        rootDirectoryPath = getCanonicalPath(rootDirectory);
+    /**
+     * Constructs a new instance.
+     * @param directory the directory to be scanned.
+     * @param includes a list of include patterns.
+     * @param excludes a list of exclude patterns.
+     * @since 1.2
+     */
+    public RegexFileFilter(final File directory, final String[] includes, final String[] excludes) {
+        rootDirectoryPath = getCanonicalPath(directory);
         this.includes = includes.clone();
         this.excludes = excludes.clone();
     }
 
+    /**
+     * {@inheritDoc}<br>
+     * This method delegates logic to {@link RegexFileFilter#isAcceptable(File)}.
+     * @return {@code true} whether the file should be accepted by this filter, otherwise {@code false}.
+     * @since 1.2
+     */
     public final boolean accept(final File dir, final String name) {
-        return accept(new File(dir, name));
+        return isAcceptable(new File(dir, name));
     }
 
-    public boolean accept(final File file) {
-        final String name = getCanonicalPath(file);
-        if (!name.startsWith(rootDirectoryPath)) {
+    /**
+     * {@inheritDoc}<br>
+     * This method delegates logic to {@link RegexFileFilter#isAcceptable(File)}.
+     * @return {@code true} whether the file should be accepted by this filter, otherwise {@code false}.
+     * @since 1.2
+     */
+    public final boolean accept(final File file) {
+        return isAcceptable(file);
+    }
+
+    /**
+     * Checks whether a file should be accepted by this filter.
+     * @param file the file to check.
+     * @return {@code true} whether the file should be accepted by this filter, otherwise {@code false}.
+     * @since 1.2
+     */
+    protected boolean isAcceptable(final File file) {
+        final String path = getCanonicalPath(file);
+        if (!path.startsWith(rootDirectoryPath)) {
             return false;
         }
-        final String nameWithoutRoot = name.substring(rootDirectoryPath.length() + 1).replace('\\', '/');
-        return !isExcluded(nameWithoutRoot, excludes) && isIncluded(nameWithoutRoot, includes);
+        final String nameWithoutRoot = path.substring(rootDirectoryPath.length() + 1).replace('\\', '/');
+        return !matches(nameWithoutRoot, excludes) && matches(nameWithoutRoot, includes);
     }
 
-    private static boolean isExcluded(final String name, final String[] excludes) {
-        for (final String exclude : excludes) {
-            if (name.matches(exclude)) {
+    /**
+     * Checks whether a file path matches at least one patter from patterns.
+     * @param path the file path to check.
+     * @param patterns the regular expressions patterns.
+     * @return {@code true} whether the file path matches at least one patter from patterns, otherwise {@code false}.
+     * @since 1.2
+     */
+    protected static boolean matches(final String path, final String[] patterns) {
+        for (final String pattern : patterns) {
+            if (path.matches(pattern)) {
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean isIncluded(final String name, final String[] includes) {
-        for (final String include : includes) {
-            if (name.matches(include)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static String getCanonicalPath(final File file) {
+    /**
+     * Returns canonical path for a file.
+     * @param file the file.
+     * @return file canonical path.
+     * @throws RegexFileFilterException if an error occurs while resolving canonical path.
+     * @since 1.2
+     */
+    protected static String getCanonicalPath(final File file) {
         try {
             return file.getCanonicalPath();
         } catch (final IOException e) {

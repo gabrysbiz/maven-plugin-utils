@@ -13,7 +13,7 @@
 package biz.gabrys.maven.plugin.util.timer;
 
 /**
- * Represent time counted by a {@link Timer}.
+ * Represents time counted by a {@link Timer}.
  * @since 1.0
  */
 public class Time {
@@ -36,6 +36,26 @@ public class Time {
      */
     public long toMilliseconds() {
         return milliseconds;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (milliseconds ^ milliseconds >>> 32);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Time other = (Time) obj;
+        return milliseconds == other.milliseconds;
     }
 
     @Override

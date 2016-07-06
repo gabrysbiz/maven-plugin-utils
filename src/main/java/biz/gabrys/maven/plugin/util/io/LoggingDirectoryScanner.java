@@ -17,21 +17,37 @@ import java.io.File;
 import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.DirectoryScanner;
 
-class LoggingDirectoryScanner extends DirectoryScanner {
+/**
+ * Extended version of the {@link DirectoryScanner} which adds logger instructions in debug mode.
+ * @since 1.2
+ */
+public class LoggingDirectoryScanner extends DirectoryScanner {
 
     private final Log logger;
 
-    LoggingDirectoryScanner(final Log logger) {
+    /**
+     * Constructs a new instance.
+     * @param logger the logger used to log included/excluded files (only in debug mode).
+     * @throws IllegalArgumentException if the logger is equal to {@code null}.
+     * @since 1.2
+     */
+    public LoggingDirectoryScanner(final Log logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger cannot be null");
+        }
         this.logger = logger;
     }
 
+    /**
+     * {@inheritDoc} It logs (in debug mode) for {@link File#isFile() normal file} information whether it is included or
+     * excluded.
+     * @since 1.2
+     */
     @Override
     protected boolean isExcluded(final String name) {
         final boolean excluded = super.isExcluded(name);
         final File file = new File(getBasedir(), name);
-        if (logger.isDebugEnabled() && file.isFile()) {
-            logger.debug((excluded ? "Exclude " : "Include ") + file.getAbsolutePath());
-        }
+        LoggerUtils.debugInclusion(logger, file, !excluded);
         return excluded;
     }
 }
