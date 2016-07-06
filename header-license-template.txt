@@ -1,5 +1,5 @@
 ${project.name}
-http://maven-project-utils.projects.gabrys.biz/
+http://maven-plugin-utils.projects.gabrys.biz/
 
 Copyright (c) ${project.inceptionYear} ${owner}
 
