@@ -1,6 +1,6 @@
 /*
  * Maven Plugin Utils
- * http://maven-project-utils.projects.gabrys.biz/
+ * http://maven-plugin-utils.projects.gabrys.biz/
  *
  * Copyright (c) 2015 Adam Gabryś
  *
