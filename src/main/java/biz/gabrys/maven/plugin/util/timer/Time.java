@@ -39,7 +39,7 @@ public class Time {
     }
 
     @Override
-    public synchronized String toString() {
+    public String toString() {
         final long seconds = milliseconds / 1000 % 60;
         final long millis = milliseconds % 1000;
         return String.format("%s.%03d seconds", seconds, millis);

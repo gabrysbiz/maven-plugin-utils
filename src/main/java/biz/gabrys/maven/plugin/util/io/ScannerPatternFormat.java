@@ -35,8 +35,8 @@ public enum ScannerPatternFormat {
      * Returns a scanner pattern format by name (case insensitive).
      * @param name the scanner pattern format name.
      * @return the scanner pattern format.
-     * @since 1.0
      * @throws IllegalArgumentException if cannot find search pattern format related with name.
+     * @since 1.0
      */
     public static ScannerPatternFormat toPattern(final String name) {
         for (final ScannerPatternFormat pattern : values()) {

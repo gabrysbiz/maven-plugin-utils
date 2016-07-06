@@ -33,8 +33,9 @@ class AntFileScanner implements FileScanner {
         scanner.setIncludes(includes.clone());
         scanner.setExcludes(excludes.clone());
         scanner.scan();
-        final Collection<File> files = new ArrayList<File>();
-        for (final String path : scanner.getIncludedFiles()) {
+        final String[] paths = scanner.getIncludedFiles();
+        final Collection<File> files = new ArrayList<File>(paths.length);
+        for (final String path : paths) {
             files.add(new File(directory, path));
         }
         return files;
