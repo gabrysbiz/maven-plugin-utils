@@ -13,7 +13,7 @@
 package biz.gabrys.maven.plugin.util.timer;
 
 /**
- * Represents timer.
+ * Represents timer responsible for counting the execution time.
  * @since 1.0
  */
 public interface Timer {

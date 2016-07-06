@@ -28,7 +28,7 @@ public class LoggingFileFilter implements IOFileFilter {
 
     /**
      * Constructs a new instance.
-     * @param filter the decorated class.
+     * @param filter the decorated filter.
      * @param logger logger the logger used to log included/excluded files (only in debug mode).
      * @throws IllegalArgumentException if the filter or the logger is equal to {@code null}.
      * @since 1.2
@@ -45,8 +45,8 @@ public class LoggingFileFilter implements IOFileFilter {
     }
 
     /**
-     * {@inheritDoc} It logs (in debug mode) for {@link File#isFile() normal file} information whether it is included or
-     * excluded.
+     * {@inheritDoc} It additionally logs (in debug mode) for {@link File#isFile() normal file} information whether it
+     * is included or excluded.
      * @since 1.2
      */
     public boolean accept(final File file) {
@@ -59,8 +59,8 @@ public class LoggingFileFilter implements IOFileFilter {
     }
 
     /**
-     * {@inheritDoc} It logs (in debug mode) for {@link File#isFile() normal file} information whether it is included or
-     * excluded.
+     * {@inheritDoc} It additionally logs (in debug mode) for {@link File#isFile() normal file} information whether it
+     * is included or excluded.
      * @since 1.2
      */
     public boolean accept(final File dir, final String name) {

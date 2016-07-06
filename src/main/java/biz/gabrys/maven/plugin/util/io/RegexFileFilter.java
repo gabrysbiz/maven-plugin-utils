@@ -30,8 +30,9 @@ public class RegexFileFilter implements IOFileFilter {
     /**
      * Constructs a new instance.
      * @param directory the directory to be scanned.
-     * @param includes a list of include patterns.
-     * @param excludes a list of exclude patterns.
+     * @param includes an array of include patterns.
+     * @param excludes an array of exclude patterns.
+     * @throws RegexFileFilterException if an error occurs while resolving canonical path.
      * @since 1.2
      */
     public RegexFileFilter(final File directory, final String[] includes, final String[] excludes) {

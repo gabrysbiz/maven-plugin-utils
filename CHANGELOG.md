@@ -1,5 +1,16 @@
 # Maven Plugin Utils Changelog
 
+## 1.3.0
+Features:
+* Added [ParametersLogBuilder](http://maven-plugin-utils.projects.gabrys.biz/1.3.0/apidocs/index.html?biz/gabrys/maven/plugin/util/parameter/ParametersLogBuilder.html) which allows to log Mojos parameters values
+* Added protected method [AntFileScanner#createDirectoryScanner()](http://maven-plugin-utils.projects.gabrys.biz/1.3.0/apidocs/index.html?biz/gabrys/maven/plugin/util/io/AntFileScanner.html)
+* Added protected method [RegexFileScanner#createFileFilter(File, String[], String[])](http://maven-plugin-utils.projects.gabrys.biz/1.3.0/apidocs/index.html?biz/gabrys/maven/plugin/util/io/RegexFileScanner.html)
+
+Bugs:
+* Fixed incorrect implementation of method [Time#toString()](http://maven-plugin-utils.projects.gabrys.biz/1.3.0/apidocs/index.html?biz/gabrys/maven/plugin/util/timer/Time.html)
+
+[See documentation](http://maven-plugin-utils.projects.gabrys.biz/1.3.0/)
+
 ## 1.2
 Features:
 * Allow access to all classes from [biz.gabrys.maven.plugin.util.io](http://maven-plugin-utils.projects.gabrys.biz/1.2/apidocs/index.html?biz/gabrys/maven/plugin/util/io/package-summary.html) package

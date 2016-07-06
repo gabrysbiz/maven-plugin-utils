@@ -17,7 +17,7 @@ import java.io.File;
 import org.apache.maven.plugin.logging.Log;
 
 /**
- * Provides tools for log information related with files.
+ * Provides tools to log information related with files.
  * @since 1.2
  */
 public final class LoggerUtils {

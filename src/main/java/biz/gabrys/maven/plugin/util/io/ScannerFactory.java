@@ -15,7 +15,7 @@ package biz.gabrys.maven.plugin.util.io;
 import org.apache.maven.plugin.logging.Log;
 
 /**
- * Responsible for creating new instances of {@link FileScanner}.
+ * Responsible for creating new instances of the {@link FileScanner} by the {@link ScannerPatternFormat}.
  * @since 1.0
  */
 public class ScannerFactory {
@@ -29,7 +29,8 @@ public class ScannerFactory {
     }
 
     /**
-     * Creates a new scanner related with the pattern format.
+     * Creates a new scanner related with the pattern format. Returns an instance of the {@link RegexFileScanner} if
+     * {@code patternFormat} is equal to {@code null}.
      * @param patternFormat the scanner pattern format.
      * @param logger the logger used to log included/excluded files (only in debug mode).
      * @return the new scanner.

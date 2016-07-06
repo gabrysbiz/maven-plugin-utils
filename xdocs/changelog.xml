@@ -7,12 +7,45 @@
     </properties>
 
     <body>
+         <section id="release-1.3.0" name="Release 1.3.0">
+            <p>Features:</p>
+            <ul>
+                <li>
+                    Added
+                    <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/parameter/ParametersLogBuilder.html">
+                        ParametersLogBuilder
+                    </a>
+                    which allows to log Mojos parameters values
+                </li>
+                <li>
+                    Added protected method
+                    <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/io/AntFileScanner.html">
+                        AntFileScanner#createDirectoryScanner()
+                    </a>
+                </li>
+                <li>
+                    Added protected method
+                    <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/io/RegexFileScanner.html">
+                        RegexFileScanner#createFileFilter(File, String[], String[])
+                    </a>
+                </li>
+            </ul>
+            <p>Bugs:</p>
+            <ul>
+                <li>
+                    Fixed incorrect implementation of method
+                    <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/timer/Time.html">
+                        Time#toString()
+                    </a>
+                </li>
+            </ul>
+        </section>
          <section id="release-1.2" name="Release 1.2">
             <p>Features:</p>
             <ul>
                 <li>
                     Allow access to all classes from
-                    <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/io/package-summary.html">biz.gabrys.maven.plugin.util.io</a>
+                    <a href="http://maven-plugin-utils.projects.gabrys.biz/1.2/apidocs/index.html?biz/gabrys/maven/plugin/util/io/package-summary.html">biz.gabrys.maven.plugin.util.io</a>
                     package
                 </li>
             </ul>
@@ -20,9 +53,14 @@
         <section id="release-1.1" name="Release 1.1">
             <p>Bugs:</p>
             <ul>
-                <li>Corrected <a href="https://en.wikipedia.org/wiki/Double-checked_locking">double-checked locking</a></li>
+                <li>
+                    Corrected
+                    <a href="https://en.wikipedia.org/wiki/Double-checked_locking">
+                        double-checked locking
+                    </a>
+                </li>
                 <li>Optimization of call logger instructions</li>
-                <li>Added missing <a href="apidocs/">JavaDocs</a></li>
+                <li>Added missing <a href="http://maven-plugin-utils.projects.gabrys.biz/1.1/apidocs/">JavaDocs</a></li>
             </ul>
             <p><a href="http://maven-plugin-utils.projects.gabrys.biz/1.1/">See documentation</a></p>
         </section>
