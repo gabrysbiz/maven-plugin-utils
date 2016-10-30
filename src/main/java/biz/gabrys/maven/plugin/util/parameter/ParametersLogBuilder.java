@@ -163,13 +163,10 @@ public class ParametersLogBuilder {
      * @since 1.3.0
      */
     protected ParametersLogBuilder(final Map<String, Container> parameters, final Log logger) {
-        if (parameters == null) {
-            throw new IllegalArgumentException("Parameters cannot be null");
-        }
+        ParameterUtils.verifyNotNull("parameters", parameters);
+        ParameterUtils.verifyNotNull("logger", logger);
+
         this.parameters = parameters;
-        if (logger == null) {
-            throw new IllegalArgumentException("Logger cannot be null");
-        }
         this.logger = logger;
     }
 

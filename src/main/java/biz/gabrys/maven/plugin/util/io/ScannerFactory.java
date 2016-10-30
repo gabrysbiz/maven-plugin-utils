@@ -14,6 +14,8 @@ package biz.gabrys.maven.plugin.util.io;
 
 import org.apache.maven.plugin.logging.Log;
 
+import biz.gabrys.maven.plugin.util.parameter.ParameterUtils;
+
 /**
  * Responsible for creating new instances of the {@link FileScanner} by the {@link ScannerPatternFormat}.
  * @since 1.0
@@ -38,9 +40,7 @@ public class ScannerFactory {
      * @since 1.0
      */
     public FileScanner create(final ScannerPatternFormat patternFormat, final Log logger) {
-        if (logger == null) {
-            throw new IllegalArgumentException("Logger cannot be null");
-        }
+        ParameterUtils.verifyNotNull("logger", logger);
         if (patternFormat == ScannerPatternFormat.ANT) {
             return new AntFileScanner(logger);
         }

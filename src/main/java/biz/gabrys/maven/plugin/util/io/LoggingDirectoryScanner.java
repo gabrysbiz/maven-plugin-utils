@@ -17,6 +17,8 @@ import java.io.File;
 import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.DirectoryScanner;
 
+import biz.gabrys.maven.plugin.util.parameter.ParameterUtils;
+
 /**
  * Extended version of the {@link DirectoryScanner} which adds logger instructions in debug mode.
  * @since 1.2
@@ -32,9 +34,7 @@ public class LoggingDirectoryScanner extends DirectoryScanner {
      * @since 1.2
      */
     public LoggingDirectoryScanner(final Log logger) {
-        if (logger == null) {
-            throw new IllegalArgumentException("Logger cannot be null");
-        }
+        ParameterUtils.verifyNotNull("logger", logger);
         this.logger = logger;
     }
 

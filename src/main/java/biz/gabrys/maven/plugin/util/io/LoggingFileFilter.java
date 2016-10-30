@@ -17,6 +17,8 @@ import java.io.File;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.maven.plugin.logging.Log;
 
+import biz.gabrys.maven.plugin.util.parameter.ParameterUtils;
+
 /**
  * Decorator which adds logger instructions (in debug mode) to an instance of the {@link IOFileFilter}.
  * @since 1.2
@@ -34,12 +36,9 @@ public class LoggingFileFilter implements IOFileFilter {
      * @since 1.2
      */
     public LoggingFileFilter(final IOFileFilter filter, final Log logger) {
-        if (filter == null) {
-            throw new IllegalArgumentException("Filter cannot be null");
-        }
-        if (logger == null) {
-            throw new IllegalArgumentException("Logger cannot be null");
-        }
+        ParameterUtils.verifyNotNull("filter", filter);
+        ParameterUtils.verifyNotNull("logger", logger);
+
         this.filter = filter;
         this.logger = logger;
     }
