@@ -17,6 +17,8 @@ import java.io.File;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.maven.plugin.logging.Log;
 
+import biz.gabrys.maven.plugin.util.parameter.ParameterUtils;
+
 /**
  * Decorator which adds logger instructions (in debug mode) to an instance of the {@link IOFileFilter}.
  * @since 1.2
@@ -33,16 +35,13 @@ public class LoggingFileFilter implements IOFileFilter {
      * @throws IllegalArgumentException if the filter or the logger is equal to {@code null}.
      * @since 1.2
      */
-<span class="fc" id="L36">    public LoggingFileFilter(final IOFileFilter filter, final Log logger) {</span>
-<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (filter == null) {</span>
-<span class="nc" id="L38">            throw new IllegalArgumentException(&quot;Filter cannot be null&quot;);</span>
-        }
-<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        if (logger == null) {</span>
-<span class="nc" id="L41">            throw new IllegalArgumentException(&quot;Logger cannot be null&quot;);</span>
-        }
-<span class="fc" id="L43">        this.filter = filter;</span>
-<span class="fc" id="L44">        this.logger = logger;</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L38">    public LoggingFileFilter(final IOFileFilter filter, final Log logger) {</span>
+<span class="fc" id="L39">        ParameterUtils.verifyNotNull(&quot;filter&quot;, filter);</span>
+<span class="fc" id="L40">        ParameterUtils.verifyNotNull(&quot;logger&quot;, logger);</span>
+
+<span class="fc" id="L42">        this.filter = filter;</span>
+<span class="fc" id="L43">        this.logger = logger;</span>
+<span class="fc" id="L44">    }</span>
 
     /**
      * {@inheritDoc} It additionally logs (in debug mode) for {@link File#isFile() normal file} information whether it
@@ -50,12 +49,12 @@ public class LoggingFileFilter implements IOFileFilter {
      * @since 1.2
      */
     public boolean accept(final File file) {
-<span class="fc" id="L53">        final boolean accepted = filter.accept(file);</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (!logger.isDebugEnabled()) {</span>
-<span class="fc" id="L55">            return accepted;</span>
+<span class="fc" id="L52">        final boolean accepted = filter.accept(file);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (!logger.isDebugEnabled()) {</span>
+<span class="fc" id="L54">            return accepted;</span>
         }
-<span class="fc" id="L57">        LoggerUtils.debugInclusion(logger, file, accepted);</span>
-<span class="fc" id="L58">        return accepted;</span>
+<span class="fc" id="L56">        LoggerUtils.debugInclusion(logger, file, accepted);</span>
+<span class="fc" id="L57">        return accepted;</span>
     }
 
     /**
@@ -64,12 +63,12 @@ public class LoggingFileFilter implements IOFileFilter {
      * @since 1.2
      */
     public boolean accept(final File dir, final String name) {
-<span class="fc" id="L67">        final boolean accepted = filter.accept(dir, name);</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (!logger.isDebugEnabled()) {</span>
-<span class="fc" id="L69">            return accepted;</span>
+<span class="fc" id="L66">        final boolean accepted = filter.accept(dir, name);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (!logger.isDebugEnabled()) {</span>
+<span class="fc" id="L68">            return accepted;</span>
         }
-<span class="fc" id="L71">        LoggerUtils.debugInclusion(logger, new File(dir, name), accepted);</span>
-<span class="fc" id="L72">        return accepted;</span>
+<span class="fc" id="L70">        LoggerUtils.debugInclusion(logger, new File(dir, name), accepted);</span>
+<span class="fc" id="L71">        return accepted;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

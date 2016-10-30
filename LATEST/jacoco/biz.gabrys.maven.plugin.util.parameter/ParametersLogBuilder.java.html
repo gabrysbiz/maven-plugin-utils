@@ -163,15 +163,12 @@ public class ParametersLogBuilder {
      * @since 1.3.0
      */
 <span class="fc" id="L165">    protected ParametersLogBuilder(final Map&lt;String, Container&gt; parameters, final Log logger) {</span>
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">        if (parameters == null) {</span>
-<span class="nc" id="L167">            throw new IllegalArgumentException(&quot;Parameters cannot be null&quot;);</span>
-        }
+<span class="fc" id="L166">        ParameterUtils.verifyNotNull(&quot;parameters&quot;, parameters);</span>
+<span class="fc" id="L167">        ParameterUtils.verifyNotNull(&quot;logger&quot;, logger);</span>
+
 <span class="fc" id="L169">        this.parameters = parameters;</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">        if (logger == null) {</span>
-<span class="nc" id="L171">            throw new IllegalArgumentException(&quot;Logger cannot be null&quot;);</span>
-        }
-<span class="fc" id="L173">        this.logger = logger;</span>
-<span class="fc" id="L174">    }</span>
+<span class="fc" id="L170">        this.logger = logger;</span>
+<span class="fc" id="L171">    }</span>
 
     /**
      * Appends a parameter with a valid value. If parameter has been appended before, then it removes its previous value
@@ -184,7 +181,7 @@ public class ParametersLogBuilder {
      * @see AlwaysValidSanitizer
      */
     public ParametersLogBuilder append(final String name, final Object value) {
-<span class="fc" id="L187">        return append(name, value, new DefaultValueToStringConverter(), new AlwaysValidSanitizer());</span>
+<span class="fc" id="L184">        return append(name, value, new DefaultValueToStringConverter(), new AlwaysValidSanitizer());</span>
     }
 
     /**
@@ -198,7 +195,7 @@ public class ParametersLogBuilder {
      * @see AlwaysValidSanitizer
      */
     public ParametersLogBuilder append(final String name, final Object value, final ValueToStringConverter converter) {
-<span class="fc" id="L201">        return append(name, value, converter, new AlwaysValidSanitizer());</span>
+<span class="fc" id="L198">        return append(name, value, converter, new AlwaysValidSanitizer());</span>
     }
 
     /**
@@ -212,7 +209,7 @@ public class ParametersLogBuilder {
      * @see DefaultValueToStringConverter
      */
     public ParametersLogBuilder append(final String name, final Object value, final ValueSanitizer sanitizer) {
-<span class="fc" id="L215">        return append(name, value, new DefaultValueToStringConverter(), sanitizer);</span>
+<span class="fc" id="L212">        return append(name, value, new DefaultValueToStringConverter(), sanitizer);</span>
     }
 
     /**
@@ -227,9 +224,9 @@ public class ParametersLogBuilder {
      */
     public ParametersLogBuilder append(final String name, final Object value, final ValueToStringConverter converter,
             final ValueSanitizer sanitizer) {
-<span class="fc" id="L230">        parameters.remove(name);</span>
-<span class="fc" id="L231">        parameters.put(name, new Container(value, converter, sanitizer));</span>
-<span class="fc" id="L232">        return this;</span>
+<span class="fc" id="L227">        parameters.remove(name);</span>
+<span class="fc" id="L228">        parameters.put(name, new Container(value, converter, sanitizer));</span>
+<span class="fc" id="L229">        return this;</span>
     }
 
     /**
@@ -238,7 +235,7 @@ public class ParametersLogBuilder {
      * @since 1.3.0
      */
     public boolean info() {
-<span class="fc" id="L241">        return log(new InfoInternalLoggerAdapter(logger));</span>
+<span class="fc" id="L238">        return log(new InfoInternalLoggerAdapter(logger));</span>
     }
 
     /**
@@ -247,7 +244,7 @@ public class ParametersLogBuilder {
      * @since 1.3.0
      */
     public boolean debug() {
-<span class="fc" id="L250">        return log(new DebugInternalLoggerAdapter(logger));</span>
+<span class="fc" id="L247">        return log(new DebugInternalLoggerAdapter(logger));</span>
     }
 
     /**
@@ -259,17 +256,17 @@ public class ParametersLogBuilder {
      * @see #debug()
      */
     protected boolean log(final InternalLogger internalLogger) {
-<span class="fc bfc" id="L262" title="All 2 branches covered.">        if (!internalLogger.isEnabled()) {</span>
-<span class="fc" id="L263">            return false;</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">        if (!internalLogger.isEnabled()) {</span>
+<span class="fc" id="L260">            return false;</span>
         }
-<span class="fc" id="L265">        final List&lt;String&gt; lines = createLines();</span>
-<span class="fc bfc" id="L266" title="All 2 branches covered.">        if (lines.isEmpty()) {</span>
-<span class="fc" id="L267">            return false;</span>
+<span class="fc" id="L262">        final List&lt;String&gt; lines = createLines();</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">        if (lines.isEmpty()) {</span>
+<span class="fc" id="L264">            return false;</span>
         }
-<span class="fc bfc" id="L269" title="All 2 branches covered.">        for (final String line : lines) {</span>
-<span class="fc" id="L270">            internalLogger.log(line);</span>
-<span class="fc" id="L271">        }</span>
-<span class="fc" id="L272">        return true;</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">        for (final String line : lines) {</span>
+<span class="fc" id="L267">            internalLogger.log(line);</span>
+<span class="fc" id="L268">        }</span>
+<span class="fc" id="L269">        return true;</span>
     }
 
     /**
@@ -279,11 +276,11 @@ public class ParametersLogBuilder {
      * @see #log(InternalLogger)
      */
     protected List&lt;String&gt; createLines() {
-<span class="fc" id="L282">        final List&lt;String&gt; lines = new ArrayList&lt;String&gt;(parameters.size() + 2);</span>
-<span class="fc" id="L283">        lines.add(&quot;Job parameters:&quot;);</span>
-<span class="fc" id="L284">        lines.addAll(createParametersLines());</span>
-<span class="fc" id="L285">        lines.add(&quot;&quot;);</span>
-<span class="fc" id="L286">        return lines;</span>
+<span class="fc" id="L279">        final List&lt;String&gt; lines = new ArrayList&lt;String&gt;(parameters.size() + 2);</span>
+<span class="fc" id="L280">        lines.add(&quot;Job parameters:&quot;);</span>
+<span class="fc" id="L281">        lines.addAll(createParametersLines());</span>
+<span class="fc" id="L282">        lines.add(&quot;&quot;);</span>
+<span class="fc" id="L283">        return lines;</span>
     }
 
     /**
@@ -293,11 +290,11 @@ public class ParametersLogBuilder {
      * @see #createLines()
      */
     protected List&lt;String&gt; createParametersLines() {
-<span class="fc" id="L296">        final List&lt;String&gt; lines = new ArrayList&lt;String&gt;(parameters.size());</span>
-<span class="fc bfc" id="L297" title="All 2 branches covered.">        for (final Map.Entry&lt;String, Container&gt; entry : parameters.entrySet()) {</span>
-<span class="fc" id="L298">            lines.add(createParemeterLine(entry.getKey(), entry.getValue()));</span>
-<span class="fc" id="L299">        }</span>
-<span class="fc" id="L300">        return lines;</span>
+<span class="fc" id="L293">        final List&lt;String&gt; lines = new ArrayList&lt;String&gt;(parameters.size());</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">        for (final Map.Entry&lt;String, Container&gt; entry : parameters.entrySet()) {</span>
+<span class="fc" id="L295">            lines.add(createParemeterLine(entry.getKey(), entry.getValue()));</span>
+<span class="fc" id="L296">        }</span>
+<span class="fc" id="L297">        return lines;</span>
     }
 
     /**
@@ -309,12 +306,12 @@ public class ParametersLogBuilder {
      * @see #createParametersLines()
      */
     protected String createParemeterLine(final String name, final Container container) {
-<span class="fc" id="L312">        final StringBuilder line = new StringBuilder();</span>
-<span class="fc" id="L313">        line.append(&quot;      &quot;);</span>
-<span class="fc" id="L314">        line.append(name);</span>
-<span class="fc" id="L315">        line.append(&quot; = &quot;);</span>
-<span class="fc" id="L316">        line.append(createParameterValue(container));</span>
-<span class="fc" id="L317">        return line.toString();</span>
+<span class="fc" id="L309">        final StringBuilder line = new StringBuilder();</span>
+<span class="fc" id="L310">        line.append(&quot;      &quot;);</span>
+<span class="fc" id="L311">        line.append(name);</span>
+<span class="fc" id="L312">        line.append(&quot; = &quot;);</span>
+<span class="fc" id="L313">        line.append(createParameterValue(container));</span>
+<span class="fc" id="L314">        return line.toString();</span>
     }
 
     /**
@@ -325,20 +322,20 @@ public class ParametersLogBuilder {
      * @see #createParemeterLine(String, Container)
      */
     protected String createParameterValue(final Container container) {
-<span class="fc" id="L328">        final StringBuilder line = new StringBuilder();</span>
+<span class="fc" id="L325">        final StringBuilder line = new StringBuilder();</span>
 
-<span class="fc" id="L330">        final ValueToStringConverter converter = container.getConverter();</span>
-<span class="fc" id="L331">        final Object value = container.getValue();</span>
-<span class="fc" id="L332">        line.append(converter.convert(value));</span>
+<span class="fc" id="L327">        final ValueToStringConverter converter = container.getConverter();</span>
+<span class="fc" id="L328">        final Object value = container.getValue();</span>
+<span class="fc" id="L329">        line.append(converter.convert(value));</span>
 
-<span class="fc" id="L334">        final ValueSanitizer sanitizer = container.getSanitizer();</span>
-<span class="fc bfc" id="L335" title="All 2 branches covered.">        if (!sanitizer.isValid(value)) {</span>
-<span class="fc" id="L336">            line.append(&quot; (calculated: &quot;);</span>
-<span class="fc" id="L337">            final Object correctedValue = sanitizer.sanitize(value);</span>
-<span class="fc" id="L338">            line.append(converter.convert(correctedValue));</span>
-<span class="fc" id="L339">            line.append(')');</span>
+<span class="fc" id="L331">        final ValueSanitizer sanitizer = container.getSanitizer();</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">        if (!sanitizer.isValid(value)) {</span>
+<span class="fc" id="L333">            line.append(&quot; (calculated: &quot;);</span>
+<span class="fc" id="L334">            final Object correctedValue = sanitizer.sanitize(value);</span>
+<span class="fc" id="L335">            line.append(converter.convert(correctedValue));</span>
+<span class="fc" id="L336">            line.append(')');</span>
         }
-<span class="fc" id="L341">        return line.toString();</span>
+<span class="fc" id="L338">        return line.toString();</span>
     }
 
     /**
@@ -358,11 +355,11 @@ public class ParametersLogBuilder {
          * @param sanitizer the sanitizer responsible for sanitizing parameter value.
          * @since 1.3.0
          */
-<span class="fc" id="L361">        protected Container(final Object value, final ValueToStringConverter converter, final ValueSanitizer sanitizer) {</span>
-<span class="fc" id="L362">            this.value = value;</span>
-<span class="fc" id="L363">            this.converter = converter;</span>
-<span class="fc" id="L364">            this.sanitizer = sanitizer;</span>
-<span class="fc" id="L365">        }</span>
+<span class="fc" id="L358">        protected Container(final Object value, final ValueToStringConverter converter, final ValueSanitizer sanitizer) {</span>
+<span class="fc" id="L359">            this.value = value;</span>
+<span class="fc" id="L360">            this.converter = converter;</span>
+<span class="fc" id="L361">            this.sanitizer = sanitizer;</span>
+<span class="fc" id="L362">        }</span>
 
         /**
          * Returns a parameter value.
@@ -370,7 +367,7 @@ public class ParametersLogBuilder {
          * @since 1.3.0
          */
         protected Object getValue() {
-<span class="nc" id="L373">            return value;</span>
+<span class="nc" id="L370">            return value;</span>
         }
 
         /**
@@ -379,7 +376,7 @@ public class ParametersLogBuilder {
          * @since 1.3.0
          */
         protected ValueToStringConverter getConverter() {
-<span class="fc" id="L382">            return converter;</span>
+<span class="fc" id="L379">            return converter;</span>
         }
 
         /**
@@ -388,7 +385,7 @@ public class ParametersLogBuilder {
          * @since 1.3.0
          */
         protected ValueSanitizer getSanitizer() {
-<span class="fc" id="L391">            return sanitizer;</span>
+<span class="fc" id="L388">            return sanitizer;</span>
         }
     }
 
@@ -430,17 +427,17 @@ public class ParametersLogBuilder {
          * @param logger the adapted logger.
          * @since 1.3.0
          */
-<span class="fc" id="L433">        protected InfoInternalLoggerAdapter(final Log logger) {</span>
-<span class="fc" id="L434">            this.logger = logger;</span>
-<span class="fc" id="L435">        }</span>
+<span class="fc" id="L430">        protected InfoInternalLoggerAdapter(final Log logger) {</span>
+<span class="fc" id="L431">            this.logger = logger;</span>
+<span class="fc" id="L432">        }</span>
 
         public boolean isEnabled() {
-<span class="fc" id="L438">            return logger.isInfoEnabled();</span>
+<span class="fc" id="L435">            return logger.isInfoEnabled();</span>
         }
 
         public void log(final CharSequence line) {
-<span class="fc" id="L442">            logger.info(line);</span>
-<span class="fc" id="L443">        }</span>
+<span class="fc" id="L439">            logger.info(line);</span>
+<span class="fc" id="L440">        }</span>
     }
 
     /**
@@ -457,17 +454,17 @@ public class ParametersLogBuilder {
          * @param logger the adapted logger.
          * @since 1.3.0
          */
-<span class="fc" id="L460">        protected DebugInternalLoggerAdapter(final Log logger) {</span>
-<span class="fc" id="L461">            this.logger = logger;</span>
-<span class="fc" id="L462">        }</span>
+<span class="fc" id="L457">        protected DebugInternalLoggerAdapter(final Log logger) {</span>
+<span class="fc" id="L458">            this.logger = logger;</span>
+<span class="fc" id="L459">        }</span>
 
         public boolean isEnabled() {
-<span class="fc" id="L465">            return logger.isDebugEnabled();</span>
+<span class="fc" id="L462">            return logger.isDebugEnabled();</span>
         }
 
         public void log(final CharSequence line) {
-<span class="fc" id="L469">            logger.debug(line);</span>
-<span class="fc" id="L470">        }</span>
+<span class="fc" id="L466">            logger.debug(line);</span>
+<span class="fc" id="L467">        }</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

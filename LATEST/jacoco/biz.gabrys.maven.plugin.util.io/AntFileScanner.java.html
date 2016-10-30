@@ -56,7 +56,7 @@ public class AntFileScanner implements FileScanner {
     }
 
     /**
-     * Creates a {@link DirectoryScanner} which will be used to find all files which match filters.
+     * Creates a {@link DirectoryScanner} which will be used to find all files whose match filters.
      * @return a not initialized instance of the {@link DirectoryScanner} or its subclass.
      * @since 1.3.0
      * @see #getFiles(File, String[], String[])

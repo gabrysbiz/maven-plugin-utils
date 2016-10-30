@@ -1,3 +1,4 @@
+biz.gabrys.maven.plugin.util.classpath
 biz.gabrys.maven.plugin.util.io
 biz.gabrys.maven.plugin.util.parameter
 biz.gabrys.maven.plugin.util.parameter.converter
