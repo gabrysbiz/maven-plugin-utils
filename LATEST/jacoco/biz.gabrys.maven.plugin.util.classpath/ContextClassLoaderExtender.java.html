@@ -15,6 +15,7 @@ package biz.gabrys.maven.plugin.util.classpath;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -40,47 +41,51 @@ public class ContextClassLoaderExtender {
     /**
      * Creates a new instance.
      * @param project the Maven project.
+     * @throws IllegalArgumentException if the Maven project is equal to {@code null}.
      * @since 1.4.0
      */
     public ContextClassLoaderExtender(final MavenProject project) {
-<span class="nc" id="L46">        this(project, null);</span>
-<span class="nc" id="L47">    }</span>
+<span class="nc" id="L48">        this(project, null);</span>
+<span class="nc" id="L49">    }</span>
 
     /**
      * Creates a new instance.
      * @param project the Maven project.
      * @param logger the logger.
+     * @throws IllegalArgumentException if the Maven project is equal to {@code null}.
      * @since 1.4.0
      */
-<span class="nc" id="L55">    public ContextClassLoaderExtender(final MavenProject project, final Log logger) {</span>
-<span class="nc" id="L56">        this.project = project;</span>
-<span class="nc" id="L57">        this.logger = logger;</span>
-<span class="nc" id="L58">    }</span>
+<span class="fc" id="L58">    public ContextClassLoaderExtender(final MavenProject project, final Log logger) {</span>
+<span class="fc" id="L59">        ParameterUtils.verifyNotNull(&quot;project&quot;, project);</span>
+<span class="fc" id="L60">        this.project = project;</span>
+<span class="fc" id="L61">        this.logger = logger;</span>
+<span class="fc" id="L62">    }</span>
 
     /**
      * Adds all dependencies with specified types to context class loader.
      * @param types the supported types.
+     * @throws IllegalArgumentException if the types are equal to {@code null}.
      * @since 1.4.0
      */
     public void addDependencies(final String... types) {
-<span class="nc" id="L66">        ParameterUtils.verifyNotNull(&quot;types&quot;, types);</span>
-<span class="nc" id="L67">        addDependencies(new HashSet&lt;String&gt;(Arrays.asList(types)));</span>
-<span class="nc" id="L68">    }</span>
+<span class="fc" id="L71">        ParameterUtils.verifyNotNull(&quot;types&quot;, types);</span>
+<span class="fc" id="L72">        addDependencies(new HashSet&lt;String&gt;(Arrays.asList(types)));</span>
+<span class="fc" id="L73">    }</span>
 
     /**
      * Adds all dependencies with specified types to context class loader.
      * @param types the supported types.
+     * @throws IllegalArgumentException if the types collection is equal to {@code null}.
      * @since 1.4.0
      */
     public void addDependencies(final Collection&lt;String&gt; types) {
-<span class="nc" id="L76">        ParameterUtils.verifyNotNull(&quot;types&quot;, types);</span>
+<span class="fc" id="L82">        ParameterUtils.verifyNotNull(&quot;types&quot;, types);</span>
         @SuppressWarnings(&quot;unchecked&quot;)
-<span class="nc" id="L78">        final Set&lt;Artifact&gt; artifacts = project.getArtifacts();</span>
-<span class="nc" id="L79">        final List&lt;Artifact&gt; filtered = filterArtifacts(artifacts, types);</span>
-<span class="nc" id="L80">        final List&lt;URL&gt; urls = resolveArtifactsUrls(filtered);</span>
-<span class="nc" id="L81">        final URLClassLoader classLoader = new URLClassLoader(urls.toArray(new URL[0]), Thread.currentThread().getContextClassLoader());</span>
-<span class="nc" id="L82">        Thread.currentThread().setContextClassLoader(classLoader);</span>
-<span class="nc" id="L83">    }</span>
+<span class="fc" id="L84">        final Set&lt;Artifact&gt; artifacts = project.getArtifacts();</span>
+<span class="fc" id="L85">        final List&lt;Artifact&gt; filtered = filterArtifacts(artifacts, types);</span>
+<span class="fc" id="L86">        final List&lt;URL&gt; urls = resolveArtifactsUrls(filtered);</span>
+<span class="fc" id="L87">        addToContextClassLoader(urls);</span>
+<span class="fc" id="L88">    }</span>
 
     /**
      * Filters artifacts based on the type.
@@ -90,16 +95,18 @@ public class ContextClassLoaderExtender {
      * @since 1.4.0
      */
     protected List&lt;Artifact&gt; filterArtifacts(final Collection&lt;Artifact&gt; artifacts, final Collection&lt;String&gt; types) {
-<span class="nc" id="L93">        final List&lt;Artifact&gt; filtered = new LinkedList&lt;Artifact&gt;();</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">        for (final Artifact artifact : artifacts) {</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">            if (!types.contains(artifact.getType())) {</span>
-<span class="nc" id="L96">                logger.debug(String.format(&quot;Exclude %s&quot;, createDisplayString(artifact)));</span>
-            } else {
-<span class="nc" id="L98">                logger.debug(String.format(&quot;Include %s&quot;, createDisplayString(artifact)));</span>
-<span class="nc" id="L99">                filtered.add(artifact);</span>
+<span class="fc" id="L98">        final List&lt;Artifact&gt; filtered = new LinkedList&lt;Artifact&gt;();</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        for (final Artifact artifact : artifacts) {</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">            if (types.contains(artifact.getType())) {</span>
+<span class="pc bpc" id="L101" title="2 of 4 branches missed.">                if (logger != null &amp;&amp; logger.isDebugEnabled()) {</span>
+<span class="fc" id="L102">                    logger.debug(String.format(&quot;Include %s&quot;, createDisplayString(artifact)));</span>
+                }
+<span class="fc" id="L104">                filtered.add(artifact);</span>
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">            } else if (logger != null &amp;&amp; logger.isDebugEnabled()) {</span>
+<span class="fc" id="L106">                logger.debug(String.format(&quot;Exclude %s&quot;, createDisplayString(artifact)));</span>
             }
-<span class="nc" id="L101">        }</span>
-<span class="nc" id="L102">        return filtered;</span>
+<span class="fc" id="L108">        }</span>
+<span class="fc" id="L109">        return filtered;</span>
     }
 
     /**
@@ -109,17 +116,28 @@ public class ContextClassLoaderExtender {
      * @since 1.4.0
      */
     protected List&lt;URL&gt; resolveArtifactsUrls(final Collection&lt;Artifact&gt; artifacts) {
-<span class="nc" id="L112">        final List&lt;URL&gt; urls = new LinkedList&lt;URL&gt;();</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">        for (final Artifact artifact : artifacts) {</span>
+<span class="nc" id="L119">        final List&lt;URL&gt; urls = new ArrayList&lt;URL&gt;(artifacts.size());</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        for (final Artifact artifact : artifacts) {</span>
             try {
-<span class="nc" id="L115">                urls.add(artifact.getFile().toURI().toURL());</span>
-<span class="nc" id="L116">            } catch (final MalformedURLException e) {</span>
+<span class="nc" id="L122">                urls.add(artifact.getFile().toURI().toURL());</span>
+<span class="nc" id="L123">            } catch (final MalformedURLException e) {</span>
                 // never
-<span class="nc" id="L118">                throw new IllegalStateException(String.format(&quot;Cannot add dependency %s to classpath!&quot;, createDisplayString(artifact)), e);</span>
-<span class="nc" id="L119">            }</span>
-<span class="nc" id="L120">        }</span>
-<span class="nc" id="L121">        return urls;</span>
+<span class="nc" id="L125">                throw new IllegalStateException(String.format(&quot;Cannot add %s to the classpath!&quot;, createDisplayString(artifact)), e);</span>
+<span class="nc" id="L126">            }</span>
+<span class="nc" id="L127">        }</span>
+<span class="nc" id="L128">        return urls;</span>
     }
+
+    /**
+     * Adds artifacts URLs to context class loader.
+     * @param urls the artifacts URLs.
+     * @since 1.4.0
+     */
+    protected void addToContextClassLoader(final List&lt;URL&gt; urls) {
+<span class="fc" id="L137">        final Thread currentThread = Thread.currentThread();</span>
+<span class="fc" id="L138">        final URLClassLoader classLoader = new URLClassLoader(urls.toArray(new URL[0]), currentThread.getContextClassLoader());</span>
+<span class="fc" id="L139">        currentThread.setContextClassLoader(classLoader);</span>
+<span class="fc" id="L140">    }</span>
 
     /**
      * Creates a text representation of the {@link Artifact}.
@@ -128,8 +146,8 @@ public class ContextClassLoaderExtender {
      * @since 1.4.0
      */
     protected String createDisplayString(final Artifact artifact) {
-<span class="nc" id="L131">        return String.format(&quot;%s:%s-%s.%s (%s)&quot;, artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion(), artifact.getType(),</span>
-<span class="nc" id="L132">                artifact.getScope());</span>
+<span class="fc" id="L149">        return String.format(&quot;%s:%s-%s.%s (%s)&quot;, artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion(), artifact.getType(),</span>
+<span class="fc" id="L150">                artifact.getScope());</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
