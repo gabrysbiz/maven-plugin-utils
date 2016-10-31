@@ -45,8 +45,8 @@ public class ContextClassLoaderExtender {
      * @since 1.4.0
      */
     public ContextClassLoaderExtender(final MavenProject project) {
-<span class="nc" id="L48">        this(project, null);</span>
-<span class="nc" id="L49">    }</span>
+<span class="fc" id="L48">        this(project, null);</span>
+<span class="fc" id="L49">    }</span>
 
     /**
      * Creates a new instance.
@@ -98,11 +98,11 @@ public class ContextClassLoaderExtender {
 <span class="fc" id="L98">        final List&lt;Artifact&gt; filtered = new LinkedList&lt;Artifact&gt;();</span>
 <span class="fc bfc" id="L99" title="All 2 branches covered.">        for (final Artifact artifact : artifacts) {</span>
 <span class="fc bfc" id="L100" title="All 2 branches covered.">            if (types.contains(artifact.getType())) {</span>
-<span class="pc bpc" id="L101" title="2 of 4 branches missed.">                if (logger != null &amp;&amp; logger.isDebugEnabled()) {</span>
+<span class="pc bpc" id="L101" title="1 of 4 branches missed.">                if (logger != null &amp;&amp; logger.isDebugEnabled()) {</span>
 <span class="fc" id="L102">                    logger.debug(String.format(&quot;Include %s&quot;, createDisplayString(artifact)));</span>
                 }
 <span class="fc" id="L104">                filtered.add(artifact);</span>
-<span class="pc bpc" id="L105" title="2 of 4 branches missed.">            } else if (logger != null &amp;&amp; logger.isDebugEnabled()) {</span>
+<span class="pc bpc" id="L105" title="1 of 4 branches missed.">            } else if (logger != null &amp;&amp; logger.isDebugEnabled()) {</span>
 <span class="fc" id="L106">                logger.debug(String.format(&quot;Exclude %s&quot;, createDisplayString(artifact)));</span>
             }
 <span class="fc" id="L108">        }</span>
