@@ -46,7 +46,7 @@ public class AbstractValueToStringConverterTest {
         Mockito.verifyNoMoreInteractions(converter);
     }
 
-    private static class NotNullConverter extends AbstractValueToStringConverter {
+    public static class NotNullConverter extends AbstractValueToStringConverter {
 
         private static final String RETURNED_VALUE = "not null";
 
@@ -56,7 +56,7 @@ public class AbstractValueToStringConverterTest {
         }
     }
 
-    private static class NullConverter extends AbstractValueToStringConverter {
+    public static class NullConverter extends AbstractValueToStringConverter {
 
         @Override
         protected String convert2(final Object value) {

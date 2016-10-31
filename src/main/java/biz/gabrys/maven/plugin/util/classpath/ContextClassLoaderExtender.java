@@ -15,6 +15,7 @@ package biz.gabrys.maven.plugin.util.classpath;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -40,6 +41,7 @@ public class ContextClassLoaderExtender {
     /**
      * Creates a new instance.
      * @param project the Maven project.
+     * @throws IllegalArgumentException if the Maven project is equal to {@code null}.
      * @since 1.4.0
      */
     public ContextClassLoaderExtender(final MavenProject project) {
@@ -50,9 +52,11 @@ public class ContextClassLoaderExtender {
      * Creates a new instance.
      * @param project the Maven project.
      * @param logger the logger.
+     * @throws IllegalArgumentException if the Maven project is equal to {@code null}.
      * @since 1.4.0
      */
     public ContextClassLoaderExtender(final MavenProject project, final Log logger) {
+        ParameterUtils.verifyNotNull("project", project);
         this.project = project;
         this.logger = logger;
     }
@@ -60,6 +64,7 @@ public class ContextClassLoaderExtender {
     /**
      * Adds all dependencies with specified types to context class loader.
      * @param types the supported types.
+     * @throws IllegalArgumentException if the types are equal to {@code null}.
      * @since 1.4.0
      */
     public void addDependencies(final String... types) {
@@ -70,6 +75,7 @@ public class ContextClassLoaderExtender {
     /**
      * Adds all dependencies with specified types to context class loader.
      * @param types the supported types.
+     * @throws IllegalArgumentException if the types collection is equal to {@code null}.
      * @since 1.4.0
      */
     public void addDependencies(final Collection<String> types) {
@@ -78,8 +84,7 @@ public class ContextClassLoaderExtender {
         final Set<Artifact> artifacts = project.getArtifacts();
         final List<Artifact> filtered = filterArtifacts(artifacts, types);
         final List<URL> urls = resolveArtifactsUrls(filtered);
-        final URLClassLoader classLoader = new URLClassLoader(urls.toArray(new URL[0]), Thread.currentThread().getContextClassLoader());
-        Thread.currentThread().setContextClassLoader(classLoader);
+        addToContextClassLoader(urls);
     }
 
     /**
@@ -92,11 +97,13 @@ public class ContextClassLoaderExtender {
     protected List<Artifact> filterArtifacts(final Collection<Artifact> artifacts, final Collection<String> types) {
         final List<Artifact> filtered = new LinkedList<Artifact>();
         for (final Artifact artifact : artifacts) {
-            if (!types.contains(artifact.getType())) {
-                logger.debug(String.format("Exclude %s", createDisplayString(artifact)));
-            } else {
-                logger.debug(String.format("Include %s", createDisplayString(artifact)));
+            if (types.contains(artifact.getType())) {
+                if (logger != null && logger.isDebugEnabled()) {
+                    logger.debug(String.format("Include %s", createDisplayString(artifact)));
+                }
                 filtered.add(artifact);
+            } else if (logger != null && logger.isDebugEnabled()) {
+                logger.debug(String.format("Exclude %s", createDisplayString(artifact)));
             }
         }
         return filtered;
@@ -109,16 +116,27 @@ public class ContextClassLoaderExtender {
      * @since 1.4.0
      */
     protected List<URL> resolveArtifactsUrls(final Collection<Artifact> artifacts) {
-        final List<URL> urls = new LinkedList<URL>();
+        final List<URL> urls = new ArrayList<URL>(artifacts.size());
         for (final Artifact artifact : artifacts) {
             try {
                 urls.add(artifact.getFile().toURI().toURL());
             } catch (final MalformedURLException e) {
                 // never
-                throw new IllegalStateException(String.format("Cannot add dependency %s to classpath!", createDisplayString(artifact)), e);
+                throw new IllegalStateException(String.format("Cannot add %s to the classpath!", createDisplayString(artifact)), e);
             }
         }
         return urls;
+    }
+
+    /**
+     * Adds artifacts URLs to context class loader.
+     * @param urls the artifacts URLs.
+     * @since 1.4.0
+     */
+    protected void addToContextClassLoader(final List<URL> urls) {
+        final Thread currentThread = Thread.currentThread();
+        final URLClassLoader classLoader = new URLClassLoader(urls.toArray(new URL[0]), currentThread.getContextClassLoader());
+        currentThread.setContextClassLoader(classLoader);
     }
 
     /**
