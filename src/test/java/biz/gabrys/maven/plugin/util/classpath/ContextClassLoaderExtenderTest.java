@@ -82,7 +82,7 @@ public final class ContextClassLoaderExtenderTest {
     }
 
     @Test
-    public void filterArtifacts_threeArtifactsAndOneShouldBeIgnored_returnTwoArtifacts() {
+    public void filterArtifacts_loggerEnabledAndThreeArtifactsAndOneShouldBeIgnored_logsDataAndReturnTwoArtifacts() {
         final ContextClassLoaderExtender extender = Mockito.spy(new ContextClassLoaderExtender(project, logger));
 
         final Artifact artifact1 = Mockito.mock(Artifact.class);
@@ -114,6 +114,36 @@ public final class ContextClassLoaderExtenderTest {
         Mockito.verify(logger).debug("Exclude artifact2");
         Mockito.verify(extender).createDisplayText(artifact3);
         Mockito.verify(logger).debug("Include artifact3");
+        Mockito.verifyNoMoreInteractions(extender, logger);
+    }
+
+    @Test
+    public void filterArtifacts_loggerDisabledAndThreeArtifactsAndOneShouldBeIgnored_logsDataAndReturnTwoArtifacts() {
+        final ContextClassLoaderExtender extender = Mockito.spy(new ContextClassLoaderExtender(project, logger));
+
+        final Artifact artifact1 = Mockito.mock(Artifact.class);
+        Mockito.doReturn("artifact1").when(extender).createDisplayText(artifact1);
+        Mockito.when(artifact1.getType()).thenReturn("include");
+        final Artifact artifact2 = Mockito.mock(Artifact.class);
+        Mockito.doReturn("artifact2").when(extender).createDisplayText(artifact2);
+        Mockito.when(artifact2.getType()).thenReturn("exclude");
+        final Artifact artifact3 = Mockito.mock(Artifact.class);
+        Mockito.doReturn("artifact3").when(extender).createDisplayText(artifact3);
+        Mockito.when(artifact3.getType()).thenReturn("include");
+
+        final List<Artifact> artifacts = Arrays.asList(artifact1, artifact2, artifact3);
+        final List<String> types = Arrays.asList("include");
+
+        Mockito.when(logger.isDebugEnabled()).thenReturn(Boolean.FALSE);
+
+        final List<Artifact> filtered = extender.filterArtifacts(artifacts, types);
+        Assert.assertNotNull("Filtered collection instance.", filtered);
+        Assert.assertEquals("Filtered collection size.", 2, filtered.size());
+        Assert.assertTrue("Filtered collection contains artifact1.", filtered.contains(artifact1));
+        Assert.assertTrue("Filtered collection contains artifact3.", filtered.contains(artifact3));
+
+        Mockito.verify(extender).filterArtifacts(artifacts, types);
+        Mockito.verify(logger, Mockito.times(3)).isDebugEnabled();
         Mockito.verifyNoMoreInteractions(extender, logger);
     }
 
