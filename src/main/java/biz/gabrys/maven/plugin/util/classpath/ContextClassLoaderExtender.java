@@ -41,22 +41,13 @@ public class ContextClassLoaderExtender {
     /**
      * Creates a new instance.
      * @param project the Maven project.
-     * @throws IllegalArgumentException if the Maven project is equal to {@code null}.
-     * @since 1.4.0
-     */
-    public ContextClassLoaderExtender(final MavenProject project) {
-        this(project, null);
-    }
-
-    /**
-     * Creates a new instance.
-     * @param project the Maven project.
      * @param logger the logger.
-     * @throws IllegalArgumentException if the Maven project is equal to {@code null}.
+     * @throws IllegalArgumentException if the Maven project or/and the logger is equal to {@code null}.
      * @since 1.4.0
      */
     public ContextClassLoaderExtender(final MavenProject project, final Log logger) {
         ParameterUtils.verifyNotNull("project", project);
+        ParameterUtils.verifyNotNull("logger", logger);
         this.project = project;
         this.logger = logger;
     }
@@ -98,12 +89,12 @@ public class ContextClassLoaderExtender {
         final List<Artifact> filtered = new LinkedList<Artifact>();
         for (final Artifact artifact : artifacts) {
             if (types.contains(artifact.getType())) {
-                if (logger != null && logger.isDebugEnabled()) {
-                    logger.debug(String.format("Include %s", createDisplayString(artifact)));
+                if (logger.isDebugEnabled()) {
+                    logger.debug(String.format("Include %s", createDisplayText(artifact)));
                 }
                 filtered.add(artifact);
-            } else if (logger != null && logger.isDebugEnabled()) {
-                logger.debug(String.format("Exclude %s", createDisplayString(artifact)));
+            } else if (logger.isDebugEnabled()) {
+                logger.debug(String.format("Exclude %s", createDisplayText(artifact)));
             }
         }
         return filtered;
@@ -122,7 +113,7 @@ public class ContextClassLoaderExtender {
                 urls.add(artifact.getFile().toURI().toURL());
             } catch (final MalformedURLException e) {
                 // never
-                throw new IllegalStateException(String.format("Cannot add %s to the classpath!", createDisplayString(artifact)), e);
+                throw new IllegalStateException(String.format("Cannot add %s to the classpath!", createDisplayText(artifact)), e);
             }
         }
         return urls;
@@ -145,7 +136,7 @@ public class ContextClassLoaderExtender {
      * @return the text representation of the {@link Artifact}.
      * @since 1.4.0
      */
-    protected String createDisplayString(final Artifact artifact) {
+    protected String createDisplayText(final Artifact artifact) {
         return String.format("%s:%s-%s.%s (%s)", artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion(), artifact.getType(),
                 artifact.getScope());
     }
