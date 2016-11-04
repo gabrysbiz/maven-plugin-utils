@@ -79,7 +79,7 @@ public class Time {
      * </pre>
      * 
      * @return a string representation of the time in human-readable format.
-     * @since 1.3.0
+     * @since 1.4.0
      */
     @Override
     public String toString() {
