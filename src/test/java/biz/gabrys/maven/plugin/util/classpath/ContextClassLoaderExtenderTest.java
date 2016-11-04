@@ -101,10 +101,10 @@ public final class ContextClassLoaderExtenderTest {
         Mockito.when(logger.isDebugEnabled()).thenReturn(Boolean.TRUE);
 
         final List<Artifact> filtered = extender.filterArtifacts(artifacts, types);
-        Assert.assertNotNull("Filtered collection instance", filtered);
-        Assert.assertEquals("Filtered collection size", 2, filtered.size());
-        Assert.assertTrue("Filtered collection contains artifact1", filtered.contains(artifact1));
-        Assert.assertTrue("Filtered collection contains artifact3", filtered.contains(artifact3));
+        Assert.assertNotNull("Filtered collection instance.", filtered);
+        Assert.assertEquals("Filtered collection size.", 2, filtered.size());
+        Assert.assertTrue("Filtered collection contains artifact1.", filtered.contains(artifact1));
+        Assert.assertTrue("Filtered collection contains artifact3.", filtered.contains(artifact3));
 
         Mockito.verify(extender).filterArtifacts(artifacts, types);
         Mockito.verify(extender).createDisplayText(artifact1);
@@ -129,7 +129,7 @@ public final class ContextClassLoaderExtenderTest {
         Mockito.when(artifact.getScope()).thenReturn("compile");
 
         final String text = extender.createDisplayText(artifact);
-        Assert.assertEquals("Text representation", "groupId:artifactId-1.0.jar (compile)", text);
+        Assert.assertEquals("Text representation.", "groupId:artifactId-1.0.jar (compile)", text);
 
         Mockito.verify(extender).createDisplayText(artifact);
         Mockito.verifyNoMoreInteractions(extender);

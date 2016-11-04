@@ -4,6 +4,7 @@
 Features:
 * Added [ContextClassLoaderExtender](http://maven-plugin-utils.projects.gabrys.biz/LATEST/apidocs/index.html?biz/gabrys/maven/plugin/util/classpath/ContextClassLoaderExtender.html) responsible for adding Maven project dependencies to classpath
 * Added [ParameterUtils](http://maven-plugin-utils.projects.gabrys.biz/LATEST/apidocs/index.html?biz/gabrys/maven/plugin/util/parameter/ParameterUtils.html) which provides tools to work with method parameters
+* Separation of the seconds and milliseconds in the [Time#toString()](http://maven-plugin-utils.projects.gabrys.biz/LATEST/apidocs/index.html?biz/gabrys/maven/plugin/util/timer/Time.html) method
 
 ## 1.3.0
 Features:
