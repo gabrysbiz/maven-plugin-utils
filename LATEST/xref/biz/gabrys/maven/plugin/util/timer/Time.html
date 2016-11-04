@@ -71,49 +71,75 @@
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">     * Returns a string representation of the time in human-readable format. Examples:</em>
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * 0.000 seconds</em>
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     * 0.589 seconds</em>
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     * 1.000 second</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * 57.042 seconds</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     * 1 minute 0.000 seconds</em>
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">     * 7 minutes 1.000 second</em>
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * 12 minutes 28.321 seconds</em>
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     * 1 hour 0 minutes 0.000 seconds</em>
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     * 5 hours 0 minutes 0.000 seconds</em>
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_javadoccomment">     * 5 hours 1 minute 1.000 second</em>
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  <em class="jxr_javadoccomment">     * 5 hours 1 minute 54.132 seconds</em>
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">     * 5 hours 9 minutes 4.123 seconds</em>
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     * @return a string representation of the time in human-readable format.</em>
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment">     * @since 1.3.0</em>
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>      @Override
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>      <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>          <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> millis = milliseconds % MILLISECONDS_IN_SECOND;
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">long</strong> seconds = milliseconds / MILLISECONDS_IN_SECOND;
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">long</strong> minutes = seconds / SECONDS_IN_MINUTE;
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>          <strong class="jxr_keyword">if</strong> (minutes &gt; 0) {
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>              seconds -= minutes * SECONDS_IN_MINUTE;
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>          }
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>          <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> hours = minutes / MINUTES_IN_HOUR;
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>          <strong class="jxr_keyword">if</strong> (hours &gt; 0) {
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>              minutes -= hours * MINUTES_IN_HOUR;
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>          }
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>  
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>          <strong class="jxr_keyword">final</strong> StringBuilder time = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>          <strong class="jxr_keyword">if</strong> (hours &gt; 0) {
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>              time.append(hours);
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>              time.append(String.format(<span class="jxr_string">" hour%s "</span>, hours == 1 ? <span class="jxr_string">""</span> : <span class="jxr_string">"s"</span>));
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * 0 seconds</em>
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     * 589 milliseconds</em>
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     * 1 second</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * 57 seconds 42 milliseconds</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     * 1 minute</em>
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">     * 2 minutes 1 millisecond</em>
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * 7 minutes 1 second</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     * 12 minutes 28 seconds 321 milliseconds</em>
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     * 1 hour</em>
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_javadoccomment">     * 5 hours</em>
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  <em class="jxr_javadoccomment">     * 5 hours 1 second</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">     * 5 hours 1 minute 54 seconds 132 milliseconds</em>
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">     * 5 hours 9 minutes 4 seconds 123 milliseconds</em>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment">     * @return a string representation of the time in human-readable format.</em>
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">     * @since 1.3.0</em>
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>      @Override
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>      <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> millis = milliseconds % MILLISECONDS_IN_SECOND;
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">long</strong> seconds = milliseconds / MILLISECONDS_IN_SECOND;
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>          <strong class="jxr_keyword">long</strong> minutes = seconds / SECONDS_IN_MINUTE;
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>          <strong class="jxr_keyword">if</strong> (minutes &gt; 0) {
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>              seconds -= minutes * SECONDS_IN_MINUTE;
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          }
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> hours = minutes / MINUTES_IN_HOUR;
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          <strong class="jxr_keyword">if</strong> (hours &gt; 0) {
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>              minutes -= hours * MINUTES_IN_HOUR;
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>          }
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>  
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          <strong class="jxr_keyword">final</strong> StringBuilder time = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          <strong class="jxr_keyword">if</strong> (hours &gt; 0) {
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>              appendTimeWithUnit(time, hours, <span class="jxr_string">"hour"</span>);
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>         }
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>         <strong class="jxr_keyword">if</strong> (hours &gt; 0 || minutes &gt; 0) {
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>             time.append(minutes);
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>             time.append(String.format(<span class="jxr_string">" minute%s "</span>, minutes == 1 ? <span class="jxr_string">""</span> : <span class="jxr_string">"s"</span>));
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>         }
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>         time.append(String.format(<span class="jxr_string">"%s.%03d second%s"</span>, seconds, millis, seconds == 1 &amp;&amp; millis == 0 ? <span class="jxr_string">""</span> : <span class="jxr_string">"s"</span>));
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>         <strong class="jxr_keyword">return</strong> time.toString();
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>     }
-<a class="jxr_linenumber" name="L108" href="#L108">108</a> }
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>         <strong class="jxr_keyword">if</strong> (minutes &gt; 0) {
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>             appendTimeWithUnit(time, minutes, <span class="jxr_string">"minute"</span>);
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         }
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>         <strong class="jxr_keyword">if</strong> (seconds &gt; 0) {
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>             appendTimeWithUnit(time, seconds, <span class="jxr_string">"second"</span>);
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         }
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>         <strong class="jxr_keyword">if</strong> (millis &gt; 0) {
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>             appendTimeWithUnit(time, millis, <span class="jxr_string">"millisecond"</span>);
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>         }
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>         <strong class="jxr_keyword">final</strong> String text = time.toString();
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         <strong class="jxr_keyword">if</strong> (text.length() == 0) {
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>             <strong class="jxr_keyword">return</strong> createText(0, <span class="jxr_string">"second"</span>);
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>         }
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>         <strong class="jxr_keyword">return</strong> text;
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>     }
+<a class="jxr_linenumber" name="L116" href="#L116">116</a> 
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> appendTimeWithUnit(<strong class="jxr_keyword">final</strong> StringBuilder text, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> time, <strong class="jxr_keyword">final</strong> String unit) {
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         <strong class="jxr_keyword">if</strong> (text.length() &gt; 0) {
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>             text.append(' ');
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>         }
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>         text.append(createText(time, unit));
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>     }
+<a class="jxr_linenumber" name="L123" href="#L123">123</a> 
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String createText(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> value, <strong class="jxr_keyword">final</strong> String unit) {
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>         <strong class="jxr_keyword">final</strong> StringBuilder text = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>         text.append(value);
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>         text.append(' ');
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>         text.append(unit);
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>         <strong class="jxr_keyword">if</strong> (value != 1) {
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>             text.append('s');
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>         }
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>         <strong class="jxr_keyword">return</strong> text.toString();
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>     }
+<a class="jxr_linenumber" name="L134" href="#L134">134</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2015&#x2013;2016 <a href="http://www.gabrys.biz/">gabrys.biz</a>. All rights reserved.</div>
