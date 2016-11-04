@@ -89,11 +89,11 @@ public class ContextClassLoaderExtender {
 <span class="fc" id="L89">        final List&lt;Artifact&gt; filtered = new LinkedList&lt;Artifact&gt;();</span>
 <span class="fc bfc" id="L90" title="All 2 branches covered.">        for (final Artifact artifact : artifacts) {</span>
 <span class="fc bfc" id="L91" title="All 2 branches covered.">            if (types.contains(artifact.getType())) {</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">                if (logger.isDebugEnabled()) {</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">                if (logger.isDebugEnabled()) {</span>
 <span class="fc" id="L93">                    logger.debug(String.format(&quot;Include %s&quot;, createDisplayText(artifact)));</span>
                 }
 <span class="fc" id="L95">                filtered.add(artifact);</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">            } else if (logger.isDebugEnabled()) {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            } else if (logger.isDebugEnabled()) {</span>
 <span class="fc" id="L97">                logger.debug(String.format(&quot;Exclude %s&quot;, createDisplayText(artifact)));</span>
             }
 <span class="fc" id="L99">        }</span>
