@@ -63,22 +63,23 @@ public class Time {
      * Returns a string representation of the time in human-readable format. Examples:
      * 
      * <pre>
-     * 0.000 seconds
-     * 0.589 seconds
-     * 1.000 second
-     * 57.042 seconds
-     * 1 minute 0.000 seconds
-     * 7 minutes 1.000 second
-     * 12 minutes 28.321 seconds
-     * 1 hour 0 minutes 0.000 seconds
-     * 5 hours 0 minutes 0.000 seconds
-     * 5 hours 1 minute 1.000 second
-     * 5 hours 1 minute 54.132 seconds
-     * 5 hours 9 minutes 4.123 seconds
+     * 0 seconds
+     * 589 milliseconds
+     * 1 second
+     * 57 seconds 42 milliseconds
+     * 1 minute
+     * 2 minutes 1 millisecond
+     * 7 minutes 1 second
+     * 12 minutes 28 seconds 321 milliseconds
+     * 1 hour
+     * 5 hours
+     * 5 hours 1 second
+     * 5 hours 1 minute 54 seconds 132 milliseconds
+     * 5 hours 9 minutes 4 seconds 123 milliseconds
      * </pre>
      * 
      * @return a string representation of the time in human-readable format.
-     * @since 1.3.0
+     * @since 1.4.0
      */
     @Override
     public String toString() {
@@ -95,14 +96,39 @@ public class Time {
 
         final StringBuilder time = new StringBuilder();
         if (hours > 0) {
-            time.append(hours);
-            time.append(String.format(" hour%s ", hours == 1 ? "" : "s"));
+            appendTimeWithUnit(time, hours, "hour");
         }
-        if (hours > 0 || minutes > 0) {
-            time.append(minutes);
-            time.append(String.format(" minute%s ", minutes == 1 ? "" : "s"));
+        if (minutes > 0) {
+            appendTimeWithUnit(time, minutes, "minute");
         }
-        time.append(String.format("%s.%03d second%s", seconds, millis, seconds == 1 && millis == 0 ? "" : "s"));
-        return time.toString();
+        if (seconds > 0) {
+            appendTimeWithUnit(time, seconds, "second");
+        }
+        if (millis > 0) {
+            appendTimeWithUnit(time, millis, "millisecond");
+        }
+        final String text = time.toString();
+        if (text.length() == 0) {
+            return createText(0, "second");
+        }
+        return text;
+    }
+
+    private static void appendTimeWithUnit(final StringBuilder text, final long time, final String unit) {
+        if (text.length() > 0) {
+            text.append(' ');
+        }
+        text.append(createText(time, unit));
+    }
+
+    private static String createText(final long value, final String unit) {
+        final StringBuilder text = new StringBuilder();
+        text.append(value);
+        text.append(' ');
+        text.append(unit);
+        if (value != 1) {
+            text.append('s');
+        }
+        return text.toString();
     }
 }

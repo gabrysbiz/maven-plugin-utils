@@ -11,6 +11,8 @@
  * - a template of the License at https://opensource.org/licenses/BSD-3-Clause
  */
 /**
- * Contains utilities to operate on Mojos and methods parameters.
+ * <p>
+ * Contains tools to operate on classpath.
+ * </p>
  */
-package biz.gabrys.maven.plugin.util.parameter;
+package biz.gabrys.maven.plugin.util.classpath;

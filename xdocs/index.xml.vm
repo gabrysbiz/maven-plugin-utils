@@ -25,6 +25,11 @@
                     package)
                 </li>
                 <li>
+                	manage classpath (see
+                	<a href="apidocs/index.html?biz/gabrys/maven/plugin/util/classpath/package-summary.html">biz.gabrys.maven.plugin.util.classpath</a>
+                    package)
+                </li>
+                <li>
                     count execution time (see
                     <a href="apidocs/index.html?biz/gabrys/maven/plugin/util/timer/package-summary.html">biz.gabrys.maven.plugin.util.timer</a>
                     package)

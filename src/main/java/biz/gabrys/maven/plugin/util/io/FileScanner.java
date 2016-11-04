@@ -17,7 +17,7 @@ import java.util.Collection;
 
 /**
  * <p>
- * Responsible for scanning a directory for files which match certain criteria.
+ * Responsible for scanning a directory for files whose match certain criteria.
  * </p>
  * <p>
  * Example:

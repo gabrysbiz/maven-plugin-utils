@@ -11,12 +11,7 @@ public final class LazySimpleSanitizerTest {
     @Test
     public void sanitize2() {
         final Object sanitizedValue = Mockito.mock(Object.class);
-        final ValueContainer container = Mockito.spy(new ValueContainer() {
-
-            public Object getValue() {
-                return sanitizedValue;
-            }
-        });
+        final ValueContainer container = Mockito.spy(new ValueContainerImpl(sanitizedValue));
         final LazySimpleSanitizer sanitizer = new LazySimpleSanitizer(true, container);
 
         final Object value = Mockito.mock(Object.class);
@@ -26,5 +21,18 @@ public final class LazySimpleSanitizerTest {
         Mockito.verify(container).getValue();
         Mockito.verifyNoMoreInteractions(container);
         Mockito.verifyZeroInteractions(sanitizedValue, value);
+    }
+
+    public static class ValueContainerImpl implements ValueContainer {
+
+        private final Object value;
+
+        public ValueContainerImpl(final Object value) {
+            this.value = value;
+        }
+
+        public Object getValue() {
+            return value;
+        }
     }
 }

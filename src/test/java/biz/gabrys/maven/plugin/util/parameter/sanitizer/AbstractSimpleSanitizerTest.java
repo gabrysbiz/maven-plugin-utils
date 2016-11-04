@@ -49,7 +49,7 @@ public final class AbstractSimpleSanitizerTest {
         Mockito.verifyZeroInteractions(value);
     }
 
-    private static class SimpleSanitizerImpl extends AbstractSimpleSanitizer {
+    public static class SimpleSanitizerImpl extends AbstractSimpleSanitizer {
 
         protected SimpleSanitizerImpl(final boolean valid) {
             super(valid);

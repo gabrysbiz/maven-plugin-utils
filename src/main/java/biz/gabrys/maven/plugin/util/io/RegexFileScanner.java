@@ -54,7 +54,7 @@ public class RegexFileScanner implements FileScanner {
     }
 
     /**
-     * Creates a {@link IOFileFilter} which will be used to find all files which match filters.
+     * Creates a {@link IOFileFilter} which will be used to find all files whose match filters.
      * @param directory the directory to be scanned.
      * @param includes an array of include patterns.
      * @param excludes an array of exclude patterns
