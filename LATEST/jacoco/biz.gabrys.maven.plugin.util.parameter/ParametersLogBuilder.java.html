@@ -326,16 +326,20 @@ public class ParametersLogBuilder {
 
 <span class="fc" id="L327">        final ValueToStringConverter converter = container.getConverter();</span>
 <span class="fc" id="L328">        final Object value = container.getValue();</span>
-<span class="fc" id="L329">        line.append(converter.convert(value));</span>
+<span class="fc" id="L329">        final String valueText = String.valueOf(converter.convert(value));</span>
+<span class="fc" id="L330">        line.append(valueText);</span>
 
-<span class="fc" id="L331">        final ValueSanitizer sanitizer = container.getSanitizer();</span>
-<span class="fc bfc" id="L332" title="All 2 branches covered.">        if (!sanitizer.isValid(value)) {</span>
-<span class="fc" id="L333">            line.append(&quot; (calculated: &quot;);</span>
-<span class="fc" id="L334">            final Object correctedValue = sanitizer.sanitize(value);</span>
-<span class="fc" id="L335">            line.append(converter.convert(correctedValue));</span>
-<span class="fc" id="L336">            line.append(')');</span>
+<span class="fc" id="L332">        final ValueSanitizer sanitizer = container.getSanitizer();</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">        if (!sanitizer.isValid(value)) {</span>
+<span class="fc" id="L334">            final Object calculatedValue = sanitizer.sanitize(value);</span>
+<span class="fc" id="L335">            final String calculatedValueText = String.valueOf(converter.convert(calculatedValue));</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">            if (!valueText.equals(calculatedValueText)) {</span>
+<span class="fc" id="L337">                line.append(&quot; (calculated: &quot;);</span>
+<span class="fc" id="L338">                line.append(calculatedValueText);</span>
+<span class="fc" id="L339">                line.append(')');</span>
+            }
         }
-<span class="fc" id="L338">        return line.toString();</span>
+<span class="fc" id="L342">        return line.toString();</span>
     }
 
     /**
@@ -355,11 +359,11 @@ public class ParametersLogBuilder {
          * @param sanitizer the sanitizer responsible for sanitizing parameter value.
          * @since 1.3.0
          */
-<span class="fc" id="L358">        protected Container(final Object value, final ValueToStringConverter converter, final ValueSanitizer sanitizer) {</span>
-<span class="fc" id="L359">            this.value = value;</span>
-<span class="fc" id="L360">            this.converter = converter;</span>
-<span class="fc" id="L361">            this.sanitizer = sanitizer;</span>
-<span class="fc" id="L362">        }</span>
+<span class="fc" id="L362">        protected Container(final Object value, final ValueToStringConverter converter, final ValueSanitizer sanitizer) {</span>
+<span class="fc" id="L363">            this.value = value;</span>
+<span class="fc" id="L364">            this.converter = converter;</span>
+<span class="fc" id="L365">            this.sanitizer = sanitizer;</span>
+<span class="fc" id="L366">        }</span>
 
         /**
          * Returns a parameter value.
@@ -367,7 +371,7 @@ public class ParametersLogBuilder {
          * @since 1.3.0
          */
         protected Object getValue() {
-<span class="nc" id="L370">            return value;</span>
+<span class="nc" id="L374">            return value;</span>
         }
 
         /**
@@ -376,7 +380,7 @@ public class ParametersLogBuilder {
          * @since 1.3.0
          */
         protected ValueToStringConverter getConverter() {
-<span class="fc" id="L379">            return converter;</span>
+<span class="fc" id="L383">            return converter;</span>
         }
 
         /**
@@ -385,7 +389,7 @@ public class ParametersLogBuilder {
          * @since 1.3.0
          */
         protected ValueSanitizer getSanitizer() {
-<span class="fc" id="L388">            return sanitizer;</span>
+<span class="fc" id="L392">            return sanitizer;</span>
         }
     }
 
@@ -427,17 +431,17 @@ public class ParametersLogBuilder {
          * @param logger the adapted logger.
          * @since 1.3.0
          */
-<span class="fc" id="L430">        protected InfoInternalLoggerAdapter(final Log logger) {</span>
-<span class="fc" id="L431">            this.logger = logger;</span>
-<span class="fc" id="L432">        }</span>
+<span class="fc" id="L434">        protected InfoInternalLoggerAdapter(final Log logger) {</span>
+<span class="fc" id="L435">            this.logger = logger;</span>
+<span class="fc" id="L436">        }</span>
 
         public boolean isEnabled() {
-<span class="fc" id="L435">            return logger.isInfoEnabled();</span>
+<span class="fc" id="L439">            return logger.isInfoEnabled();</span>
         }
 
         public void log(final CharSequence line) {
-<span class="fc" id="L439">            logger.info(line);</span>
-<span class="fc" id="L440">        }</span>
+<span class="fc" id="L443">            logger.info(line);</span>
+<span class="fc" id="L444">        }</span>
     }
 
     /**
@@ -454,17 +458,17 @@ public class ParametersLogBuilder {
          * @param logger the adapted logger.
          * @since 1.3.0
          */
-<span class="fc" id="L457">        protected DebugInternalLoggerAdapter(final Log logger) {</span>
-<span class="fc" id="L458">            this.logger = logger;</span>
-<span class="fc" id="L459">        }</span>
+<span class="fc" id="L461">        protected DebugInternalLoggerAdapter(final Log logger) {</span>
+<span class="fc" id="L462">            this.logger = logger;</span>
+<span class="fc" id="L463">        }</span>
 
         public boolean isEnabled() {
-<span class="fc" id="L462">            return logger.isDebugEnabled();</span>
+<span class="fc" id="L466">            return logger.isDebugEnabled();</span>
         }
 
         public void log(final CharSequence line) {
-<span class="fc" id="L466">            logger.debug(line);</span>
-<span class="fc" id="L467">        }</span>
+<span class="fc" id="L470">            logger.debug(line);</span>
+<span class="fc" id="L471">        }</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

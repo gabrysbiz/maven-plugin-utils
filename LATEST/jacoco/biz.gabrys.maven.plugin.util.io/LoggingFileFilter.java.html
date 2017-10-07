@@ -50,11 +50,8 @@ public class LoggingFileFilter implements IOFileFilter {
      */
     public boolean accept(final File file) {
 <span class="fc" id="L52">        final boolean accepted = filter.accept(file);</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (!logger.isDebugEnabled()) {</span>
-<span class="fc" id="L54">            return accepted;</span>
-        }
-<span class="fc" id="L56">        LoggerUtils.debugInclusion(logger, file, accepted);</span>
-<span class="fc" id="L57">        return accepted;</span>
+<span class="fc" id="L53">        LoggerUtils.debugInclusion(logger, file, accepted);</span>
+<span class="fc" id="L54">        return accepted;</span>
     }
 
     /**
@@ -63,12 +60,11 @@ public class LoggingFileFilter implements IOFileFilter {
      * @since 1.2
      */
     public boolean accept(final File dir, final String name) {
-<span class="fc" id="L66">        final boolean accepted = filter.accept(dir, name);</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (!logger.isDebugEnabled()) {</span>
-<span class="fc" id="L68">            return accepted;</span>
+<span class="fc" id="L63">        final boolean accepted = filter.accept(dir, name);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (logger.isDebugEnabled()) {</span>
+<span class="fc" id="L65">            LoggerUtils.debugInclusion(logger, new File(dir, name), accepted);</span>
         }
-<span class="fc" id="L70">        LoggerUtils.debugInclusion(logger, new File(dir, name), accepted);</span>
-<span class="fc" id="L71">        return accepted;</span>
+<span class="fc" id="L67">        return accepted;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
