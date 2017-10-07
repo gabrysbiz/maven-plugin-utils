@@ -50,9 +50,6 @@ public class LoggingFileFilter implements IOFileFilter {
      */
     public boolean accept(final File file) {
         final boolean accepted = filter.accept(file);
-        if (!logger.isDebugEnabled()) {
-            return accepted;
-        }
         LoggerUtils.debugInclusion(logger, file, accepted);
         return accepted;
     }
@@ -64,10 +61,9 @@ public class LoggingFileFilter implements IOFileFilter {
      */
     public boolean accept(final File dir, final String name) {
         final boolean accepted = filter.accept(dir, name);
-        if (!logger.isDebugEnabled()) {
-            return accepted;
+        if (logger.isDebugEnabled()) {
+            LoggerUtils.debugInclusion(logger, new File(dir, name), accepted);
         }
-        LoggerUtils.debugInclusion(logger, new File(dir, name), accepted);
         return accepted;
     }
 }
