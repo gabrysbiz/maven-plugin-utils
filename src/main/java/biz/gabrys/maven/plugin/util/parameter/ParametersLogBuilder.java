@@ -326,14 +326,18 @@ public class ParametersLogBuilder {
 
         final ValueToStringConverter converter = container.getConverter();
         final Object value = container.getValue();
-        line.append(converter.convert(value));
+        final String valueText = String.valueOf(converter.convert(value));
+        line.append(valueText);
 
         final ValueSanitizer sanitizer = container.getSanitizer();
         if (!sanitizer.isValid(value)) {
-            line.append(" (calculated: ");
-            final Object correctedValue = sanitizer.sanitize(value);
-            line.append(converter.convert(correctedValue));
-            line.append(')');
+            final Object calculatedValue = sanitizer.sanitize(value);
+            final String calculatedValueText = String.valueOf(converter.convert(calculatedValue));
+            if (!valueText.equals(calculatedValueText)) {
+                line.append(" (calculated: ");
+                line.append(calculatedValueText);
+                line.append(')');
+            }
         }
         return line.toString();
     }

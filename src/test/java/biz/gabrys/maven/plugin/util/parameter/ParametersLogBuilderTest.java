@@ -367,4 +367,79 @@ public final class ParametersLogBuilderTest {
         Mockito.verifyNoMoreInteractions(builder, converter, sanitizer);
         Mockito.verifyZeroInteractions(logger);
     }
+
+    @Test
+    public void createParameterValue_valueIsNotValid_sanitizedValueIsTheSameAsValue() {
+        final Log logger = Mockito.mock(Log.class);
+        final ParametersLogBuilder builder = Mockito.spy(new ParametersLogBuilder(logger));
+
+        final String object = "object";
+
+        final Container container = Mockito.mock(Container.class);
+        Mockito.when(container.getValue()).thenReturn(object);
+
+        final ValueToStringConverter converter = Mockito.mock(ValueToStringConverter.class);
+        final String incorrectValue = "incorrect";
+        Mockito.when(converter.convert(object)).thenReturn(incorrectValue);
+        Mockito.when(container.getConverter()).thenReturn(converter);
+
+        final ValueSanitizer sanitizer = Mockito.mock(ValueSanitizer.class);
+        Mockito.when(sanitizer.isValid(object)).thenReturn(Boolean.FALSE);
+        final String sanitized = "sanitized";
+        Mockito.when(sanitizer.sanitize(object)).thenReturn(sanitized);
+        Mockito.when(container.getSanitizer()).thenReturn(sanitizer);
+
+        Mockito.when(converter.convert(sanitized)).thenReturn(incorrectValue);
+
+        final String value = builder.createParameterValue(container);
+
+        Assert.assertEquals("Value.", incorrectValue, value);
+        Mockito.verify(builder).createParameterValue(container);
+        Mockito.verify(container).getConverter();
+        Mockito.verify(container).getValue();
+        Mockito.verify(converter).convert(object);
+        Mockito.verify(container).getSanitizer();
+        Mockito.verify(sanitizer).isValid(object);
+        Mockito.verify(sanitizer).sanitize(object);
+        Mockito.verify(converter).convert(sanitized);
+        Mockito.verifyNoMoreInteractions(builder, converter, sanitizer);
+        Mockito.verifyZeroInteractions(logger);
+    }
+
+    @Test
+    public void createParameterValue_valueIsNull_sanitizedValueIsNullText() {
+        final Log logger = Mockito.mock(Log.class);
+        final ParametersLogBuilder builder = Mockito.spy(new ParametersLogBuilder(logger));
+
+        final String object = "object";
+
+        final Container container = Mockito.mock(Container.class);
+        Mockito.when(container.getValue()).thenReturn(object);
+
+        final ValueToStringConverter converter = Mockito.mock(ValueToStringConverter.class);
+        Mockito.when(converter.convert(object)).thenReturn(null);
+        Mockito.when(container.getConverter()).thenReturn(converter);
+
+        final ValueSanitizer sanitizer = Mockito.mock(ValueSanitizer.class);
+        Mockito.when(sanitizer.isValid(object)).thenReturn(Boolean.FALSE);
+        final String sanitized = "sanitized";
+        Mockito.when(sanitizer.sanitize(object)).thenReturn(sanitized);
+        Mockito.when(container.getSanitizer()).thenReturn(sanitizer);
+
+        Mockito.when(converter.convert(sanitized)).thenReturn("null");
+
+        final String value = builder.createParameterValue(container);
+
+        Assert.assertEquals("Value.", "null", value);
+        Mockito.verify(builder).createParameterValue(container);
+        Mockito.verify(container).getConverter();
+        Mockito.verify(container).getValue();
+        Mockito.verify(converter).convert(object);
+        Mockito.verify(container).getSanitizer();
+        Mockito.verify(sanitizer).isValid(object);
+        Mockito.verify(sanitizer).sanitize(object);
+        Mockito.verify(converter).convert(sanitized);
+        Mockito.verifyNoMoreInteractions(builder, converter, sanitizer);
+        Mockito.verifyZeroInteractions(logger);
+    }
 }
