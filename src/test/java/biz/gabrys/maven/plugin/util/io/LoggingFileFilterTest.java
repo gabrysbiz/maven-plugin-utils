@@ -50,7 +50,7 @@ public final class LoggingFileFilterTest {
 
         Mockito.verify(filter).accept(file);
         Mockito.verify(fileFilter).accept(file);
-        Mockito.verify(logger, Mockito.times(2)).isDebugEnabled();
+        Mockito.verify(logger).isDebugEnabled();
         Mockito.verify(file).isFile();
         Mockito.verify(file).getAbsolutePath();
         Mockito.verify(logger).debug(Matchers.anyString());
