@@ -5,7 +5,7 @@
 
     <groupId>biz.gabrys.maven</groupId>
     <artifactId>plugin-utils</artifactId>
-    <version>1.4.1-SNAPSHOT</version>
+    <version>1.4.2-SNAPSHOT</version>
     <name>Maven Plugin Utils</name>
     <description>A Java library which contains utilities for Maven 2 plugins.</description>
     <url>http://maven-plugin-utils.projects.gabrys.biz/LATEST/</url>
