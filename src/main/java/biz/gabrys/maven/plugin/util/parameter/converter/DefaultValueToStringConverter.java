@@ -12,9 +12,10 @@
  */
 package biz.gabrys.maven.plugin.util.parameter.converter;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map.Entry;
 
 /**
  * Default {@link ValueToStringConverter} which allows to converts basic types. Supported types:
@@ -27,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultValueToStringConverter extends AbstractValueToStringConverter {
 
-    private final Map<Class<?>, ValueToStringConverter> converters;
+    private final Collection<Converter> converters;
     private final ValueToStringConverter fallback;
 
     /**
@@ -35,25 +36,47 @@ public class DefaultValueToStringConverter extends AbstractValueToStringConverte
      * @since 1.3.0
      */
     public DefaultValueToStringConverter() {
-        converters = new ConcurrentHashMap<Class<?>, ValueToStringConverter>();
-        converters.put(Object[].class, new ArrayToStringConverter());
-        converters.put(Collection.class, new CollectionToStringConverter());
+        converters = new ArrayList<Converter>(2);
+        converters.add(new Converter(Object[].class, new ArrayToStringConverter()));
+        converters.add(new Converter(Collection.class, new CollectionToStringConverter()));
         fallback = new ObjectToStringConverter();
     }
 
     // for tests
     DefaultValueToStringConverter(final Map<Class<?>, ValueToStringConverter> converters, final ValueToStringConverter fallback) {
-        this.converters = converters;
+        this.converters = new ArrayList<Converter>(converters.size());
+        for (final Entry<Class<?>, ValueToStringConverter> entry : converters.entrySet()) {
+            this.converters.add(new Converter(entry.getKey(), entry.getValue()));
+        }
         this.fallback = fallback;
     }
 
     @Override
     public String convert2(final Object value) {
-        for (final Map.Entry<Class<?>, ValueToStringConverter> entry : converters.entrySet()) {
-            if (entry.getKey().isInstance(value)) {
-                return entry.getValue().convert(value);
+        for (final Converter converter : converters) {
+            if (converter.isSupported(value)) {
+                return converter.convert(value);
             }
         }
         return fallback.convert(value);
+    }
+
+    private static class Converter {
+
+        private final Class<?> clazz;
+        private final ValueToStringConverter valueConverter;
+
+        private Converter(final Class<?> clazz, final ValueToStringConverter converter) {
+            this.clazz = clazz;
+            valueConverter = converter;
+        }
+
+        private boolean isSupported(final Object value) {
+            return clazz.isInstance(value);
+        }
+
+        private String convert(final Object value) {
+            return valueConverter.convert(value);
+        }
     }
 }

@@ -140,11 +140,11 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.10.4</version>
+                    <version>3.0.0-M1</version>
                     <configuration>
                         <links>
                             <link>https://maven.apache.org/ref/2.0.11/apidocs</link>
-                            <link>http://codehaus-plexus.github.io/plexus-utils/apidocs</link>
+                            <link>https://codehaus-plexus.github.io/plexus-utils/apidocs</link>
                             <link>https://commons.apache.org/proper/commons-io/javadocs/api-2.2</link>
                         </links>
                     </configuration>
