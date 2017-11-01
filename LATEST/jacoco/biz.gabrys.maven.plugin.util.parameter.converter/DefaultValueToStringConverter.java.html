@@ -12,9 +12,10 @@
  */
 package biz.gabrys.maven.plugin.util.parameter.converter;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map.Entry;
 
 /**
  * Default {@link ValueToStringConverter} which allows to converts basic types. Supported types:
@@ -27,34 +28,56 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultValueToStringConverter extends AbstractValueToStringConverter {
 
-    private final Map&lt;Class&lt;?&gt;, ValueToStringConverter&gt; converters;
+    private final Collection&lt;Converter&gt; converters;
     private final ValueToStringConverter fallback;
 
     /**
      * Constructs a new instance.
      * @since 1.3.0
      */
-<span class="fc" id="L37">    public DefaultValueToStringConverter() {</span>
-<span class="fc" id="L38">        converters = new ConcurrentHashMap&lt;Class&lt;?&gt;, ValueToStringConverter&gt;();</span>
-<span class="fc" id="L39">        converters.put(Object[].class, new ArrayToStringConverter());</span>
-<span class="fc" id="L40">        converters.put(Collection.class, new CollectionToStringConverter());</span>
-<span class="fc" id="L41">        fallback = new ObjectToStringConverter();</span>
-<span class="fc" id="L42">    }</span>
+<span class="fc" id="L38">    public DefaultValueToStringConverter() {</span>
+<span class="fc" id="L39">        converters = new ArrayList&lt;Converter&gt;(2);</span>
+<span class="fc" id="L40">        converters.add(new Converter(Object[].class, new ArrayToStringConverter()));</span>
+<span class="fc" id="L41">        converters.add(new Converter(Collection.class, new CollectionToStringConverter()));</span>
+<span class="fc" id="L42">        fallback = new ObjectToStringConverter();</span>
+<span class="fc" id="L43">    }</span>
 
     // for tests
-<span class="fc" id="L45">    DefaultValueToStringConverter(final Map&lt;Class&lt;?&gt;, ValueToStringConverter&gt; converters, final ValueToStringConverter fallback) {</span>
-<span class="fc" id="L46">        this.converters = converters;</span>
-<span class="fc" id="L47">        this.fallback = fallback;</span>
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L46">    DefaultValueToStringConverter(final Map&lt;Class&lt;?&gt;, ValueToStringConverter&gt; converters, final ValueToStringConverter fallback) {</span>
+<span class="fc" id="L47">        this.converters = new ArrayList&lt;Converter&gt;(converters.size());</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        for (final Entry&lt;Class&lt;?&gt;, ValueToStringConverter&gt; entry : converters.entrySet()) {</span>
+<span class="fc" id="L49">            this.converters.add(new Converter(entry.getKey(), entry.getValue()));</span>
+<span class="fc" id="L50">        }</span>
+<span class="fc" id="L51">        this.fallback = fallback;</span>
+<span class="fc" id="L52">    }</span>
 
     @Override
     public String convert2(final Object value) {
-<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (final Map.Entry&lt;Class&lt;?&gt;, ValueToStringConverter&gt; entry : converters.entrySet()) {</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">            if (entry.getKey().isInstance(value)) {</span>
-<span class="fc" id="L54">                return entry.getValue().convert(value);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        for (final Converter converter : converters) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            if (converter.isSupported(value)) {</span>
+<span class="fc" id="L58">                return converter.convert(value);</span>
             }
-<span class="fc" id="L56">        }</span>
-<span class="fc" id="L57">        return fallback.convert(value);</span>
+<span class="fc" id="L60">        }</span>
+<span class="fc" id="L61">        return fallback.convert(value);</span>
+    }
+
+    private static final class Converter {
+
+        private final Class&lt;?&gt; clazz;
+        private final ValueToStringConverter valueConverter;
+
+<span class="fc" id="L69">        private Converter(final Class&lt;?&gt; clazz, final ValueToStringConverter converter) {</span>
+<span class="fc" id="L70">            this.clazz = clazz;</span>
+<span class="fc" id="L71">            valueConverter = converter;</span>
+<span class="fc" id="L72">        }</span>
+
+        private boolean isSupported(final Object value) {
+<span class="fc" id="L75">            return clazz.isInstance(value);</span>
+        }
+
+        private String convert(final Object value) {
+<span class="fc" id="L79">            return valueConverter.convert(value);</span>
+        }
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -19,7 +19,8 @@ Maven Plugin Utils,biz.gabrys.maven.plugin.util.io,ScannerPatternFormat,5,68,0,4
 Maven Plugin Utils,biz.gabrys.maven.plugin.util.io,LoggerUtils,3,22,0,6,2,3,1,4,1,1
 Maven Plugin Utils,biz.gabrys.maven.plugin.util.parameter.converter,AbstractValueToStringConverter,0,17,0,4,0,6,0,4,0,2
 Maven Plugin Utils,biz.gabrys.maven.plugin.util.parameter.converter,ObjectToStringConverter,0,6,0,0,0,3,0,2,0,2
-Maven Plugin Utils,biz.gabrys.maven.plugin.util.parameter.converter,DefaultValueToStringConverter,0,68,0,4,0,15,0,5,0,3
+Maven Plugin Utils,biz.gabrys.maven.plugin.util.parameter.converter,DefaultValueToStringConverter,0,102,0,6,0,18,0,6,0,3
+Maven Plugin Utils,biz.gabrys.maven.plugin.util.parameter.converter,DefaultValueToStringConverter.Converter,0,19,0,0,0,6,0,3,0,3
 Maven Plugin Utils,biz.gabrys.maven.plugin.util.parameter.converter,ArrayToStringConverter,0,8,0,0,0,3,0,2,0,2
 Maven Plugin Utils,biz.gabrys.maven.plugin.util.parameter.converter,CollectionToStringConverter,0,10,0,0,0,4,0,2,0,2
 Maven Plugin Utils,biz.gabrys.maven.plugin.util.parameter.sanitizer,LazySimpleSanitizer,0,11,0,0,0,4,0,2,0,2
