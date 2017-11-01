@@ -61,7 +61,7 @@ public class DefaultValueToStringConverter extends AbstractValueToStringConverte
         return fallback.convert(value);
     }
 
-    private static class Converter {
+    private static final class Converter {
 
         private final Class<?> clazz;
         private final ValueToStringConverter valueConverter;
