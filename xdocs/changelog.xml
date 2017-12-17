@@ -12,6 +12,7 @@
             <ul>
                 <li>Set compatibility with Java 6+</li>
                 <li>Set compatibility with Maven 3+</li>
+                <li>Renamed <code>Time</code> class to <a href="../apidocs/index.html?biz/gabrys/maven/plugin/util/timer/TimeSpan.html">TimeSpan</a></li>
             </ul>
          </section>
          <section id="release-1.4.1" name="Release 1.4.1">

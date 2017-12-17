@@ -19,22 +19,22 @@ package biz.gabrys.maven.plugin.util.timer;
 public interface Timer {
 
     /**
-     * Starts counting time.
+     * Starts counting execution time.
      * @since 1.0
      */
     void start();
 
     /**
-     * Stops counting time.
-     * @return the counted time.
+     * Stops counting execution time.
+     * @return the counted execution time.
      * @since 1.0
      */
-    Time stop();
+    TimeSpan stop();
 
     /**
-     * Returns a current counted time.
-     * @return the current counted time.
+     * Returns a current counted execution time.
+     * @return the current counted execution time.
      * @since 1.0
      */
-    Time getTime();
+    TimeSpan getTime();
 }

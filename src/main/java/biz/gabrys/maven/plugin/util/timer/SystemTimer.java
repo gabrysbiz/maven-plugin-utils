@@ -41,7 +41,7 @@ public class SystemTimer implements Timer {
     private final Object mutex = new Object();
 
     private Long startTime;
-    private volatile Time time;
+    private volatile TimeSpan time;
 
     /**
      * Constructs a new instance.
@@ -60,7 +60,7 @@ public class SystemTimer implements Timer {
     }
 
     @Override
-    public Time stop() {
+    public TimeSpan stop() {
         if (time == null) {
             synchronized (mutex) {
                 if (time == null) {
@@ -72,21 +72,21 @@ public class SystemTimer implements Timer {
     }
 
     /**
-     * {@inheritDoc} The current counted time is equal to:
+     * {@inheritDoc} The current counted time span is equal to:
      * <ul>
      * <li>{@code null} when timer has not been started</li>
      * <li>{@code current time - start time} when timer has been started and has not been stopped</li>
      * <li>{@code counted time during stop} when timer has been stopped</li>
      * </ul>
-     * @since 1.0
+     * @since 2.0.0
      */
     @Override
-    public Time getTime() {
+    public TimeSpan getTime() {
         if (startTime == null) {
             return null;
         }
         if (time == null) {
-            return new Time(System.currentTimeMillis() - startTime);
+            return new TimeSpan(System.currentTimeMillis() - startTime);
         }
         return time;
     }

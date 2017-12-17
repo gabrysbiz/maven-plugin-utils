@@ -4,6 +4,7 @@
 Features:
 * Set compatibility with Java 6+
 * Set compatibility with Maven 3+
+* Renamed `Time` class to [TimeSpan](http://maven-plugin-utils.projects.gabrys.biz/2.0.0/apidocs/index.html?biz/gabrys/maven/plugin/util/timer/TimeSpan.html)
 
 [See documentation](http://maven-plugin-utils.projects.gabrys.biz/2.0.0/)
 
