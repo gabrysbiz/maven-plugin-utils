@@ -46,6 +46,7 @@ public class AntFileScanner implements FileScanner {
         this.logger = logger;
     }
 
+    @Override
     public Collection<File> getFiles(final File directory, final String[] includes, final String[] excludes) {
         final DirectoryScanner scanner = createDirectoryScanner();
         scanner.setBasedir(directory);

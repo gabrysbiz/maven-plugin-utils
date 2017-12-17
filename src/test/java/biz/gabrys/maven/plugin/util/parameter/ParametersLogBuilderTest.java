@@ -1,11 +1,8 @@
 package biz.gabrys.maven.plugin.util.parameter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -42,18 +39,16 @@ public final class ParametersLogBuilderTest {
 
         builder.append(NAME, VALUE);
 
-        assertTrue("Parameters should store key", builder.parameters.containsKey(NAME));
+        assertThat(builder.parameters).containsKey(NAME);
         final Container container = builder.parameters.get(NAME);
-        assertNotNull("Parameters should store container", container);
+        assertThat(container).isNotNull();
         final ValueToStringConverter converter = container.getConverter();
-        assertNotNull("Converter instance should not be equal to null", converter);
-        assertEquals("Converter class", DefaultValueToStringConverter.class, converter.getClass());
+        assertThat(converter).isExactlyInstanceOf(DefaultValueToStringConverter.class);
         final ValueSanitizer sanitizer = container.getSanitizer();
-        assertNotNull("Sanitizer instance should not be equal to null", sanitizer);
-        assertEquals("Sanitizer class", AlwaysValidSanitizer.class, sanitizer.getClass());
+        assertThat(sanitizer).isExactlyInstanceOf(AlwaysValidSanitizer.class);
 
         verify(builder).append(NAME, VALUE);
-        verify(builder).append(anyString(), anyString(), any(DefaultValueToStringConverter.class), any(AlwaysValidSanitizer.class));
+        verify(builder).append(eq(NAME), eq(VALUE), any(DefaultValueToStringConverter.class), any(AlwaysValidSanitizer.class));
         verifyNoMoreInteractions(builder);
         verifyZeroInteractions(logger);
     }
@@ -66,16 +61,15 @@ public final class ParametersLogBuilderTest {
         final ValueToStringConverter converter = mock(ValueToStringConverter.class);
         builder.append(NAME, VALUE, converter);
 
-        assertTrue("Parameters should store key", builder.parameters.containsKey(NAME));
+        assertThat(builder.parameters).containsKey(NAME);
         final Container container = builder.parameters.get(NAME);
-        assertNotNull("Parameters should store container", container);
-        assertEquals("Custom converter instance", converter, container.getConverter());
+        assertThat(container).isNotNull();
+        assertThat(container.getConverter()).isSameAs(converter);
         final ValueSanitizer sanitizer = container.getSanitizer();
-        assertNotNull("Sanitizer instance should not be equal to null", sanitizer);
-        assertEquals("Sanitizer class", AlwaysValidSanitizer.class, sanitizer.getClass());
+        assertThat(sanitizer).isExactlyInstanceOf(AlwaysValidSanitizer.class);
 
         verify(builder).append(NAME, VALUE, converter);
-        verify(builder).append(anyString(), anyString(), any(DefaultValueToStringConverter.class), any(AlwaysValidSanitizer.class));
+        verify(builder).append(eq(NAME), eq(VALUE), eq(converter), any(AlwaysValidSanitizer.class));
         verifyNoMoreInteractions(builder);
         verifyZeroInteractions(logger, converter);
     }
@@ -88,16 +82,15 @@ public final class ParametersLogBuilderTest {
         final ValueSanitizer sanitizer = mock(ValueSanitizer.class);
         builder.append(NAME, VALUE, sanitizer);
 
-        assertTrue("Parameters should store key", builder.parameters.containsKey(NAME));
+        assertThat(builder.parameters).containsKey(NAME);
         final Container container = builder.parameters.get(NAME);
-        assertNotNull("Parameters should store container", container);
+        assertThat(container).isNotNull();
         final ValueToStringConverter converter = container.getConverter();
-        assertNotNull("Converter instance should not be equal to null", converter);
-        assertEquals("Converter class", DefaultValueToStringConverter.class, converter.getClass());
-        assertEquals("Custom sanitizer instance", sanitizer, container.getSanitizer());
+        assertThat(converter).isExactlyInstanceOf(DefaultValueToStringConverter.class);
+        assertThat(container.getSanitizer()).isSameAs(sanitizer);
 
         verify(builder).append(NAME, VALUE, sanitizer);
-        verify(builder).append(anyString(), anyString(), any(DefaultValueToStringConverter.class), any(AlwaysValidSanitizer.class));
+        verify(builder).append(eq(NAME), eq(VALUE), any(DefaultValueToStringConverter.class), eq(sanitizer));
         verifyNoMoreInteractions(builder);
         verifyZeroInteractions(logger, sanitizer);
     }
@@ -111,11 +104,11 @@ public final class ParametersLogBuilderTest {
         final ValueSanitizer sanitizer = mock(ValueSanitizer.class);
         builder.append(NAME, VALUE, converter, sanitizer);
 
-        assertTrue("Parameters should store key", builder.parameters.containsKey(NAME));
+        assertThat(builder.parameters).containsKey(NAME);
         final Container container = builder.parameters.get(NAME);
-        assertNotNull("Parameters should store container", container);
-        assertEquals("Custom converter instance", converter, container.getConverter());
-        assertEquals("Custom sanitizer instance", sanitizer, container.getSanitizer());
+        assertThat(container).isNotNull();
+        assertThat(container.getConverter()).isSameAs(converter);
+        assertThat(container.getSanitizer()).isSameAs(sanitizer);
 
         verify(builder).append(NAME, VALUE, converter, sanitizer);
         verifyNoMoreInteractions(builder);
@@ -136,11 +129,11 @@ public final class ParametersLogBuilderTest {
         final String value2 = VALUE + "2";
         builder.append(NAME, value2, converter2, sanitizer2);
 
-        assertTrue("Parameters should store key", builder.parameters.containsKey(NAME));
+        assertThat(builder.parameters).containsKey(NAME);
         final Container container = builder.parameters.get(NAME);
-        assertNotNull("Parameters should store container", container);
-        assertEquals("Custom converter instance", converter2, container.getConverter());
-        assertEquals("Custom sanitizer instance", sanitizer2, container.getSanitizer());
+        assertThat(container).isNotNull();
+        assertThat(container.getConverter()).isSameAs(converter2);
+        assertThat(container.getSanitizer()).isSameAs(sanitizer2);
 
         verify(builder).append(NAME, VALUE, converter1, sanitizer1);
         verify(builder).append(NAME, value2, converter2, sanitizer2);
@@ -180,12 +173,12 @@ public final class ParametersLogBuilderTest {
     public void log_loggerIsDisabled_doesNothing() {
         final Log logger = mock(Log.class);
         final ParametersLogBuilder builder = spy(new ParametersLogBuilder(logger));
-        final InternalLogger internalLogger = mock(InternalLogger.class);
+        final InternalLogger internalLogger = mock(InternalLogger2.class);
         when(internalLogger.isEnabled()).thenReturn(Boolean.FALSE);
 
         final boolean result = builder.log(internalLogger);
 
-        assertFalse(result);
+        assertThat(result).isFalse();
         verify(builder).log(internalLogger);
         verify(internalLogger).isEnabled();
         verifyNoMoreInteractions(builder, internalLogger);
@@ -195,13 +188,13 @@ public final class ParametersLogBuilderTest {
     public void log_loggerIsEnabled_containsZeroLines_doesNothing() {
         final Log logger = mock(Log.class);
         final ParametersLogBuilder builder = spy(new ParametersLogBuilder(logger));
-        final InternalLogger internalLogger = mock(InternalLogger.class);
+        final InternalLogger internalLogger = mock(InternalLogger2.class);
         when(internalLogger.isEnabled()).thenReturn(Boolean.TRUE);
         doReturn(Collections.emptyList()).when(builder).createLines();
 
         final boolean result = builder.log(internalLogger);
 
-        assertFalse(result);
+        assertThat(result).isFalse();
         verify(builder).log(internalLogger);
         verify(internalLogger).isEnabled();
         verify(builder).createLines();
@@ -212,13 +205,13 @@ public final class ParametersLogBuilderTest {
     public void log_loggerIsEnabled_containsLines_logsLines() {
         final Log logger = mock(Log.class);
         final ParametersLogBuilder builder = spy(new ParametersLogBuilder(logger));
-        final InternalLogger internalLogger = mock(InternalLogger.class);
+        final InternalLogger internalLogger = mock(InternalLogger2.class);
         when(internalLogger.isEnabled()).thenReturn(Boolean.TRUE);
         doReturn(Arrays.asList("line1", "line2")).when(builder).createLines();
 
         final boolean result = builder.log(internalLogger);
 
-        assertTrue(result);
+        assertThat(result).isTrue();
         verify(builder).log(internalLogger);
         verify(internalLogger).isEnabled();
         verify(builder).createLines();
@@ -236,11 +229,11 @@ public final class ParametersLogBuilderTest {
 
         final List<String> lines = builder.createLines();
 
-        assertEquals("Lines size", 4, lines.size());
-        assertEquals("Line 1", "Job parameters:", lines.get(0));
-        assertEquals("Line 2", "line1", lines.get(1));
-        assertEquals("Line 3", "line2", lines.get(2));
-        assertEquals("Line 4", "", lines.get(3));
+        assertThat(lines).hasSize(4);
+        assertThat(lines.get(0)).isEqualTo("Job parameters:");
+        assertThat(lines.get(1)).isEqualTo("line1");
+        assertThat(lines.get(2)).isEqualTo("line2");
+        assertThat(lines.get(3)).isEqualTo("");
         verify(builder).createLines();
         verify(builder).createParametersLines();
         verifyNoMoreInteractions(builder);
@@ -254,7 +247,7 @@ public final class ParametersLogBuilderTest {
 
         final List<String> lines = builder.createParametersLines();
 
-        assertTrue(lines.isEmpty());
+        assertThat(lines).isEmpty();
         verify(builder).createParametersLines();
         verifyNoMoreInteractions(builder);
         verifyZeroInteractions(logger);
@@ -266,19 +259,17 @@ public final class ParametersLogBuilderTest {
         final ParametersLogBuilder builder = spy(new ParametersLogBuilder(logger));
 
         final String name1 = "name1";
-        final Container container1 = mock(Container.class);
+        final Container container1 = mock(Container2.class);
         builder.parameters.put(name1, container1);
         doReturn("line1").when(builder).createParemeterLine(name1, container1);
 
         final String name2 = "name2";
-        final Container container2 = mock(Container.class);
+        final Container container2 = mock(Container2.class);
         builder.parameters.put(name2, container2);
         doReturn("line2").when(builder).createParemeterLine(name2, container2);
 
         final List<String> lines = builder.createParametersLines();
-        assertEquals("Lines size", 2, lines.size());
-        assertEquals("Line 1", "line1", lines.get(0));
-        assertEquals("Line 2", "line2", lines.get(1));
+        assertThat(lines).containsExactly("line1", "line2");
         verify(builder).createParametersLines();
         verify(builder).createParemeterLine(name1, container1);
         verify(builder).createParemeterLine(name2, container2);
@@ -291,12 +282,12 @@ public final class ParametersLogBuilderTest {
         final Log logger = mock(Log.class);
         final ParametersLogBuilder builder = spy(new ParametersLogBuilder(logger));
 
-        final Container container = mock(Container.class);
+        final Container container = mock(Container2.class);
         doReturn("value").when(builder).createParameterValue(container);
 
         final String line = builder.createParemeterLine(NAME, container);
 
-        assertEquals("      " + NAME + " = value", line);
+        assertThat(line).isEqualTo("      " + NAME + " = value");
         verify(builder).createParemeterLine(NAME, container);
         verify(builder).createParameterValue(container);
         verifyNoMoreInteractions(builder);
@@ -310,7 +301,7 @@ public final class ParametersLogBuilderTest {
 
         final String object = "object";
 
-        final Container container = mock(Container.class);
+        final Container container = mock(Container2.class);
         when(container.getValue()).thenReturn(object);
 
         final ValueToStringConverter converter = mock(ValueToStringConverter.class);
@@ -323,7 +314,7 @@ public final class ParametersLogBuilderTest {
 
         final String value = builder.createParameterValue(container);
 
-        assertEquals("string", value);
+        assertThat(value).isEqualTo("string");
         verify(builder).createParameterValue(container);
         verify(container).getConverter();
         verify(container).getValue();
@@ -341,7 +332,7 @@ public final class ParametersLogBuilderTest {
 
         final String object = "object";
 
-        final Container container = mock(Container.class);
+        final Container container = mock(Container2.class);
         when(container.getValue()).thenReturn(object);
 
         final ValueToStringConverter converter = mock(ValueToStringConverter.class);
@@ -358,7 +349,7 @@ public final class ParametersLogBuilderTest {
 
         final String value = builder.createParameterValue(container);
 
-        assertEquals("incorrect (calculated: correct)", value);
+        assertThat(value).isEqualTo("incorrect (calculated: correct)");
         verify(builder).createParameterValue(container);
         verify(container).getConverter();
         verify(container).getValue();
@@ -378,7 +369,7 @@ public final class ParametersLogBuilderTest {
 
         final String object = "object";
 
-        final Container container = mock(Container.class);
+        final Container container = mock(Container2.class);
         when(container.getValue()).thenReturn(object);
 
         final ValueToStringConverter converter = mock(ValueToStringConverter.class);
@@ -396,7 +387,7 @@ public final class ParametersLogBuilderTest {
 
         final String value = builder.createParameterValue(container);
 
-        assertEquals(incorrectValue, value);
+        assertThat(value).isEqualTo(incorrectValue);
         verify(builder).createParameterValue(container);
         verify(container).getConverter();
         verify(container).getValue();
@@ -416,7 +407,7 @@ public final class ParametersLogBuilderTest {
 
         final String object = "object";
 
-        final Container container = mock(Container.class);
+        final Container container = mock(Container2.class);
         when(container.getValue()).thenReturn(object);
 
         final ValueToStringConverter converter = mock(ValueToStringConverter.class);
@@ -433,7 +424,7 @@ public final class ParametersLogBuilderTest {
 
         final String value = builder.createParameterValue(container);
 
-        assertEquals("null", value);
+        assertThat(value).isEqualTo("null");
         verify(builder).createParameterValue(container);
         verify(container).getConverter();
         verify(container).getValue();
@@ -444,5 +435,16 @@ public final class ParametersLogBuilderTest {
         verify(converter).convert(sanitized);
         verifyNoMoreInteractions(builder, converter, sanitizer);
         verifyZeroInteractions(logger);
+    }
+
+    public static class Container2 extends Container {
+
+        protected Container2(final Object value, final ValueToStringConverter converter, final ValueSanitizer sanitizer) {
+            super(value, converter, sanitizer);
+        }
+    }
+
+    public interface InternalLogger2 extends InternalLogger {
+
     }
 }

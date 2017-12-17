@@ -1,6 +1,6 @@
 package biz.gabrys.maven.plugin.util.parameter.converter;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -26,7 +26,7 @@ public final class DefaultValueToStringConverterTest {
 
         final String converted = converter.convert(value);
 
-        assertEquals(expectedConverted, converted);
+        assertThat(converted).isEqualTo(expectedConverted);
     }
 
     @Test
@@ -45,7 +45,7 @@ public final class DefaultValueToStringConverterTest {
 
         final String converted = converter.convert(value);
 
-        assertEquals(expectedConverted, converted);
+        assertThat(converted).isEqualTo(expectedConverted);
         verify(fallback).convert(value);
         verifyZeroInteractions(integerConverter, booleanConverter);
     }
@@ -66,7 +66,7 @@ public final class DefaultValueToStringConverterTest {
 
         final String converted = converter.convert(value);
 
-        assertEquals(expectedConverted, converted);
+        assertThat(converted).isEqualTo(expectedConverted);
         verify(booleanConverter).convert(value);
         verifyZeroInteractions(integerConverter, fallback);
     }

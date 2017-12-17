@@ -1,7 +1,6 @@
 package biz.gabrys.maven.plugin.util.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -40,7 +39,7 @@ public final class AntFileScannerTest {
         final String[] excludes = new String[] { "exclude1", "exclude2" };
         final Collection<File> files = scanner.getFiles(directory, includes, excludes);
 
-        assertEquals(convertedFiles, files);
+        assertThat(files).isEqualTo(convertedFiles);
 
         verify(scanner).getFiles(directory, includes, excludes);
         verify(scanner).createDirectoryScanner();
@@ -59,9 +58,8 @@ public final class AntFileScannerTest {
         final AntFileScanner scanner = spy(new AntFileScanner());
 
         final DirectoryScanner directoryScanner = scanner.createDirectoryScanner();
-        assertNotNull("Directory scanner instance should not be equal to null", directoryScanner);
-        assertEquals("Directory scanner class", DirectoryScanner.class, directoryScanner.getClass());
 
+        assertThat(directoryScanner).isExactlyInstanceOf(DirectoryScanner.class);
         verify(scanner).createDirectoryScanner();
         verifyNoMoreInteractions(scanner);
     }
@@ -74,9 +72,8 @@ public final class AntFileScannerTest {
         when(logger.isDebugEnabled()).thenReturn(Boolean.FALSE);
 
         final DirectoryScanner directoryScanner = scanner.createDirectoryScanner();
-        assertNotNull("Directory scanner instance should not be equal to null", directoryScanner);
-        assertEquals("Directory scanner class", DirectoryScanner.class, directoryScanner.getClass());
 
+        assertThat(directoryScanner).isExactlyInstanceOf(DirectoryScanner.class);
         verify(scanner).createDirectoryScanner();
         verify(logger).isDebugEnabled();
         verifyNoMoreInteractions(logger);
@@ -91,9 +88,8 @@ public final class AntFileScannerTest {
         when(logger.isDebugEnabled()).thenReturn(Boolean.TRUE);
 
         final DirectoryScanner directoryScanner = scanner.createDirectoryScanner();
-        assertNotNull("Directory scanner instance should not be equal to null", directoryScanner);
-        assertEquals("Directory scanner class", LoggingDirectoryScanner.class, directoryScanner.getClass());
 
+        assertThat(directoryScanner).isExactlyInstanceOf(LoggingDirectoryScanner.class);
         verify(scanner).createDirectoryScanner();
         verify(logger).isDebugEnabled();
         verifyNoMoreInteractions(logger);
@@ -108,9 +104,8 @@ public final class AntFileScannerTest {
         final String[] paths = new String[0];
 
         final List<File> files = scanner.convertToFiles(directory, paths);
-        assertNotNull("Collection instance should not be equal to null", files);
-        assertEquals("Collection should contain 0 files", 0, files.size());
 
+        assertThat(files).isEmpty();
         verify(scanner).convertToFiles(directory, paths);
         verifyNoMoreInteractions(scanner);
     }
@@ -123,13 +118,8 @@ public final class AntFileScannerTest {
         final String[] paths = new String[] { "file1", "dir1/file2", "dir2/file3" };
 
         final List<File> files = scanner.convertToFiles(directory, paths);
-        assertNotNull("Collection instance should not be equal to null", files);
-        assertEquals("Collection should contain 3 files", 3, files.size());
 
-        assertEquals("First file path", new File("/root/file1"), files.get(0));
-        assertEquals("Second file path", new File("/root/dir1/file2"), files.get(1));
-        assertEquals("Third file path", new File("/root/dir2/file3"), files.get(2));
-
+        assertThat(files).containsExactly(new File("/root/file1"), new File("/root/dir1/file2"), new File("/root/dir2/file3"));
         verify(scanner).convertToFiles(directory, paths);
         verifyNoMoreInteractions(scanner);
     }

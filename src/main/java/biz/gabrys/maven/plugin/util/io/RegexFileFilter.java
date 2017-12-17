@@ -47,6 +47,7 @@ public class RegexFileFilter implements IOFileFilter {
      * @return {@code true} whether the file should be accepted by this filter, otherwise {@code false}.
      * @since 1.2
      */
+    @Override
     public final boolean accept(final File dir, final String name) {
         return isAcceptable(new File(dir, name));
     }
@@ -57,6 +58,7 @@ public class RegexFileFilter implements IOFileFilter {
      * @return {@code true} whether the file should be accepted by this filter, otherwise {@code false}.
      * @since 1.2
      */
+    @Override
     public final boolean accept(final File file) {
         return isAcceptable(file);
     }

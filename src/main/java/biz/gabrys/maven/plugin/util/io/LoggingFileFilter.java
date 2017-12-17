@@ -48,6 +48,7 @@ public class LoggingFileFilter implements IOFileFilter {
      * is included or excluded.
      * @since 1.2
      */
+    @Override
     public boolean accept(final File file) {
         final boolean accepted = filter.accept(file);
         LoggerUtils.debugInclusion(logger, file, accepted);
@@ -59,6 +60,7 @@ public class LoggingFileFilter implements IOFileFilter {
      * is included or excluded.
      * @since 1.2
      */
+    @Override
     public boolean accept(final File dir, final String name) {
         final boolean accepted = filter.accept(dir, name);
         if (logger.isDebugEnabled()) {

@@ -1,7 +1,6 @@
 package biz.gabrys.maven.plugin.util.parameter;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -21,10 +20,10 @@ public final class InfoInternalLoggerAdapterTest {
         final InfoInternalLoggerAdapter adapter = new InfoInternalLoggerAdapter(logger);
 
         when(logger.isInfoEnabled()).thenReturn(Boolean.FALSE);
-        assertFalse("Should return false when isInfoEnabled = false", adapter.isEnabled());
+        assertThat(adapter.isEnabled()).isFalse();
 
         when(logger.isInfoEnabled()).thenReturn(Boolean.TRUE);
-        assertTrue("Should return true when isInfoEnabled = true", adapter.isEnabled());
+        assertThat(adapter.isEnabled()).isTrue();
 
         verify(logger, times(2)).isInfoEnabled();
         verifyNoMoreInteractions(logger);

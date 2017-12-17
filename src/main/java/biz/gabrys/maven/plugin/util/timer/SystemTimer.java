@@ -51,6 +51,7 @@ public class SystemTimer implements Timer {
         // do nothing
     }
 
+    @Override
     public void start() {
         synchronized (mutex) {
             time = null;
@@ -58,6 +59,7 @@ public class SystemTimer implements Timer {
         }
     }
 
+    @Override
     public Time stop() {
         if (time == null) {
             synchronized (mutex) {
@@ -78,6 +80,7 @@ public class SystemTimer implements Timer {
      * </ul>
      * @since 1.0
      */
+    @Override
     public Time getTime() {
         if (startTime == null) {
             return null;

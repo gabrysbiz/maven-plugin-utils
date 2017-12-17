@@ -1,7 +1,7 @@
 package biz.gabrys.maven.plugin.util.io;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -27,7 +27,7 @@ public final class LoggingFileFilterTest {
         when(logger.isDebugEnabled()).thenReturn(false);
         final LoggingFileFilter filter = spy(new LoggingFileFilter(fileFilter, logger));
 
-        assertTrue(filter.accept(file));
+        assertThat(filter.accept(file)).isTrue();
 
         verify(filter).accept(file);
         verify(fileFilter).accept(file);
@@ -47,7 +47,7 @@ public final class LoggingFileFilterTest {
         when(logger.isDebugEnabled()).thenReturn(true);
         final LoggingFileFilter filter = spy(new LoggingFileFilter(fileFilter, logger));
 
-        assertTrue(filter.accept(file));
+        assertThat(filter.accept(file)).isTrue();
 
         verify(filter).accept(file);
         verify(fileFilter).accept(file);
@@ -68,7 +68,7 @@ public final class LoggingFileFilterTest {
         when(logger.isDebugEnabled()).thenReturn(false);
         final LoggingFileFilter filter = spy(new LoggingFileFilter(fileFilter, logger));
 
-        assertTrue(filter.accept(dir, name));
+        assertThat(filter.accept(dir, name)).isTrue();
 
         verify(filter).accept(dir, name);
         verify(fileFilter).accept(dir, name);
@@ -86,7 +86,7 @@ public final class LoggingFileFilterTest {
         when(logger.isDebugEnabled()).thenReturn(true);
         final LoggingFileFilter filter = spy(new LoggingFileFilter(fileFilter, logger));
 
-        assertTrue(filter.accept(dir, name));
+        assertThat(filter.accept(dir, name)).isTrue();
 
         verify(filter).accept(dir, name);
         verify(fileFilter).accept(dir, name);

@@ -1,6 +1,6 @@
 package biz.gabrys.maven.plugin.util.parameter.sanitizer;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
@@ -12,7 +12,7 @@ public final class AlwaysValidSanitizerTest {
     public void isValid_valueIsNull_returnsTrue() {
         final AlwaysValidSanitizer sanitizer = new AlwaysValidSanitizer();
         final boolean valid = sanitizer.isValid(null);
-        assertTrue(valid);
+        assertThat(valid).isTrue();
     }
 
     @Test
@@ -22,7 +22,7 @@ public final class AlwaysValidSanitizerTest {
 
         final boolean valid = sanitizer.isValid(value);
 
-        assertTrue(valid);
+        assertThat(valid).isTrue();
         verifyZeroInteractions(value);
     }
 

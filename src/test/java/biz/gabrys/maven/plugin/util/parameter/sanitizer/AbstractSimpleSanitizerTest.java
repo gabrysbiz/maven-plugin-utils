@@ -1,8 +1,6 @@
 package biz.gabrys.maven.plugin.util.parameter.sanitizer;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -16,20 +14,20 @@ public final class AbstractSimpleSanitizerTest {
     @Test
     public void isValid_conditionIsTrue_returnsTrue() {
         final SimpleSanitizerImpl sanitizer = new SimpleSanitizerImpl(true);
-        assertTrue("Returned value (null parameter)", sanitizer.isValid(null));
+        assertThat(sanitizer.isValid(null)).isTrue();
 
         final Object value = mock(Object.class);
-        assertTrue("Returned value (not null parameter)", sanitizer.isValid(value));
+        assertThat(sanitizer.isValid(value)).isTrue();
         verifyZeroInteractions(value);
     }
 
     @Test
     public void isValid_conditionIsFalse_returnsFalse() {
         final SimpleSanitizerImpl sanitizer = new SimpleSanitizerImpl(false);
-        assertFalse("Returned value (null parameter)", sanitizer.isValid(null));
+        assertThat(sanitizer.isValid(null)).isFalse();
 
         final Object value = mock(Object.class);
-        assertFalse("Returned value (not null parameter)", sanitizer.isValid(value));
+        assertThat(sanitizer.isValid(value)).isFalse();
         verifyZeroInteractions(value);
     }
 
@@ -46,7 +44,7 @@ public final class AbstractSimpleSanitizerTest {
 
         final Object sanitizedValue = sanitizer.sanitize(value);
 
-        assertSame(value, sanitizedValue);
+        assertThat(sanitizedValue).isSameAs(value);
         verify(sanitizer).sanitize(value);
         verify(sanitizer).sanitize2(value);
         verifyNoMoreInteractions(sanitizer);

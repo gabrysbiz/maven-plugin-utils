@@ -31,6 +31,7 @@ public class ObjectToStringConverter implements ValueToStringConverter {
      * @return the string representation of the parameter value (never {@code null}).
      * @since 1.3.0
      */
+    @Override
     public String convert(final Object value) {
         return String.valueOf(value);
     }

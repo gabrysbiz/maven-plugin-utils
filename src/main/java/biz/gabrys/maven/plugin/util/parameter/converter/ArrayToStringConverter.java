@@ -33,6 +33,7 @@ public class ArrayToStringConverter implements ValueToStringConverter {
      * @return the string representation of the parameter value (never {@code null}).
      * @since 1.3.0
      */
+    @Override
     public String convert(final Object value) {
         return Arrays.toString((Object[]) value);
     }

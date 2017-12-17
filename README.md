@@ -12,7 +12,7 @@ Read [API documentation](http://maven-plugin-utils.projects.gabrys.biz/LATEST/ap
 
 # Requirements
 The library to run requires:
-* Java 5.0 or higher
+* Java 6 or higher
 * Third-Party Dependencies ([see list](http://maven-plugin-utils.projects.gabrys.biz/LATEST/dependencies.html))
 
 # Download

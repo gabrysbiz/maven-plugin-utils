@@ -32,6 +32,7 @@ public class AlwaysValidSanitizer implements ValueSanitizer {
      * @return {@code true}.
      * @since 1.3.0
      */
+    @Override
     public boolean isValid(final Object value) {
         return true;
     }
@@ -43,6 +44,7 @@ public class AlwaysValidSanitizer implements ValueSanitizer {
      * @throws UnsupportedOperationException always.
      * @since 1.3.0
      */
+    @Override
     public Object sanitize(final Object value) {
         throw new UnsupportedOperationException();
     }

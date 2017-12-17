@@ -48,6 +48,7 @@ public class RegexFileScanner implements FileScanner {
     /**
      * {@inheritDoc} You must use '/' as path separator in include/exclude patterns.
      */
+    @Override
     public Collection<File> getFiles(final File directory, final String[] includes, final String[] excludes) {
         final IOFileFilter filter = createFileFilter(directory, includes, excludes);
         return FileUtils.listFiles(directory, filter, TrueFileFilter.INSTANCE);

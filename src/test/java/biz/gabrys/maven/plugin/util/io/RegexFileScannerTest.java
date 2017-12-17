@@ -1,7 +1,6 @@
 package biz.gabrys.maven.plugin.util.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -25,8 +24,7 @@ public final class RegexFileScannerTest {
         final String[] excludes = new String[] { "exclude1", "exclude2" };
 
         final IOFileFilter filter = scanner.createFileFilter(directory, includes, excludes);
-        assertNotNull("Filter instance should not be equal to null", filter);
-        assertEquals("Filter class", RegexFileFilter.class, filter.getClass());
+        assertThat(filter).isExactlyInstanceOf(RegexFileFilter.class);
 
         verify(scanner).createFileFilter(directory, includes, excludes);
         verifyNoMoreInteractions(scanner);
@@ -44,8 +42,7 @@ public final class RegexFileScannerTest {
         when(logger.isDebugEnabled()).thenReturn(Boolean.FALSE);
 
         final IOFileFilter filter = scanner.createFileFilter(directory, includes, excludes);
-        assertNotNull("Filter instance should not be equal to null", filter);
-        assertEquals("Filter class", RegexFileFilter.class, filter.getClass());
+        assertThat(filter).isExactlyInstanceOf(RegexFileFilter.class);
 
         verify(scanner).createFileFilter(directory, includes, excludes);
         verify(logger).isDebugEnabled();
@@ -64,8 +61,7 @@ public final class RegexFileScannerTest {
         when(logger.isDebugEnabled()).thenReturn(Boolean.TRUE);
 
         final IOFileFilter filter = scanner.createFileFilter(directory, includes, excludes);
-        assertNotNull("Filter instance should not be equal to null", filter);
-        assertEquals("Filter class", LoggingFileFilter.class, filter.getClass());
+        assertThat(filter).isExactlyInstanceOf(LoggingFileFilter.class);
 
         verify(scanner).createFileFilter(directory, includes, excludes);
         verify(logger).isDebugEnabled();

@@ -5,7 +5,7 @@
 
     <groupId>biz.gabrys.maven</groupId>
     <artifactId>plugin-utils</artifactId>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <name>Maven Plugin Utils</name>
     <description>A Java library which contains utilities for Maven 2 plugins.</description>
     <url>http://maven-plugin-utils.projects.gabrys.biz/LATEST/</url>
@@ -88,8 +88,8 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <!-- latest compatible with JDK 1.5 -->
-            <version>2.2</version>
+            <!-- latest compatible with JDK 1.6 -->
+            <version>2.5</version>
         </dependency>
 
         <dependency>
@@ -99,10 +99,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <!-- latest compatible with JDK 1.6 -->
+            <version>1.7.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <!-- latest compatible with JDK 1.5 -->
-            <version>1.10.19</version>
+            <version>2.13.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -140,7 +146,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.0.0-M1</version>
+                    <version>3.0.0</version>
                     <configuration>
                         <links>
                             <link>https://maven.apache.org/ref/2.0.11/apidocs</link>
@@ -221,8 +227,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
                 </configuration>

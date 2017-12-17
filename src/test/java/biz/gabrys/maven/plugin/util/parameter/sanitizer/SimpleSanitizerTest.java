@@ -1,6 +1,6 @@
 package biz.gabrys.maven.plugin.util.parameter.sanitizer;
 
-import static org.junit.Assert.assertSame;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
@@ -16,7 +16,7 @@ public final class SimpleSanitizerTest {
         final Object value = mock(Object.class);
         final Object result = sanitizer.sanitize2(value);
 
-        assertSame(sanitizedValue, result);
+        assertThat(result).isSameAs(sanitizedValue);
         verifyZeroInteractions(sanitizedValue, value);
     }
 }

@@ -1,6 +1,6 @@
 package biz.gabrys.maven.plugin.util.parameter.converter;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -10,16 +10,13 @@ public final class ArrayToStringConverterTest {
     public void convert_nullObject_returnsString() {
         final ArrayToStringConverter converter = new ArrayToStringConverter();
         final String converted = converter.convert(null);
-        assertEquals("null", converted);
+        assertThat(converted).isEqualTo("null");
     }
 
     @Test
     public void convert_notNullObject_returnsString() {
         final ArrayToStringConverter converter = new ArrayToStringConverter();
-        final String[] value = { "one", "two", "three" };
-
-        final String converted = converter.convert(value);
-
-        assertEquals("[one, two, three]", converted);
+        final String converted = converter.convert(new String[] { "one", "two", "three" });
+        assertThat(converted).isEqualTo("[one, two, three]");
     }
 }

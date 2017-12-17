@@ -1,6 +1,6 @@
 package biz.gabrys.maven.plugin.util.parameter.converter;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -15,7 +15,7 @@ public class AbstractValueToStringConverterTest {
 
         final String converted = converter.convert(null);
 
-        assertEquals(AbstractValueToStringConverter.NULL_STRING, converted);
+        assertThat(converted).isEqualTo(AbstractValueToStringConverter.NULL_STRING);
         verify(converter).convert(null);
         verifyNoMoreInteractions(converter);
     }
@@ -26,7 +26,7 @@ public class AbstractValueToStringConverterTest {
 
         final String converted = converter.convert(null);
 
-        assertEquals(AbstractValueToStringConverter.NULL_STRING, converted);
+        assertThat(converted).isEqualTo(AbstractValueToStringConverter.NULL_STRING);
         verify(converter).convert(null);
         verifyNoMoreInteractions(converter);
     }
@@ -38,7 +38,7 @@ public class AbstractValueToStringConverterTest {
 
         final String converted = converter.convert(value);
 
-        assertEquals(NotNullConverter.RETURNED_VALUE, converted);
+        assertThat(converted).isEqualTo(NotNullConverter.RETURNED_VALUE);
         verify(converter).convert(value);
         verify(converter).convert2(value);
         verifyNoMoreInteractions(converter);
@@ -51,7 +51,7 @@ public class AbstractValueToStringConverterTest {
 
         final String converted = converter.convert(value);
 
-        assertEquals(AbstractValueToStringConverter.NULL_STRING, converted);
+        assertThat(converted).isEqualTo(AbstractValueToStringConverter.NULL_STRING);
         verify(converter).convert(value);
         verify(converter).convert2(value);
         verifyNoMoreInteractions(converter);

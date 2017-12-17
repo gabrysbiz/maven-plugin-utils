@@ -1,9 +1,8 @@
 package biz.gabrys.maven.plugin.util.parameter.converter;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 import org.junit.Test;
 
@@ -13,16 +12,13 @@ public final class CollectionToStringConverterTest {
     public void convert_nullObject_returnsString() {
         final CollectionToStringConverter converter = new CollectionToStringConverter();
         final String converted = converter.convert(null);
-        assertEquals("null", converted);
+        assertThat(converted).isEqualTo("null");
     }
 
     @Test
     public void convert_notNullObject_returnsString() {
         final CollectionToStringConverter converter = new CollectionToStringConverter();
-        final Collection<Integer> value = Arrays.asList(10, 20, 30);
-
-        final String converted = converter.convert(value);
-
-        assertEquals("[10, 20, 30]", converted);
+        final String converted = converter.convert(Arrays.asList(10, 20, 30));
+        assertThat(converted).isEqualTo("[10, 20, 30]");
     }
 }

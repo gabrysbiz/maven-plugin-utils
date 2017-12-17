@@ -1,7 +1,6 @@
 package biz.gabrys.maven.plugin.util.io;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -18,14 +17,14 @@ public final class RegexFileFilterTest {
     @Test
     public void matches_patternsAreEmpty_returnsFalse() {
         final boolean matched = RegexFileFilter.matches("name", new String[0]);
-        assertFalse(matched);
+        assertThat(matched).isFalse();
     }
 
     @Test
     public void matches_nameMatchedSecondPattern_returnsTrue() {
         final String[] patterns = new String[] { "^not-matched$", "^name$" };
         final boolean matched = RegexFileFilter.matches("name", patterns);
-        assertTrue(matched);
+        assertThat(matched).isTrue();
     }
 
     @Test(expected = RegexFileFilterException.class)
@@ -84,7 +83,7 @@ public final class RegexFileFilterTest {
 
         final File file = mock(File.class);
         when(file.getCanonicalPath()).thenReturn("/not-base/file");
-        assertFalse(filter.isAcceptable(file));
+        assertThat(filter.isAcceptable(file)).isFalse();
     }
 
     @Test
@@ -98,7 +97,7 @@ public final class RegexFileFilterTest {
 
         final File file = mock(File.class);
         when(file.getCanonicalPath()).thenReturn("/base/src/file");
-        assertFalse(filter.isAcceptable(file));
+        assertThat(filter.isAcceptable(file)).isFalse();
     }
 
     @Test
@@ -110,9 +109,9 @@ public final class RegexFileFilterTest {
         final String[] excludes = new String[0];
         final RegexFileFilter filter = new RegexFileFilter(base, includes, excludes);
 
-        final File source = mock(File.class);
-        when(source.getCanonicalPath()).thenReturn("/base/src/file");
-        assertTrue(filter.isAcceptable(source));
+        final File file = mock(File.class);
+        when(file.getCanonicalPath()).thenReturn("/base/src/file");
+        assertThat(filter.isAcceptable(file)).isTrue();
     }
 
     @Test
@@ -124,9 +123,9 @@ public final class RegexFileFilterTest {
         final String[] excludes = new String[] { "^.*/file$" };
         final RegexFileFilter filter = new RegexFileFilter(base, includes, excludes);
 
-        final File source = mock(File.class);
-        when(source.getCanonicalPath()).thenReturn("/base/src/file");
-        assertFalse(filter.isAcceptable(source));
+        final File file = mock(File.class);
+        when(file.getCanonicalPath()).thenReturn("/base/src/file");
+        assertThat(filter.isAcceptable(file)).isFalse();
     }
 
     @Test
@@ -138,9 +137,9 @@ public final class RegexFileFilterTest {
         final String[] excludes = new String[] { "^.*/file$" };
         final RegexFileFilter filter = new RegexFileFilter(base, includes, excludes);
 
-        final File source = mock(File.class);
-        when(source.getCanonicalPath()).thenReturn("/base/src/file");
-        assertFalse(filter.isAcceptable(source));
+        final File file = mock(File.class);
+        when(file.getCanonicalPath()).thenReturn("/base/src/file");
+        assertThat(filter.isAcceptable(file)).isFalse();
     }
 
     @Test
@@ -152,8 +151,8 @@ public final class RegexFileFilterTest {
         final String[] excludes = new String[0];
         final RegexFileFilter filter = new RegexFileFilter(base, includes, excludes);
 
-        final File source = mock(File.class);
-        when(source.getCanonicalPath()).thenReturn("C:\\base\\src\\file");
-        assertTrue(filter.isAcceptable(source));
+        final File file = mock(File.class);
+        when(file.getCanonicalPath()).thenReturn("C:\\base\\src\\file");
+        assertThat(filter.isAcceptable(file)).isTrue();
     }
 }

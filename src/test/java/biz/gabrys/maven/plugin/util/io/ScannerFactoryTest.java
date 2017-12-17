@@ -1,8 +1,7 @@
 package biz.gabrys.maven.plugin.util.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
@@ -22,7 +21,7 @@ public final class ScannerFactoryTest {
         final Map<Class<?>, ScannerPatternFormat> scannersTypes = new HashMap<Class<?>, ScannerPatternFormat>();
         for (final ScannerPatternFormat patternFormat : ScannerPatternFormat.values()) {
             final FileScanner scanner = factory.create(patternFormat, logger);
-            assertNotNull(String.format("File scanner instance for %s pattern format should not be null", patternFormat.name()), scanner);
+            assertThat(scanner).overridingErrorMessage("File scanner instance for %s pattern is null", patternFormat.name()).isNotNull();
 
             final Class<?> clazz = scanner.getClass();
             if (scannersTypes.containsKey(clazz)) {
@@ -67,8 +66,7 @@ public final class ScannerFactoryTest {
         final Log logger = mock(Log.class);
         final FileScanner scanner = factory.create(patternFormat, logger);
 
-        assertNotNull("File scanner instance should not be equal to null", scanner);
-        assertEquals("File scanner class", expectedClass, scanner.getClass());
+        assertThat(scanner).isExactlyInstanceOf(expectedClass);
         verifyZeroInteractions(logger);
     }
 }

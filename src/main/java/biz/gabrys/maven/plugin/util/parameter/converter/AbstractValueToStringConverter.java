@@ -38,6 +38,7 @@ public abstract class AbstractValueToStringConverter implements ValueToStringCon
      * @return the string representation of the parameter value (never {@code null}).
      * @since 1.3.0
      */
+    @Override
     public String convert(final Object value) {
         if (value == null) {
             return NULL_STRING;

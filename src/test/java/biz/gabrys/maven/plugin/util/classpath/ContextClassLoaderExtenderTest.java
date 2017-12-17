@@ -1,9 +1,6 @@
 package biz.gabrys.maven.plugin.util.classpath;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anySetOf;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -27,6 +24,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 
 public final class ContextClassLoaderExtenderTest {
 
@@ -51,12 +49,12 @@ public final class ContextClassLoaderExtenderTest {
         final ContextClassLoaderExtender extender = spy(new ContextClassLoaderExtender(project, logger));
 
         final String[] types = new String[] { "jar", "duplicated", "duplicated", "war" };
-        doNothing().when(extender).addDependencies(anySetOf(String.class));
+        doNothing().when(extender).addDependencies(ArgumentMatchers.<String>anySet());
 
         extender.addDependencies(types);
 
         verify(extender).addDependencies(types);
-        verify(extender).addDependencies(anySetOf(String.class));
+        verify(extender).addDependencies(ArgumentMatchers.<String>anySet());
         verifyNoMoreInteractions(extender);
         verifyZeroInteractions(logger);
     }
@@ -112,10 +110,7 @@ public final class ContextClassLoaderExtenderTest {
         when(logger.isDebugEnabled()).thenReturn(Boolean.TRUE);
 
         final List<Artifact> filtered = extender.filterArtifacts(artifacts, types);
-        assertNotNull("Filtered collection instance should not be equal to null", filtered);
-        assertEquals("Filtered collection size", 2, filtered.size());
-        assertTrue("Filtered collection should contain artifact1", filtered.contains(artifact1));
-        assertTrue("Filtered collection should contain artifact3", filtered.contains(artifact3));
+        assertThat(filtered).containsExactly(artifact1, artifact3);
 
         verify(extender).filterArtifacts(artifacts, types);
         verify(extender).createDisplayText(artifact1);
@@ -148,10 +143,7 @@ public final class ContextClassLoaderExtenderTest {
         when(logger.isDebugEnabled()).thenReturn(Boolean.FALSE);
 
         final List<Artifact> filtered = extender.filterArtifacts(artifacts, types);
-        assertNotNull("Filtered collection instance should not be equal to null", filtered);
-        assertEquals("Filtered collection size", 2, filtered.size());
-        assertTrue("Filtered collection should contain artifact1", filtered.contains(artifact1));
-        assertTrue("Filtered collection should contain artifact3", filtered.contains(artifact3));
+        assertThat(filtered).containsExactly(artifact1, artifact3);
 
         verify(extender).filterArtifacts(artifacts, types);
         verify(logger, times(3)).isDebugEnabled();
@@ -171,7 +163,7 @@ public final class ContextClassLoaderExtenderTest {
 
         final String text = extender.createDisplayText(artifact);
 
-        assertEquals("groupId:artifactId-1.0.jar (compile)", text);
+        assertThat(text).isEqualTo("groupId:artifactId-1.0.jar (compile)");
         verify(extender).createDisplayText(artifact);
         verifyNoMoreInteractions(extender);
         verifyZeroInteractions(logger);

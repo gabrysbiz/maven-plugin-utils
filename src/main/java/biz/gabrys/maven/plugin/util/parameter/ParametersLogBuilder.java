@@ -435,10 +435,12 @@ public class ParametersLogBuilder {
             this.logger = logger;
         }
 
+        @Override
         public boolean isEnabled() {
             return logger.isInfoEnabled();
         }
 
+        @Override
         public void log(final CharSequence line) {
             logger.info(line);
         }
@@ -462,10 +464,12 @@ public class ParametersLogBuilder {
             this.logger = logger;
         }
 
+        @Override
         public boolean isEnabled() {
             return logger.isDebugEnabled();
         }
 
+        @Override
         public void log(final CharSequence line) {
             logger.debug(line);
         }
