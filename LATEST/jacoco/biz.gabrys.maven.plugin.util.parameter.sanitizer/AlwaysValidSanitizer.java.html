@@ -32,8 +32,9 @@ public class AlwaysValidSanitizer implements ValueSanitizer {
      * @return {@code true}.
      * @since 1.3.0
      */
+    @Override
     public boolean isValid(final Object value) {
-<span class="fc" id="L36">        return true;</span>
+<span class="fc" id="L37">        return true;</span>
     }
 
     /**
@@ -43,8 +44,9 @@ public class AlwaysValidSanitizer implements ValueSanitizer {
      * @throws UnsupportedOperationException always.
      * @since 1.3.0
      */
+    @Override
     public Object sanitize(final Object value) {
-<span class="fc" id="L47">        throw new UnsupportedOperationException();</span>
+<span class="fc" id="L49">        throw new UnsupportedOperationException();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

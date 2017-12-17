@@ -48,9 +48,10 @@ public class RegexFileScanner implements FileScanner {
     /**
      * {@inheritDoc} You must use '/' as path separator in include/exclude patterns.
      */
+    @Override
     public Collection&lt;File&gt; getFiles(final File directory, final String[] includes, final String[] excludes) {
-<span class="nc" id="L52">        final IOFileFilter filter = createFileFilter(directory, includes, excludes);</span>
-<span class="nc" id="L53">        return FileUtils.listFiles(directory, filter, TrueFileFilter.INSTANCE);</span>
+<span class="nc" id="L53">        final IOFileFilter filter = createFileFilter(directory, includes, excludes);</span>
+<span class="nc" id="L54">        return FileUtils.listFiles(directory, filter, TrueFileFilter.INSTANCE);</span>
     }
 
     /**
@@ -62,11 +63,11 @@ public class RegexFileScanner implements FileScanner {
      * @since 1.3.0
      */
     protected IOFileFilter createFileFilter(final File directory, final String[] includes, final String[] excludes) {
-<span class="fc" id="L65">        IOFileFilter filter = new RegexFileFilter(directory, includes, excludes);</span>
-<span class="fc bfc" id="L66" title="All 4 branches covered.">        if (logger != null &amp;&amp; logger.isDebugEnabled()) {</span>
-<span class="fc" id="L67">            filter = new LoggingFileFilter(filter, logger);</span>
+<span class="fc" id="L66">        IOFileFilter filter = new RegexFileFilter(directory, includes, excludes);</span>
+<span class="fc bfc" id="L67" title="All 4 branches covered.">        if (logger != null &amp;&amp; logger.isDebugEnabled()) {</span>
+<span class="fc" id="L68">            filter = new LoggingFileFilter(filter, logger);</span>
         }
-<span class="fc" id="L69">        return filter;</span>
+<span class="fc" id="L70">        return filter;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

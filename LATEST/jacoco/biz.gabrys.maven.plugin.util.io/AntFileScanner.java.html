@@ -46,13 +46,14 @@ public class AntFileScanner implements FileScanner {
 <span class="fc" id="L46">        this.logger = logger;</span>
 <span class="fc" id="L47">    }</span>
 
+    @Override
     public Collection&lt;File&gt; getFiles(final File directory, final String[] includes, final String[] excludes) {
-<span class="fc" id="L50">        final DirectoryScanner scanner = createDirectoryScanner();</span>
-<span class="fc" id="L51">        scanner.setBasedir(directory);</span>
-<span class="fc" id="L52">        scanner.setIncludes(includes.clone());</span>
-<span class="fc" id="L53">        scanner.setExcludes(excludes.clone());</span>
-<span class="fc" id="L54">        scanner.scan();</span>
-<span class="fc" id="L55">        return convertToFiles(directory, scanner.getIncludedFiles());</span>
+<span class="fc" id="L51">        final DirectoryScanner scanner = createDirectoryScanner();</span>
+<span class="fc" id="L52">        scanner.setBasedir(directory);</span>
+<span class="fc" id="L53">        scanner.setIncludes(includes.clone());</span>
+<span class="fc" id="L54">        scanner.setExcludes(excludes.clone());</span>
+<span class="fc" id="L55">        scanner.scan();</span>
+<span class="fc" id="L56">        return convertToFiles(directory, scanner.getIncludedFiles());</span>
     }
 
     /**
@@ -62,8 +63,8 @@ public class AntFileScanner implements FileScanner {
      * @see #getFiles(File, String[], String[])
      */
     protected DirectoryScanner createDirectoryScanner() {
-<span class="fc bfc" id="L65" title="All 4 branches covered.">        final boolean loggerEnabled = logger != null &amp;&amp; logger.isDebugEnabled();</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">        return loggerEnabled ? new LoggingDirectoryScanner(logger) : new DirectoryScanner();</span>
+<span class="fc bfc" id="L66" title="All 4 branches covered.">        final boolean loggerEnabled = logger != null &amp;&amp; logger.isDebugEnabled();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        return loggerEnabled ? new LoggingDirectoryScanner(logger) : new DirectoryScanner();</span>
     }
 
     /**
@@ -75,11 +76,11 @@ public class AntFileScanner implements FileScanner {
      * @see #getFiles(File, String[], String[])
      */
     protected List&lt;File&gt; convertToFiles(final File directory, final String[] paths) {
-<span class="fc" id="L78">        final List&lt;File&gt; files = new ArrayList&lt;File&gt;(paths.length);</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">        for (final String path : paths) {</span>
-<span class="fc" id="L80">            files.add(new File(directory, path));</span>
+<span class="fc" id="L79">        final List&lt;File&gt; files = new ArrayList&lt;File&gt;(paths.length);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        for (final String path : paths) {</span>
+<span class="fc" id="L81">            files.add(new File(directory, path));</span>
         }
-<span class="fc" id="L82">        return files;</span>
+<span class="fc" id="L83">        return files;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

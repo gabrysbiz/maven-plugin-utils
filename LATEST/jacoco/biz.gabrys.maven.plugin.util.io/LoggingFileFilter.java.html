@@ -48,10 +48,11 @@ public class LoggingFileFilter implements IOFileFilter {
      * is included or excluded.
      * @since 1.2
      */
+    @Override
     public boolean accept(final File file) {
-<span class="fc" id="L52">        final boolean accepted = filter.accept(file);</span>
-<span class="fc" id="L53">        LoggerUtils.debugInclusion(logger, file, accepted);</span>
-<span class="fc" id="L54">        return accepted;</span>
+<span class="fc" id="L53">        final boolean accepted = filter.accept(file);</span>
+<span class="fc" id="L54">        LoggerUtils.debugInclusion(logger, file, accepted);</span>
+<span class="fc" id="L55">        return accepted;</span>
     }
 
     /**
@@ -59,12 +60,13 @@ public class LoggingFileFilter implements IOFileFilter {
      * is included or excluded.
      * @since 1.2
      */
+    @Override
     public boolean accept(final File dir, final String name) {
-<span class="fc" id="L63">        final boolean accepted = filter.accept(dir, name);</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (logger.isDebugEnabled()) {</span>
-<span class="fc" id="L65">            LoggerUtils.debugInclusion(logger, new File(dir, name), accepted);</span>
+<span class="fc" id="L65">        final boolean accepted = filter.accept(dir, name);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (logger.isDebugEnabled()) {</span>
+<span class="fc" id="L67">            LoggerUtils.debugInclusion(logger, new File(dir, name), accepted);</span>
         }
-<span class="fc" id="L67">        return accepted;</span>
+<span class="fc" id="L69">        return accepted;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

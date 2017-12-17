@@ -38,12 +38,13 @@ public abstract class AbstractValueToStringConverter implements ValueToStringCon
      * @return the string representation of the parameter value (never {@code null}).
      * @since 1.3.0
      */
+    @Override
     public String convert(final Object value) {
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (value == null) {</span>
-<span class="fc" id="L43">            return NULL_STRING;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (value == null) {</span>
+<span class="fc" id="L44">            return NULL_STRING;</span>
         }
-<span class="fc" id="L45">        final String converted = convert2(value);</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        return converted == null ? NULL_STRING : converted;</span>
+<span class="fc" id="L46">        final String converted = convert2(value);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        return converted == null ? NULL_STRING : converted;</span>
     }
 
     /**
