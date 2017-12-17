@@ -71,7 +71,6 @@ public class ContextClassLoaderExtender {
      */
     public void addDependencies(final Collection<String> types) {
         ParameterUtils.verifyNotNull("types", types);
-        @SuppressWarnings("unchecked")
         final Set<Artifact> artifacts = project.getArtifacts();
         final List<Artifact> filtered = filterArtifacts(artifacts, types);
         final List<URL> urls = resolveArtifactsUrls(filtered);

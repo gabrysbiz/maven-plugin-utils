@@ -2,7 +2,8 @@
 
 ## 2.0.0
 Features:
-* Upgraded Java to 6 version
+* Set compatibility with Java 6+
+* Set compatibility with Maven 3+
 
 [See documentation](http://maven-plugin-utils.projects.gabrys.biz/2.0.0/)
 

@@ -2,7 +2,7 @@
 [![License BSD 3-Clause](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](http://maven-plugin-utils.projects.gabrys.biz/license.txt)
 [![Build Status](https://travis-ci.org/gabrysbiz/maven-plugin-utils.svg?branch=develop)](https://travis-ci.org/gabrysbiz/maven-plugin-utils)
 
-Maven Plugin Utils is a Java library which contains utilities for [Maven 2](https://maven.apache.org/) plugins. It contains tools to:
+Maven Plugin Utils is a Java library which contains utilities for [Maven 3](https://maven.apache.org/) plugins. It contains tools to:
 * scan directories for files and create a virtual (not physical) destination file in the output directory based on the source (see [biz.gabrys.maven.plugin.util.io](http://maven-plugin-utils.projects.gabrys.biz/LATEST/apidocs/index.html?biz/gabrys/maven/plugin/util/io/package-summary.html) package)
 * log Mojos parameters (see [biz.gabrys.maven.plugin.util.parameter](http://maven-plugin-utils.projects.gabrys.biz/LATEST/apidocs/index.html?biz/gabrys/maven/plugin/util/parameter/package-summary.html) package)
 * manage classpath (see [biz.gabrys.maven.plugin.util.classpath](http://maven-plugin-utils.projects.gabrys.biz/LATEST/apidocs/index.html?biz/gabrys/maven/plugin/util/classpath/package-summary.html) package)

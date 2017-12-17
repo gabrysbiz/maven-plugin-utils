@@ -10,7 +10,8 @@
          <section id="release-2.0.0" name="Release 2.0.0">
             <p>Features:</p>
             <ul>
-                <li>Upgraded Java to 6 version</li>
+                <li>Set compatibility with Java 6+</li>
+                <li>Set compatibility with Maven 3+</li>
             </ul>
          </section>
          <section id="release-1.4.1" name="Release 1.4.1">
