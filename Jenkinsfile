@@ -17,19 +17,16 @@ node {
         stage('Checkout') {
             checkout scm
         }
-
         stage('Build') {
             withMaven(maven: 'MVN-3', jdk: 'JDK-9', mavenLocalRepo: '.repository', options: [junitPublisher(disabled: true)]) {
                 sh 'mvn -e install site -DskipTests'
             }
         }
-
         stage('Test') {
             withMaven(maven: 'MVN-3', jdk: 'JDK-9', mavenLocalRepo: '.repository', options: [openTasksPublisher(disabled: true), dependenciesFingerprintPublisher(disabled: true)]) {
                 sh 'mvn -e test'
             }
         }
-
         stage('Post Build Cleanup') {
            step($class: 'WsCleanup')
         }
