@@ -1,5 +1,13 @@
 # Maven Plugin Utils Changelog
 
+## 2.0.0
+Features:
+* Set compatibility with Java 6+
+* Set compatibility with Maven 3+
+* Renamed `Time` class to [TimeSpan](http://maven-plugin-utils.projects.gabrys.biz/2.0.0/apidocs/index.html?biz/gabrys/maven/plugin/util/timer/TimeSpan.html)
+
+[See documentation](http://maven-plugin-utils.projects.gabrys.biz/2.0.0/)
+
 ## 1.4.0
 Features:
 * Added [ContextClassLoaderExtender](http://maven-plugin-utils.projects.gabrys.biz/1.4.0/apidocs/index.html?biz/gabrys/maven/plugin/util/classpath/ContextClassLoaderExtender.html) responsible for adding Maven project dependencies to classpath

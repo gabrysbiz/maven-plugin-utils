@@ -1,12 +1,15 @@
 package biz.gabrys.maven.plugin.util.io;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyZeroInteractions;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.maven.plugin.logging.Log;
-import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 public final class ScannerFactoryTest {
 
@@ -14,16 +17,16 @@ public final class ScannerFactoryTest {
     public void create_checkAllTypes_supportsAll() {
         final ScannerFactory factory = new ScannerFactory();
 
-        final Log logger = Mockito.mock(Log.class);
+        final Log logger = mock(Log.class);
         final Map<Class<?>, ScannerPatternFormat> scannersTypes = new HashMap<Class<?>, ScannerPatternFormat>();
         for (final ScannerPatternFormat patternFormat : ScannerPatternFormat.values()) {
             final FileScanner scanner = factory.create(patternFormat, logger);
-            Assert.assertNotNull(String.format("File scanner instance for %s pattern format.", patternFormat.name()), scanner);
+            assertThat(scanner).overridingErrorMessage("File scanner instance for %s pattern is null", patternFormat.name()).isNotNull();
 
             final Class<?> clazz = scanner.getClass();
             if (scannersTypes.containsKey(clazz)) {
-                Assert.fail(String.format("Factory returns the same scanner type (%s) for diffirent pattern formats: %s and %s.",
-                        clazz.getName(), scannersTypes.get(clazz).name(), patternFormat.name()));
+                fail(String.format("Factory returns the same scanner type (%s) for diffirent pattern formats: %s and %s.", clazz.getName(),
+                        scannersTypes.get(clazz).name(), patternFormat.name()));
             }
             scannersTypes.put(clazz, patternFormat);
         }
@@ -35,7 +38,7 @@ public final class ScannerFactoryTest {
         for (final ScannerPatternFormat patternFormat : ScannerPatternFormat.values()) {
             try {
                 factory.create(patternFormat, null);
-                Assert.fail("Should throw exception! Pattern format: " + patternFormat.name());
+                fail("Should throw exception! Pattern format: " + patternFormat.name());
             } catch (final IllegalArgumentException e) {
                 // ok
             }
@@ -60,11 +63,10 @@ public final class ScannerFactoryTest {
     private static void makeTypeTest(final ScannerPatternFormat patternFormat, final Class<?> expectedClass) {
         final ScannerFactory factory = new ScannerFactory();
 
-        final Log logger = Mockito.mock(Log.class);
+        final Log logger = mock(Log.class);
         final FileScanner scanner = factory.create(patternFormat, logger);
 
-        Assert.assertNotNull("File scanner instance.", scanner);
-        Assert.assertEquals("File scanner class.", expectedClass, scanner.getClass());
-        Mockito.verifyZeroInteractions(logger);
+        assertThat(scanner).isExactlyInstanceOf(expectedClass);
+        verifyZeroInteractions(logger);
     }
 }

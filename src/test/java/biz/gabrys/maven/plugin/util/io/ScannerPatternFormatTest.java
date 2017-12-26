@@ -1,6 +1,7 @@
 package biz.gabrys.maven.plugin.util.io;
 
-import org.junit.Assert;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 
 public final class ScannerPatternFormatTest {
@@ -9,10 +10,10 @@ public final class ScannerPatternFormatTest {
     public void toPattern_correctName_returnsPattern() {
         for (final ScannerPatternFormat value : ScannerPatternFormat.values()) {
             ScannerPatternFormat format = ScannerPatternFormat.toPattern(value.name());
-            Assert.assertEquals("UPPERCASE name.", value, format);
+            assertThat(format).isEqualTo(value);
 
             format = ScannerPatternFormat.toPattern(value.name().toLowerCase());
-            Assert.assertEquals("lowercase name.", value, format);
+            assertThat(format).isEqualTo(value);
         }
     }
 

@@ -2,7 +2,7 @@
  * Maven Plugin Utils
  * http://maven-plugin-utils.projects.gabrys.biz/
  *
- * Copyright (c) 2015 Adam Gabryś
+ * Copyright (c) 2015 Adam Gabrys
  *
  * This file is licensed under the BSD 3-Clause (the "License").
  * You may not use this file except in compliance with the License.
@@ -435,10 +435,12 @@ public class ParametersLogBuilder {
             this.logger = logger;
         }
 
+        @Override
         public boolean isEnabled() {
             return logger.isInfoEnabled();
         }
 
+        @Override
         public void log(final CharSequence line) {
             logger.info(line);
         }
@@ -462,10 +464,12 @@ public class ParametersLogBuilder {
             this.logger = logger;
         }
 
+        @Override
         public boolean isEnabled() {
             return logger.isDebugEnabled();
         }
 
+        @Override
         public void log(final CharSequence line) {
             logger.debug(line);
         }

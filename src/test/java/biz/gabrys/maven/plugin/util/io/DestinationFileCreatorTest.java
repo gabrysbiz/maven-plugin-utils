@@ -1,8 +1,9 @@
 package biz.gabrys.maven.plugin.util.io;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.File;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 public final class DestinationFileCreatorTest {
@@ -23,8 +24,9 @@ public final class DestinationFileCreatorTest {
 
         final File output = creator.create(source);
 
-        Assert.assertEquals("Output file name.", expectedName, output.getName());
-        Assert.assertEquals("Output file path.", new File(outputDirectory, expectedName), output);
+        assertThat(output).isNotNull();
+        assertThat(output.getName()).isEqualTo(expectedName);
+        assertThat(output).isEqualTo(new File(outputDirectory, expectedName));
     }
 
     @Test
@@ -42,7 +44,8 @@ public final class DestinationFileCreatorTest {
 
         final File output = creator.create(source);
 
-        Assert.assertEquals("Output file name.", expectedName, output.getName());
-        Assert.assertEquals("Output file path.", new File(outputDirectory, expectedName), output);
+        assertThat(output).isNotNull();
+        assertThat(output.getName()).isEqualTo(expectedName);
+        assertThat(output).isEqualTo(new File(outputDirectory, expectedName));
     }
 }

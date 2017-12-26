@@ -1,6 +1,7 @@
 package biz.gabrys.maven.plugin.util.timer;
 
-import org.junit.Assert;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 
 public final class SystemTimerTest {
@@ -9,27 +10,28 @@ public final class SystemTimerTest {
     public void testTimerInteractions() throws InterruptedException {
         final Timer timer = new SystemTimer();
 
-        Assert.assertNull("Time for not started timer should be equal to null", timer.getTime());
+        assertThat(timer.getTime()).isNull();
 
         timer.start();
         sleep();
-        final Time time1 = timer.getTime();
-        Assert.assertTrue("Time1 should be bigger than 0.", time1.toMilliseconds() > 0);
+        final TimeSpan timeSpan1 = timer.getTime();
+        assertThat(timeSpan1.toMilliseconds()).isGreaterThan(0L);
 
         sleep();
-        final Time time2 = timer.getTime();
-        Assert.assertTrue("Time2 should be bigger than 0.", time2.toMilliseconds() > 0);
-        Assert.assertTrue("Time1 should be smaller than Time2.", time1.toMilliseconds() < time2.toMilliseconds());
+        final TimeSpan timeSpan2 = timer.getTime();
+        assertThat(timeSpan2.toMilliseconds()).isGreaterThan(0L);
+        assertThat(timeSpan1.toMilliseconds()).isLessThan(timeSpan2.toMilliseconds());
 
         sleep();
-        final Time time3 = timer.stop();
-        Assert.assertTrue("Time2 should be smaller than Time3.", time2.toMilliseconds() < time3.toMilliseconds());
+        final TimeSpan timeSpan3 = timer.stop();
+        assertThat(timeSpan2.toMilliseconds()).isLessThan(timeSpan3.toMilliseconds());
 
-        Assert.assertTrue("getTime always return the same falue after stop.", time3 == timer.getTime());
-        Assert.assertTrue("getTime always return the same falue after stop.", timer.getTime() == timer.getTime());
+        // getTime always return the same value after stop
+        assertThat(timer.getTime()).isSameAs(timeSpan3);
+        assertThat(timer.getTime()).isSameAs(timer.getTime());
 
         sleep();
-        Assert.assertTrue("Timer should return the same time when call stop() method multiple times.", timer.stop() == time3);
+        assertThat(timeSpan3).isSameAs(timer.stop());
     }
 
     private void sleep() throws InterruptedException {

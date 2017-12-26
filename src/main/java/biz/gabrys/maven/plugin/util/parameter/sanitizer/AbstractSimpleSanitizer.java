@@ -2,7 +2,7 @@
  * Maven Plugin Utils
  * http://maven-plugin-utils.projects.gabrys.biz/
  *
- * Copyright (c) 2015 Adam Gabryś
+ * Copyright (c) 2015 Adam Gabrys
  *
  * This file is licensed under the BSD 3-Clause (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ public abstract class AbstractSimpleSanitizer implements ValueSanitizer {
      * @since 1.3.0
      * @see #AbstractSimpleSanitizer(boolean)
      */
+    @Override
     public boolean isValid(final Object value) {
         return valid;
     }
@@ -53,6 +54,7 @@ public abstract class AbstractSimpleSanitizer implements ValueSanitizer {
      * @throws UnsupportedOperationException if the condition is equal to {@code true}.
      * @since 1.3.0
      */
+    @Override
     public Object sanitize(final Object value) {
         if (valid) {
             throw new UnsupportedOperationException();

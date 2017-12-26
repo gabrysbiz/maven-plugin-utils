@@ -7,11 +7,20 @@
     </properties>
 
     <body>
+         <section id="release-2.0.0" name="Release 2.0.0">
+            <p>Features:</p>
+            <ul>
+                <li>Set compatibility with Java 6+</li>
+                <li>Set compatibility with Maven 3+</li>
+                <li>Renamed <code>Time</code> class to <a href="../apidocs/index.html?biz/gabrys/maven/plugin/util/timer/TimeSpan.html">TimeSpan</a></li>
+            </ul>
+         </section>
          <section id="release-1.4.1" name="Release 1.4.1">
             <p>Bugs:</p>
             <ul>
                 <li>Stopped logging calculated value when it is the same as the primary value</li>
             </ul>
+            <p><a href="http://maven-plugin-utils.projects.gabrys.biz/1.4.1/">See documentation</a></p>
          </section>
          <section id="release-1.4.0" name="Release 1.4.0">
             <p>Features:</p>

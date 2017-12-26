@@ -2,7 +2,7 @@
  * Maven Plugin Utils
  * http://maven-plugin-utils.projects.gabrys.biz/
  *
- * Copyright (c) 2015 Adam Gabryś
+ * Copyright (c) 2015 Adam Gabrys
  *
  * This file is licensed under the BSD 3-Clause (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ public class ArrayToStringConverter implements ValueToStringConverter {
      * @return the string representation of the parameter value (never {@code null}).
      * @since 1.3.0
      */
+    @Override
     public String convert(final Object value) {
         return Arrays.toString((Object[]) value);
     }

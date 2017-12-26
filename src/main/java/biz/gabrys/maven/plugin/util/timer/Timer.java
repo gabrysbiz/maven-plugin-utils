@@ -2,7 +2,7 @@
  * Maven Plugin Utils
  * http://maven-plugin-utils.projects.gabrys.biz/
  *
- * Copyright (c) 2015 Adam Gabryś
+ * Copyright (c) 2015 Adam Gabrys
  *
  * This file is licensed under the BSD 3-Clause (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,22 +19,22 @@ package biz.gabrys.maven.plugin.util.timer;
 public interface Timer {
 
     /**
-     * Starts counting time.
+     * Starts counting execution time.
      * @since 1.0
      */
     void start();
 
     /**
-     * Stops counting time.
-     * @return the counted time.
+     * Stops counting execution time.
+     * @return the counted execution time.
      * @since 1.0
      */
-    Time stop();
+    TimeSpan stop();
 
     /**
-     * Returns a current counted time.
-     * @return the current counted time.
+     * Returns a current counted execution time.
+     * @return the current counted execution time.
      * @since 1.0
      */
-    Time getTime();
+    TimeSpan getTime();
 }

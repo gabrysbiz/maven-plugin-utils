@@ -2,7 +2,7 @@
  * Maven Plugin Utils
  * http://maven-plugin-utils.projects.gabrys.biz/
  *
- * Copyright (c) 2015 Adam Gabryś
+ * Copyright (c) 2015 Adam Gabrys
  *
  * This file is licensed under the BSD 3-Clause (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,6 +46,7 @@ public class AntFileScanner implements FileScanner {
         this.logger = logger;
     }
 
+    @Override
     public Collection<File> getFiles(final File directory, final String[] includes, final String[] excludes) {
         final DirectoryScanner scanner = createDirectoryScanner();
         scanner.setBasedir(directory);

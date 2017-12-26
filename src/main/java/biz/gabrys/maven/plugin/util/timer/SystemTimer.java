@@ -2,7 +2,7 @@
  * Maven Plugin Utils
  * http://maven-plugin-utils.projects.gabrys.biz/
  *
- * Copyright (c) 2015 Adam Gabryś
+ * Copyright (c) 2015 Adam Gabrys
  *
  * This file is licensed under the BSD 3-Clause (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ public class SystemTimer implements Timer {
     private final Object mutex = new Object();
 
     private Long startTime;
-    private volatile Time time;
+    private volatile TimeSpan time;
 
     /**
      * Constructs a new instance.
@@ -51,6 +51,7 @@ public class SystemTimer implements Timer {
         // do nothing
     }
 
+    @Override
     public void start() {
         synchronized (mutex) {
             time = null;
@@ -58,7 +59,8 @@ public class SystemTimer implements Timer {
         }
     }
 
-    public Time stop() {
+    @Override
+    public TimeSpan stop() {
         if (time == null) {
             synchronized (mutex) {
                 if (time == null) {
@@ -70,20 +72,21 @@ public class SystemTimer implements Timer {
     }
 
     /**
-     * {@inheritDoc} The current counted time is equal to:
+     * {@inheritDoc} The current counted time span is equal to:
      * <ul>
      * <li>{@code null} when timer has not been started</li>
      * <li>{@code current time - start time} when timer has been started and has not been stopped</li>
      * <li>{@code counted time during stop} when timer has been stopped</li>
      * </ul>
-     * @since 1.0
+     * @since 2.0.0
      */
-    public Time getTime() {
+    @Override
+    public TimeSpan getTime() {
         if (startTime == null) {
             return null;
         }
         if (time == null) {
-            return new Time(System.currentTimeMillis() - startTime);
+            return new TimeSpan(System.currentTimeMillis() - startTime);
         }
         return time;
     }

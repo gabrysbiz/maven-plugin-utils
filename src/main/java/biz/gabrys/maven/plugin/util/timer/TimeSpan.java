@@ -2,7 +2,7 @@
  * Maven Plugin Utils
  * http://maven-plugin-utils.projects.gabrys.biz/
  *
- * Copyright (c) 2015 Adam Gabryś
+ * Copyright (c) 2015 Adam Gabrys
  *
  * This file is licensed under the BSD 3-Clause (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,10 +13,10 @@
 package biz.gabrys.maven.plugin.util.timer;
 
 /**
- * Represents time counted by a {@link Timer}.
- * @since 1.0
+ * Represents a time span counted by an instance of the {@link Timer}.
+ * @since 2.0.0
  */
-public class Time {
+public class TimeSpan {
 
     private static final int MILLISECONDS_IN_SECOND = 1000;
     private static final int SECONDS_IN_MINUTE = 60;
@@ -26,17 +26,17 @@ public class Time {
 
     /**
      * Constructs a new instance.
-     * @param milliseconds a counted time in the milliseconds.
-     * @since 1.0
+     * @param milliseconds a counted time span in the milliseconds.
+     * @since 2.0.0
      */
-    public Time(final long milliseconds) {
+    public TimeSpan(final long milliseconds) {
         this.milliseconds = milliseconds;
     }
 
     /**
      * Returns milliseconds representation of {@code this} object.
      * @return this in milliseconds.
-     * @since 1.0
+     * @since 2.0.0
      */
     public long toMilliseconds() {
         return milliseconds;
@@ -55,12 +55,12 @@ public class Time {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        final Time other = (Time) obj;
+        final TimeSpan other = (TimeSpan) obj;
         return milliseconds == other.milliseconds;
     }
 
     /**
-     * Returns a string representation of the time in human-readable format. Examples:
+     * Returns a string representation of the time span in human-readable format. Examples:
      * 
      * <pre>
      * 0 seconds
@@ -79,7 +79,7 @@ public class Time {
      * </pre>
      * 
      * @return a string representation of the time in human-readable format.
-     * @since 1.4.0
+     * @since 2.0.0
      */
     @Override
     public String toString() {

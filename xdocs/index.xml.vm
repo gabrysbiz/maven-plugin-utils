@@ -10,7 +10,7 @@
         <section name="About">
             <p>
                 ${project.name} is a Java library which contains utilities for
-                <a href="https://maven.apache.org/">Maven 2</a> plugins. It contains tools to:
+                <a href="https://maven.apache.org/">Maven 3</a> plugins. It contains tools to:
             </p>
             <ul>
                 <li>
@@ -44,7 +44,7 @@
                 The library to run requires:
             </p>
             <ul>
-                <li>Java 5.0 or higher</li>
+                <li>Java 6 or higher</li>
                 <li>Third-Party Dependencies (<a href="dependencies.html">see list</a>)</li>
             </ul>
         </section>

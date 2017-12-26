@@ -2,7 +2,7 @@
  * Maven Plugin Utils
  * http://maven-plugin-utils.projects.gabrys.biz/
  *
- * Copyright (c) 2015 Adam Gabryś
+ * Copyright (c) 2015 Adam Gabrys
  *
  * This file is licensed under the BSD 3-Clause (the "License").
  * You may not use this file except in compliance with the License.
@@ -71,7 +71,6 @@ public class ContextClassLoaderExtender {
      */
     public void addDependencies(final Collection<String> types) {
         ParameterUtils.verifyNotNull("types", types);
-        @SuppressWarnings("unchecked")
         final Set<Artifact> artifacts = project.getArtifacts();
         final List<Artifact> filtered = filterArtifacts(artifacts, types);
         final List<URL> urls = resolveArtifactsUrls(filtered);

@@ -1,31 +1,34 @@
 package biz.gabrys.maven.plugin.util.parameter.sanitizer;
 
-import org.junit.Assert;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.verifyZeroInteractions;
+
 import org.junit.Test;
-import org.mockito.Mockito;
 
 public final class AbstractSimpleSanitizerTest {
 
     @Test
     public void isValid_conditionIsTrue_returnsTrue() {
         final SimpleSanitizerImpl sanitizer = new SimpleSanitizerImpl(true);
+        assertThat(sanitizer.isValid(null)).isTrue();
 
-        Assert.assertTrue("Returned value (null parameter).", sanitizer.isValid(null));
-
-        final Object value = Mockito.mock(Object.class);
-        Assert.assertTrue("Returned value (not null parameter).", sanitizer.isValid(value));
-        Mockito.verifyZeroInteractions(value);
+        final Object value = mock(Object.class);
+        assertThat(sanitizer.isValid(value)).isTrue();
+        verifyZeroInteractions(value);
     }
 
     @Test
     public void isValid_conditionIsFalse_returnsFalse() {
         final SimpleSanitizerImpl sanitizer = new SimpleSanitizerImpl(false);
+        assertThat(sanitizer.isValid(null)).isFalse();
 
-        Assert.assertFalse("Returned value (null parameter).", sanitizer.isValid(null));
-
-        final Object value = Mockito.mock(Object.class);
-        Assert.assertFalse("Returned value (not null parameter).", sanitizer.isValid(value));
-        Mockito.verifyZeroInteractions(value);
+        final Object value = mock(Object.class);
+        assertThat(sanitizer.isValid(value)).isFalse();
+        verifyZeroInteractions(value);
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -36,17 +39,16 @@ public final class AbstractSimpleSanitizerTest {
 
     @Test
     public void sanitize_conditionIsFalse_executesSanitize2() {
-        final SimpleSanitizerImpl sanitizer = Mockito.spy(new SimpleSanitizerImpl(false));
+        final SimpleSanitizerImpl sanitizer = spy(new SimpleSanitizerImpl(false));
+        final Object value = mock(Object.class);
 
-        final Object value = Mockito.mock(Object.class);
         final Object sanitizedValue = sanitizer.sanitize(value);
 
-        Assert.assertTrue("Sanitized value and returned value should be the same object.", value == sanitizedValue);
-
-        Mockito.verify(sanitizer).sanitize(value);
-        Mockito.verify(sanitizer).sanitize2(value);
-        Mockito.verifyNoMoreInteractions(sanitizer);
-        Mockito.verifyZeroInteractions(value);
+        assertThat(sanitizedValue).isSameAs(value);
+        verify(sanitizer).sanitize(value);
+        verify(sanitizer).sanitize2(value);
+        verifyNoMoreInteractions(sanitizer);
+        verifyZeroInteractions(value);
     }
 
     public static class SimpleSanitizerImpl extends AbstractSimpleSanitizer {

@@ -5,10 +5,10 @@
 
     <groupId>biz.gabrys.maven</groupId>
     <artifactId>plugin-utils</artifactId>
-    <version>1.4.1</version>
+    <version>2.0.0</version>
     <name>Maven Plugin Utils</name>
-    <description>A Java library which contains utilities for Maven 2 plugins.</description>
-    <url>http://maven-plugin-utils.projects.gabrys.biz/1.4.1/</url>
+    <description>A Java library which contains utilities for Maven 3 plugins.</description>
+    <url>http://maven-plugin-utils.projects.gabrys.biz/2.0.0/</url>
 
     <inceptionYear>2015</inceptionYear>
     <organization>
@@ -68,28 +68,16 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
-            <artifactId>maven-plugin-api</artifactId>
-            <version>2.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-project</artifactId>
-            <version>2.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-utils</artifactId>
-            <version>2.0.0</version>
+            <artifactId>maven-core</artifactId>
+            <version>3.0</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <!-- latest compatible with JDK 1.5 -->
-            <version>2.2</version>
+            <!-- latest compatible with JDK 6 -->
+            <version>2.5</version>
         </dependency>
 
         <dependency>
@@ -99,10 +87,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <!-- latest compatible with JDK 6 -->
+            <version>1.7.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <!-- latest compatible with JDK 1.5 -->
-            <version>1.10.19</version>
+            <version>2.13.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -140,12 +134,14 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.10.4</version>
+                    <version>3.0.0</version>
                     <configuration>
                         <links>
-                            <link>https://maven.apache.org/ref/2.0.11/apidocs</link>
-                            <link>http://codehaus-plexus.github.io/plexus-utils/apidocs</link>
-                            <link>https://commons.apache.org/proper/commons-io/javadocs/api-2.2</link>
+                            <link>https://maven.apache.org/ref/3.0/maven-artifact/apidocs</link>
+                            <link>https://maven.apache.org/ref/3.0/maven-core/apidocs</link>
+                            <link>https://maven.apache.org/ref/3.0/maven-plugin-api/apidocs</link>
+                            <link>https://codehaus-plexus.github.io/plexus-utils/apidocs</link>
+                            <link>https://commons.apache.org/proper/commons-io/javadocs/api-2.5</link>
                         </links>
                     </configuration>
                 </plugin>
@@ -180,7 +176,7 @@
                     <configuration>
                         <header>header-license-template.txt</header>
                         <properties>
-                            <owner>Adam Gabryś</owner>
+                            <owner>Adam Gabrys</owner>
                         </properties>
                         <includes>
                             <include>src/main/java/**</include>
@@ -209,10 +205,20 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>src/site/resources/files</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
                 </configuration>
@@ -268,13 +274,13 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>site</phase>
+                        <phase>pre-site</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
                             <target>
-                                <copy todir="${project.build.directory}/site/files">
+                                <copy todir="src/site/resources/files">
                                     <fileset dir="${project.build.directory}">
                                         <include name="${project.artifactId}-${project.version}.jar" />
                                         <include name="${project.artifactId}-${project.version}-javadoc.jar" />
