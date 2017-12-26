@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegexFileFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Plugin Utils</a> &gt; <a href="index.source.html" class="el_package">biz.gabrys.maven.plugin.util.io</a> &gt; <span class="el_source">RegexFileFilter.java</span></div><h1>RegexFileFilter.java</h1><pre class="source lang-java linenums">/*
+ * Maven Plugin Utils
+ * http://maven-plugin-utils.projects.gabrys.biz/
+ *
+ * Copyright (c) 2015 Adam Gabrys
+ *
+ * This file is licensed under the BSD 3-Clause (the &quot;License&quot;).
+ * You may not use this file except in compliance with the License.
+ * You may obtain:
+ * - a copy of the License at project page
+ * - a template of the License at https://opensource.org/licenses/BSD-3-Clause
+ */
+package biz.gabrys.maven.plugin.util.io;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.filefilter.IOFileFilter;
+
+/**
+ * File filter which uses regular expressions to accept files.
+ * @since 1.2
+ */
+public class RegexFileFilter implements IOFileFilter {
+
+    private final String rootDirectoryPath;
+    private final String[] includes;
+    private final String[] excludes;
+
+    /**
+     * Constructs a new instance.
+     * @param directory the directory to be scanned.
+     * @param includes an array of include patterns.
+     * @param excludes an array of exclude patterns.
+     * @throws RegexFileFilterException if an error occurs while resolving canonical path.
+     * @since 1.2
+     */
+<span class="fc" id="L38">    public RegexFileFilter(final File directory, final String[] includes, final String[] excludes) {</span>
+<span class="fc" id="L39">        rootDirectoryPath = getCanonicalPath(directory);</span>
+<span class="fc" id="L40">        this.includes = includes.clone();</span>
+<span class="fc" id="L41">        this.excludes = excludes.clone();</span>
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * {@inheritDoc}&lt;br&gt;
+     * This method delegates logic to {@link RegexFileFilter#isAcceptable(File)}.
+     * @return {@code true} whether the file should be accepted by this filter, otherwise {@code false}.
+     * @since 1.2
+     */
+    @Override
+    public final boolean accept(final File dir, final String name) {
+<span class="fc" id="L52">        return isAcceptable(new File(dir, name));</span>
+    }
+
+    /**
+     * {@inheritDoc}&lt;br&gt;
+     * This method delegates logic to {@link RegexFileFilter#isAcceptable(File)}.
+     * @return {@code true} whether the file should be accepted by this filter, otherwise {@code false}.
+     * @since 1.2
+     */
+    @Override
+    public final boolean accept(final File file) {
+<span class="fc" id="L63">        return isAcceptable(file);</span>
+    }
+
+    /**
+     * Checks whether a file should be accepted by this filter.
+     * @param file the file to check.
+     * @return {@code true} whether the file should be accepted by this filter, otherwise {@code false}.
+     * @since 1.2
+     */
+    protected boolean isAcceptable(final File file) {
+<span class="fc" id="L73">        final String path = getCanonicalPath(file);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (!path.startsWith(rootDirectoryPath)) {</span>
+<span class="fc" id="L75">            return false;</span>
+        }
+<span class="fc" id="L77">        final String nameWithoutRoot = path.substring(rootDirectoryPath.length() + 1).replace('\\', '/');</span>
+<span class="fc bfc" id="L78" title="All 4 branches covered.">        return !matches(nameWithoutRoot, excludes) &amp;&amp; matches(nameWithoutRoot, includes);</span>
+    }
+
+    /**
+     * Checks whether a file path matches at least one patter from patterns.
+     * @param path the file path to check.
+     * @param patterns the regular expressions patterns.
+     * @return {@code true} whether the file path matches at least one patter from patterns, otherwise {@code false}.
+     * @since 1.2
+     */
+    protected static boolean matches(final String path, final String[] patterns) {
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        for (final String pattern : patterns) {</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            if (path.matches(pattern)) {</span>
+<span class="fc" id="L91">                return true;</span>
+            }
+        }
+<span class="fc" id="L94">        return false;</span>
+    }
+
+    /**
+     * Returns canonical path for a file.
+     * @param file the file.
+     * @return file canonical path.
+     * @throws RegexFileFilterException if an error occurs while resolving canonical path.
+     * @since 1.2
+     */
+    protected static String getCanonicalPath(final File file) {
+        try {
+<span class="fc" id="L106">            return file.getCanonicalPath();</span>
+<span class="fc" id="L107">        } catch (final IOException e) {</span>
+<span class="fc" id="L108">            throw new RegexFileFilterException(e);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

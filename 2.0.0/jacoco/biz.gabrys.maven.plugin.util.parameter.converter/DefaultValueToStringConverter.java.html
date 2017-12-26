@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultValueToStringConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Plugin Utils</a> &gt; <a href="index.source.html" class="el_package">biz.gabrys.maven.plugin.util.parameter.converter</a> &gt; <span class="el_source">DefaultValueToStringConverter.java</span></div><h1>DefaultValueToStringConverter.java</h1><pre class="source lang-java linenums">/*
+ * Maven Plugin Utils
+ * http://maven-plugin-utils.projects.gabrys.biz/
+ *
+ * Copyright (c) 2015 Adam Gabrys
+ *
+ * This file is licensed under the BSD 3-Clause (the &quot;License&quot;).
+ * You may not use this file except in compliance with the License.
+ * You may obtain:
+ * - a copy of the License at project page
+ * - a template of the License at https://opensource.org/licenses/BSD-3-Clause
+ */
+package biz.gabrys.maven.plugin.util.parameter.converter;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
+
+/**
+ * Default {@link ValueToStringConverter} which allows to converts basic types. Supported types:
+ * &lt;ul&gt;
+ * &lt;li&gt;arrays (see {@link ArrayToStringConverter})&lt;/li&gt;
+ * &lt;li&gt;collections (see {@link CollectionToStringConverter})&lt;/li&gt;
+ * &lt;li&gt;objects (see {@link ObjectToStringConverter})&lt;/li&gt;
+ * &lt;/ul&gt;
+ * @since 1.3.0
+ */
+public class DefaultValueToStringConverter extends AbstractValueToStringConverter {
+
+    private final Collection&lt;Converter&gt; converters;
+    private final ValueToStringConverter fallback;
+
+    /**
+     * Constructs a new instance.
+     * @since 1.3.0
+     */
+<span class="fc" id="L38">    public DefaultValueToStringConverter() {</span>
+<span class="fc" id="L39">        converters = new ArrayList&lt;Converter&gt;(2);</span>
+<span class="fc" id="L40">        converters.add(new Converter(Object[].class, new ArrayToStringConverter()));</span>
+<span class="fc" id="L41">        converters.add(new Converter(Collection.class, new CollectionToStringConverter()));</span>
+<span class="fc" id="L42">        fallback = new ObjectToStringConverter();</span>
+<span class="fc" id="L43">    }</span>
+
+    // for tests
+<span class="fc" id="L46">    DefaultValueToStringConverter(final Map&lt;Class&lt;?&gt;, ValueToStringConverter&gt; converters, final ValueToStringConverter fallback) {</span>
+<span class="fc" id="L47">        this.converters = new ArrayList&lt;Converter&gt;(converters.size());</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        for (final Entry&lt;Class&lt;?&gt;, ValueToStringConverter&gt; entry : converters.entrySet()) {</span>
+<span class="fc" id="L49">            this.converters.add(new Converter(entry.getKey(), entry.getValue()));</span>
+<span class="fc" id="L50">        }</span>
+<span class="fc" id="L51">        this.fallback = fallback;</span>
+<span class="fc" id="L52">    }</span>
+
+    @Override
+    public String convert2(final Object value) {
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        for (final Converter converter : converters) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            if (converter.isSupported(value)) {</span>
+<span class="fc" id="L58">                return converter.convert(value);</span>
+            }
+<span class="fc" id="L60">        }</span>
+<span class="fc" id="L61">        return fallback.convert(value);</span>
+    }
+
+    private static final class Converter {
+
+        private final Class&lt;?&gt; clazz;
+        private final ValueToStringConverter valueConverter;
+
+<span class="fc" id="L69">        private Converter(final Class&lt;?&gt; clazz, final ValueToStringConverter converter) {</span>
+<span class="fc" id="L70">            this.clazz = clazz;</span>
+<span class="fc" id="L71">            valueConverter = converter;</span>
+<span class="fc" id="L72">        }</span>
+
+        private boolean isSupported(final Object value) {
+<span class="fc" id="L75">            return clazz.isInstance(value);</span>
+        }
+
+        private String convert(final Object value) {
+<span class="fc" id="L79">            return valueConverter.convert(value);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
