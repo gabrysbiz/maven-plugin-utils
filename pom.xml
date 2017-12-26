@@ -76,7 +76,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <!-- latest compatible with JDK 1.6 -->
+            <!-- latest compatible with JDK 6 -->
             <version>2.5</version>
         </dependency>
 
@@ -89,7 +89,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <!-- latest compatible with JDK 1.6 -->
+            <!-- latest compatible with JDK 6 -->
             <version>1.7.1</version>
             <scope>test</scope>
         </dependency>
@@ -176,7 +176,7 @@
                     <configuration>
                         <header>header-license-template.txt</header>
                         <properties>
-                            <owner>Adam Gabryś</owner>
+                            <owner>Adam Gabrys</owner>
                         </properties>
                         <includes>
                             <include>src/main/java/**</include>
