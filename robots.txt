@@ -1,3 +1,0 @@
-User-agent: *
-Disallow: /LATEST/
-Sitemap: http://maven-plugin-utils.projects.gabrys.biz/sitemap.xml
