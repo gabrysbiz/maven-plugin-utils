@@ -19,7 +19,7 @@ package biz.gabrys.maven.plugin.util.io;
 public enum ScannerPatternFormat {
 
     /**
-     * The <a href="http://ant.apache.org/manual/dirtasks.html#patterns">Ant patterns</a> format.
+     * The <a href="https://ant.apache.org/manual/dirtasks.html#patterns">Ant patterns</a> format.
      * @since 1.0
      */
     ANT,

@@ -21,7 +21,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 /**
- * File scanner which uses <a href="http://ant.apache.org/manual/dirtasks.html#patterns">Ant patterns</a> to match
+ * File scanner which uses <a href="https://ant.apache.org/manual/dirtasks.html#patterns">Ant patterns</a> to match
  * files.
  * @since 1.2
  */
