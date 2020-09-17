@@ -1,8 +1,8 @@
 /*
  * Maven Plugin Utils
- * http://maven-plugin-utils.projects.gabrys.biz/
+ * https://gabrysbiz.github.io/maven-plugin-utils/
  *
- * Copyright (c) 2015 Adam Gabrys
+ * Copyright (c) 2015-2020 Adam Gabrys
  *
  * This file is licensed under the BSD 3-Clause (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package biz.gabrys.maven.plugin.util.io;
 public enum ScannerPatternFormat {
 
     /**
-     * The <a href="http://ant.apache.org/manual/dirtasks.html#patterns">Ant patterns</a> format.
+     * The <a href="https://ant.apache.org/manual/dirtasks.html#patterns">Ant patterns</a> format.
      * @since 1.0
      */
     ANT,

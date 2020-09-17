@@ -1,8 +1,8 @@
 /*
  * Maven Plugin Utils
- * http://maven-plugin-utils.projects.gabrys.biz/
+ * https://gabrysbiz.github.io/maven-plugin-utils/
  *
- * Copyright (c) 2015 Adam Gabrys
+ * Copyright (c) 2015-2020 Adam Gabrys
  *
  * This file is licensed under the BSD 3-Clause (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 /**
- * File scanner which uses <a href="http://ant.apache.org/manual/dirtasks.html#patterns">Ant patterns</a> to match
+ * File scanner which uses <a href="https://ant.apache.org/manual/dirtasks.html#patterns">Ant patterns</a> to match
  * files.
  * @since 1.2
  */

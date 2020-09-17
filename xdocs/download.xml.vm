@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 https://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
         <title>Download</title>
@@ -21,7 +21,7 @@
                         #end
                     >${project.artifactId}-${project.version}.jar</td>
                     <td>
-                        <a href="files/${project.artifactId}-${project.version}.jar">gabrys.biz</a>
+                        <a href="files/${project.artifactId}-${project.version}.jar">gabrysbiz.github.io</a>
                         #if (!$snapshot)
                             <br /><a href="https://repo.maven.apache.org/maven2/biz/gabrys/maven/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}.jar">repo.maven.apache.org</a>
                         #end
@@ -34,7 +34,7 @@
                         #end
                     >${project.artifactId}-${project.version}-javadoc.jar</td>
                     <td>
-                        <a href="files/${project.artifactId}-${project.version}-javadoc.jar">gabrys.biz</a>
+                        <a href="files/${project.artifactId}-${project.version}-javadoc.jar">gabrysbiz.github.io</a>
                         #if (!$snapshot)
                             <br /><a href="https://repo.maven.apache.org/maven2/biz/gabrys/maven/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}-javadoc.jar">repo.maven.apache.org</a>
                         #end
@@ -47,7 +47,7 @@
                         #end
                     >${project.artifactId}-${project.version}-sources.jar</td>
                     <td>
-                        <a href="files/${project.artifactId}-${project.version}-sources.jar">gabrys.biz</a>
+                        <a href="files/${project.artifactId}-${project.version}-sources.jar">gabrysbiz.github.io</a>
                         #if (!$snapshot)
                             <br /><a href="https://repo.maven.apache.org/maven2/biz/gabrys/maven/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}-sources.jar">repo.maven.apache.org</a>
                         #end
