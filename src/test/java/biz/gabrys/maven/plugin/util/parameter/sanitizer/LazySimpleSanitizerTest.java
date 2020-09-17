@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 import org.junit.Test;
 
@@ -25,7 +25,7 @@ public final class LazySimpleSanitizerTest {
         assertThat(result).isSameAs(sanitizedValue);
         verify(container).getValue();
         verifyNoMoreInteractions(container);
-        verifyZeroInteractions(sanitizedValue, value);
+        verifyNoInteractions(sanitizedValue, value);
     }
 
     public static class ValueContainerImpl implements ValueContainer {

@@ -1,7 +1,4 @@
 language: java
-jdk:
-  - oraclejdk9
-  - oraclejdk8
-  - openjdk7
+jdk: oraclejdk11
 install: mvn -B -V -e package -DskipTests
 script: mvn -B -e verify site

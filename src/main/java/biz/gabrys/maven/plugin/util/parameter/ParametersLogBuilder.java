@@ -70,20 +70,14 @@ import biz.gabrys.maven.plugin.util.parameter.sanitizer.ValueSanitizer;
  *
  *         // lazy sanitizer
  *         boolean condition1 = true;
- *         logger.append("stringLazyNotExecuted", "lazy-not-executed", new {@link biz.gabrys.maven.plugin.util.parameter.sanitizer.LazySimpleSanitizer LazySimpleSanitizer}(condition1, new ValueContainer() {
- *
- *             public Object getValue() {
- *                 // never executed, because condition1 is equal to true 
- *                 return "heavyOperation1()";
- *             }
+ *         logger.append("stringLazyNotExecuted", "lazy-not-executed", new {@link biz.gabrys.maven.plugin.util.parameter.sanitizer.LazySimpleSanitizer LazySimpleSanitizer}(condition1, () -&gt; {
+ *             // never executed, because condition1 is equal to true 
+ *             return "heavyOperation1()";
  *         }));
  *         boolean condition2 = false;
- *         logger.append("stringLazyExecuted", "lazy-executed", new {@link biz.gabrys.maven.plugin.util.parameter.sanitizer.LazySimpleSanitizer LazySimpleSanitizer}(condition2, new ValueContainer() {
- *
- *             public Object getValue() {
- *                 // executed, because condition2 is equal to false 
- *                 return "heavyOperation2()";
- *             }
+ *         logger.append("stringLazyExecuted", "lazy-executed", new {@link biz.gabrys.maven.plugin.util.parameter.sanitizer.LazySimpleSanitizer LazySimpleSanitizer}(condition2, () -&gt; {
+ *             // executed, because condition2 is equal to false 
+ *             return "heavyOperation2()";
  *         }));
  *
  *         // custom sanitizer

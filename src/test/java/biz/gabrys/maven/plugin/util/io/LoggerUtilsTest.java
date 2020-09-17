@@ -2,8 +2,8 @@ package biz.gabrys.maven.plugin.util.io;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
@@ -24,7 +24,7 @@ public final class LoggerUtilsTest {
 
         verify(logger).isDebugEnabled();
         verifyNoMoreInteractions(logger);
-        verifyZeroInteractions(file);
+        verifyNoInteractions(file);
     }
 
     @Test
@@ -38,7 +38,7 @@ public final class LoggerUtilsTest {
 
         verify(logger).isDebugEnabled();
         verifyNoMoreInteractions(logger);
-        verifyZeroInteractions(file);
+        verifyNoInteractions(file);
     }
 
     @Test

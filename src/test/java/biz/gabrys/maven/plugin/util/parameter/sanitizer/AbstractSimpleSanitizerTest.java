@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public final class AbstractSimpleSanitizerTest {
 
         final Object value = mock(Object.class);
         assertThat(sanitizer.isValid(value)).isTrue();
-        verifyZeroInteractions(value);
+        verifyNoInteractions(value);
     }
 
     @Test
@@ -28,7 +28,7 @@ public final class AbstractSimpleSanitizerTest {
 
         final Object value = mock(Object.class);
         assertThat(sanitizer.isValid(value)).isFalse();
-        verifyZeroInteractions(value);
+        verifyNoInteractions(value);
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -48,7 +48,7 @@ public final class AbstractSimpleSanitizerTest {
         verify(sanitizer).sanitize(value);
         verify(sanitizer).sanitize2(value);
         verifyNoMoreInteractions(sanitizer);
-        verifyZeroInteractions(value);
+        verifyNoInteractions(value);
     }
 
     public static class SimpleSanitizerImpl extends AbstractSimpleSanitizer {

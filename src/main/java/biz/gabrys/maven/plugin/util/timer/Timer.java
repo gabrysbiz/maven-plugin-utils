@@ -27,14 +27,14 @@ public interface Timer {
     /**
      * Stops counting execution time.
      * @return the counted execution time.
-     * @since 1.0
+     * @since 2.0.0
      */
     TimeSpan stop();
 
     /**
      * Returns a current counted execution time.
      * @return the current counted execution time.
-     * @since 1.0
+     * @since 2.0.0
      */
     TimeSpan getTime();
 }
