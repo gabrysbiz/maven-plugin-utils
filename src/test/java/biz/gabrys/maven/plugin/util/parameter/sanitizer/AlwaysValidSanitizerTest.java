@@ -2,7 +2,7 @@ package biz.gabrys.maven.plugin.util.parameter.sanitizer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 import org.junit.Test;
 
@@ -23,7 +23,7 @@ public final class AlwaysValidSanitizerTest {
         final boolean valid = sanitizer.isValid(value);
 
         assertThat(valid).isTrue();
-        verifyZeroInteractions(value);
+        verifyNoInteractions(value);
     }
 
     @Test(expected = UnsupportedOperationException.class)

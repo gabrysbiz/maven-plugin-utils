@@ -44,7 +44,7 @@
                 The library to run requires:
             </p>
             <ul>
-                <li>Java 6 or higher</li>
+                <li>Java 11 or higher</li>
                 <li>Third-Party Dependencies (<a href="dependencies.html">see list</a>)</li>
             </ul>
         </section>

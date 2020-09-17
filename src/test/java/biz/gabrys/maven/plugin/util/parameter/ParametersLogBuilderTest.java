@@ -7,8 +7,8 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -50,7 +50,7 @@ public final class ParametersLogBuilderTest {
         verify(builder).append(NAME, VALUE);
         verify(builder).append(eq(NAME), eq(VALUE), any(DefaultValueToStringConverter.class), any(AlwaysValidSanitizer.class));
         verifyNoMoreInteractions(builder);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test
@@ -71,7 +71,7 @@ public final class ParametersLogBuilderTest {
         verify(builder).append(NAME, VALUE, converter);
         verify(builder).append(eq(NAME), eq(VALUE), eq(converter), any(AlwaysValidSanitizer.class));
         verifyNoMoreInteractions(builder);
-        verifyZeroInteractions(logger, converter);
+        verifyNoInteractions(logger, converter);
     }
 
     @Test
@@ -92,7 +92,7 @@ public final class ParametersLogBuilderTest {
         verify(builder).append(NAME, VALUE, sanitizer);
         verify(builder).append(eq(NAME), eq(VALUE), any(DefaultValueToStringConverter.class), eq(sanitizer));
         verifyNoMoreInteractions(builder);
-        verifyZeroInteractions(logger, sanitizer);
+        verifyNoInteractions(logger, sanitizer);
     }
 
     @Test
@@ -112,7 +112,7 @@ public final class ParametersLogBuilderTest {
 
         verify(builder).append(NAME, VALUE, converter, sanitizer);
         verifyNoMoreInteractions(builder);
-        verifyZeroInteractions(logger, converter, sanitizer);
+        verifyNoInteractions(logger, converter, sanitizer);
     }
 
     @Test
@@ -138,7 +138,7 @@ public final class ParametersLogBuilderTest {
         verify(builder).append(NAME, VALUE, converter1, sanitizer1);
         verify(builder).append(NAME, value2, converter2, sanitizer2);
         verifyNoMoreInteractions(builder);
-        verifyZeroInteractions(logger, converter1, sanitizer1, converter2, sanitizer2);
+        verifyNoInteractions(logger, converter1, sanitizer1, converter2, sanitizer2);
     }
 
     @Test
@@ -152,7 +152,7 @@ public final class ParametersLogBuilderTest {
         verify(builder).info();
         verify(builder).log(any(InfoInternalLoggerAdapter.class));
         verifyNoMoreInteractions(builder);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test
@@ -166,7 +166,7 @@ public final class ParametersLogBuilderTest {
         verify(builder).debug();
         verify(builder).log(any(DebugInternalLoggerAdapter.class));
         verifyNoMoreInteractions(builder);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test
@@ -218,7 +218,7 @@ public final class ParametersLogBuilderTest {
         verify(internalLogger).log("line1");
         verify(internalLogger).log("line2");
         verifyNoMoreInteractions(builder, internalLogger);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test
@@ -237,7 +237,7 @@ public final class ParametersLogBuilderTest {
         verify(builder).createLines();
         verify(builder).createParametersLines();
         verifyNoMoreInteractions(builder);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test
@@ -250,7 +250,7 @@ public final class ParametersLogBuilderTest {
         assertThat(lines).isEmpty();
         verify(builder).createParametersLines();
         verifyNoMoreInteractions(builder);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test
@@ -274,7 +274,7 @@ public final class ParametersLogBuilderTest {
         verify(builder).createParemeterLine(name1, container1);
         verify(builder).createParemeterLine(name2, container2);
         verifyNoMoreInteractions(builder);
-        verifyZeroInteractions(logger, container1, container2);
+        verifyNoInteractions(logger, container1, container2);
     }
 
     @Test
@@ -291,7 +291,7 @@ public final class ParametersLogBuilderTest {
         verify(builder).createParemeterLine(NAME, container);
         verify(builder).createParameterValue(container);
         verifyNoMoreInteractions(builder);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test
@@ -322,7 +322,7 @@ public final class ParametersLogBuilderTest {
         verify(container).getSanitizer();
         verify(sanitizer).isValid(object);
         verifyNoMoreInteractions(builder, converter, sanitizer);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test
@@ -359,7 +359,7 @@ public final class ParametersLogBuilderTest {
         verify(sanitizer).sanitize(object);
         verify(converter).convert(sanitized);
         verifyNoMoreInteractions(builder, converter, sanitizer);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test
@@ -397,7 +397,7 @@ public final class ParametersLogBuilderTest {
         verify(sanitizer).sanitize(object);
         verify(converter).convert(sanitized);
         verifyNoMoreInteractions(builder, converter, sanitizer);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test
@@ -434,7 +434,7 @@ public final class ParametersLogBuilderTest {
         verify(sanitizer).sanitize(object);
         verify(converter).convert(sanitized);
         verifyNoMoreInteractions(builder, converter, sanitizer);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     public static class Container2 extends Container {

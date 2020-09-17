@@ -1,5 +1,11 @@
 # Maven Plugin Utils Changelog
 
+## 3.0.0
+Features:
+* Set compatibility with Java 11+
+
+[See documentation](http://maven-plugin-utils.projects.gabrys.biz/LATEST/)
+
 ## 2.0.0
 Features:
 * Set compatibility with Java 6+

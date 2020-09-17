@@ -3,7 +3,7 @@ package biz.gabrys.maven.plugin.util.io;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,6 +67,6 @@ public final class ScannerFactoryTest {
         final FileScanner scanner = factory.create(patternFormat, logger);
 
         assertThat(scanner).isExactlyInstanceOf(expectedClass);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 }

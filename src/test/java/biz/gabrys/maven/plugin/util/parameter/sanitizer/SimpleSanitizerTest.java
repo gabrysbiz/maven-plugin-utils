@@ -2,7 +2,7 @@ package biz.gabrys.maven.plugin.util.parameter.sanitizer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 import org.junit.Test;
 
@@ -17,6 +17,6 @@ public final class SimpleSanitizerTest {
         final Object result = sanitizer.sanitize2(value);
 
         assertThat(result).isSameAs(sanitizedValue);
-        verifyZeroInteractions(sanitizedValue, value);
+        verifyNoInteractions(sanitizedValue, value);
     }
 }

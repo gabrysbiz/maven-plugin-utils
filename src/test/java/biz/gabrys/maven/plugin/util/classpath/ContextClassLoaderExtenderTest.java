@@ -7,8 +7,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 import java.net.URL;
@@ -56,7 +56,7 @@ public final class ContextClassLoaderExtenderTest {
         verify(extender).addDependencies(types);
         verify(extender).addDependencies(ArgumentMatchers.<String>anySet());
         verifyNoMoreInteractions(extender);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -87,7 +87,7 @@ public final class ContextClassLoaderExtenderTest {
         verify(extender).resolveArtifactsUrls(filtered);
         verify(extender).addToContextClassLoader(urls);
         verifyNoMoreInteractions(extender);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 
     @Test
@@ -166,6 +166,6 @@ public final class ContextClassLoaderExtenderTest {
         assertThat(text).isEqualTo("groupId:artifactId-1.0.jar (compile)");
         verify(extender).createDisplayText(artifact);
         verifyNoMoreInteractions(extender);
-        verifyZeroInteractions(logger);
+        verifyNoInteractions(logger);
     }
 }
