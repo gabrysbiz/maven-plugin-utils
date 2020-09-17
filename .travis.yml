@@ -1,4 +1,4 @@
 language: java
 jdk: oraclejdk11
-install: mvn -B -V -e package -DskipTests
-script: mvn -B -e verify site
+install: ./mvnw -B -V -e package -DskipTests
+script: ./mvnw -B -e verify site
